@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 public class GreetingsController {
 
-  @RequestMapping("/greeting")
+  @RequestMapping("/rest/v1/greeting")
   public
   @ResponseBody
   Greeting greeting() {

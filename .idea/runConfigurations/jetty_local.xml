@@ -1,6 +1,6 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="jetty-local" type="JettyConfiguration" factoryName="Local" APPLICATION_SERVER_NAME="Jetty 9.1.0.v20131115" ALTERNATIVE_JRE_ENABLED="false" ALTERNATIVE_JRE_PATH="">
-    <option name="UPDATING_POLICY" value="redeploy-artifacts" />
+    <option name="UPDATING_POLICY" value="restart-server" />
     <deployment>
       <file path="$PROJECT_DIR$/target/mars-calendar-1.0-SNAPSHOT.war">
         <settings DEPLOYMENT_METHOD="contexts">
