@@ -42,7 +42,7 @@
 
 
     <properties>
-        <start-class>com.github.mikhailerofeev.mars.calendar.Application</start-class>
+        <start-class>com.github.mikhailerofeev.mars.calendar.server.Application</start-class>
     </properties>
 
     <build>

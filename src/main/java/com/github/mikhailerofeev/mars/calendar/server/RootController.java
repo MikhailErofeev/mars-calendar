@@ -1,4 +1,4 @@
-package com.github.mikhailerofeev.mars.calendar;
+package com.github.mikhailerofeev.mars.calendar.server;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

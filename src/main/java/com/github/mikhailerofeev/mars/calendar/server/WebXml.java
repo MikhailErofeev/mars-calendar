@@ -1,4 +1,4 @@
-package com.github.mikhailerofeev.mars.calendar;
+package com.github.mikhailerofeev.mars.calendar.server;
 
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.context.web.SpringBootServletInitializer;
