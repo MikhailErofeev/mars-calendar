@@ -4,6 +4,7 @@ mars-calendar
 https://2014.spaceappschallenge.org
 
 
+Please write all code and comments in English, according to challenge rules!
 
 //@TODO 
 Нужно будет перевести доку!
