@@ -1,6 +1,6 @@
-package com.github.mikhailerofeev.mars.calendar.rest.v1.controllers;
+package com.github.mikhailerofeev.mars.calendar.rest.controllers;
 
-import com.github.mikhailerofeev.mars.calendar.rest.v1.dto.Greeting;
+import com.github.mikhailerofeev.mars.calendar.rest.dto.Greeting;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
  */
 
 @Controller
+@Deprecated //for test purposes
 public class GreetingsController {
 
   @RequestMapping("/rest/v1/greeting")

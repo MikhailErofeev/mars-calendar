@@ -1,4 +1,4 @@
-package com.github.mikhailerofeev.mars.calendar.model;
+package com.github.mikhailerofeev.mars.calendar.model.values;
 
 import org.joda.time.DateTime;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
