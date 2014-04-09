@@ -46,14 +46,26 @@ public class MarsDateTime {
         throw new NotImplementedException();
     }
 
+
+
     /** Mars Solar Date (in seconds) */
-    public double getMSD() {
+    public double getMarsSolarDate() {
         return (double)DateTime.parse("2000-01-06T00:00:00").getMillis() / 88775244. + 44795.9998;
     }
 
+    @Deprecated
+    public double getMSD() {
+        return getMarsSolarDate();
+    }
+
     /** Mars Time Coordinated */
+    public long getMarsTimeCoordinated() {
+        return ((long)getMarsSolarDate() % 86400) * 24;
+    }
+
+    @Deprecated
     public long getMTC() {
-        return ((long)getMSD() % 86400) * 24;
+        return getMarsTimeCoordinated();
     }
 
 }
