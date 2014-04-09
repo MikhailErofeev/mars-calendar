@@ -4,6 +4,7 @@ import com.github.mikhailerofeev.mars.calendar.rest.dto.Greeting;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
@@ -15,11 +16,25 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Deprecated //for testing purposes
 public class GreetingsController {
 
-  @RequestMapping("/rest/v1/greeting")
+  private Greeting greeting;
+
+  @RequestMapping(value = "/rest/v1/greeting", method = RequestMethod.GET)
   public
   @ResponseBody
-  @Secured("IS_AUTHENTICATED_ANONYMOUSLY")
   Greeting greeting() {
-    return new Greeting("Hello, worlds!");
+    if (greeting == null) {
+      return new Greeting("Hello, worlds!");
+    } else {
+      return greeting;
+    }
+  }
+
+
+  @RequestMapping(value = "/rest/v1/greeting", method = RequestMethod.POST)
+  public
+  @ResponseBody
+  @Secured("ROLE_USER")
+  void setGreeting(Greeting greeting) {
+    this.greeting = greeting;
   }
 }

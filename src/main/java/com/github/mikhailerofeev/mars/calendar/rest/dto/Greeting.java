@@ -6,13 +6,21 @@ package com.github.mikhailerofeev.mars.calendar.rest.dto;
  */
 @Deprecated //for testing purposes
 public class Greeting {
-  private final String text;
+  private String text;
 
   public Greeting(String text) {
     this.text = text;
   }
 
+  public Greeting() {
+  }
+
+
   public String getText() {
     return text;
+  }
+
+  public void setText(String text) {
+    this.text = text;
   }
 }
