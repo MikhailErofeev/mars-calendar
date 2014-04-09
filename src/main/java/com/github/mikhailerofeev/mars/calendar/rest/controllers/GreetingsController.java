@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.security.Principal;
+
 /**
  * @author Mikhail Erofeev https://github.com/MikhailErofeev
  * @since 09.04.14
@@ -21,9 +23,10 @@ public class GreetingsController {
   @RequestMapping(value = "/rest/v1/greeting", method = RequestMethod.GET)
   public
   @ResponseBody
-  Greeting greeting() {
+  Greeting greeting(Principal principal) {
+    String userName = principal == null ? "Anonymous" : principal.getName();
     if (greeting == null) {
-      return new Greeting("Hello, worlds!");
+      return new Greeting(String.format("Hello, %s!", userName));
     } else {
       return greeting;
     }

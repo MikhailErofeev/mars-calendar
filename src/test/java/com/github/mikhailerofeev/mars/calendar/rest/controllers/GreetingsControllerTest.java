@@ -18,9 +18,11 @@ import org.springframework.web.client.RestTemplate;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.security.Principal;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.mockito.Mockito.mock;
 
 /**
  * @author Mikhail Erofeev https://github.com/MikhailErofeev
@@ -40,7 +42,7 @@ public class GreetingsControllerTest {
   @Test
   public void testInject() throws IOException, URISyntaxException {
     assertNotNull(greetingsController);
-    assertEquals("Hello, worlds!", greetingsController.greeting().getText());
+    assertEquals("Hello, null!", greetingsController.greeting(mock(Principal.class)).getText());
   }
 
   @Test
@@ -50,7 +52,7 @@ public class GreetingsControllerTest {
     final URI url = new URI("http://localhost:" + port + "/rest/v1/greeting");
     final ResponseEntity<Greeting> entity = restTemplate.getForEntity(url, Greeting.class);
     assertEquals(HttpStatus.OK, entity.getStatusCode());
-    assertEquals("Hello, worlds!", entity.getBody().getText());
+    assertEquals("Hello, Anonymous!", entity.getBody().getText());
   }
 
   @Test

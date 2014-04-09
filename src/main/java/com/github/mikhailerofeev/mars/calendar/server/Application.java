@@ -26,6 +26,13 @@ public class Application extends WebMvcConfigurerAdapter {
       protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests().anyRequest().anonymous();
       }
+//
+//      @Override
+//      protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+//        auth.inMemoryAuthentication().withUser("admin").password("admin")
+//            .roles("ADMIN", "USER").and().withUser("user").password("user")
+//            .roles("USER");
+//      }
     };
   }
 
