@@ -15,4 +15,7 @@ mvn spring-boot:run
 
 Запуск на локальном jetty: jetty-local в идее
 либо mvn org.apache.maven.plugins:maven-war-plugin:2.4:war
-а дальше что-то вроде jetty-runner
+а дальше что-то вроде jetty-runner (не настраивал)
+
+
+Чтобы разрабатывать вёрстку, можно отдельно открыть index.html через "open in browser", тогда не надо будет париться с рестартом сервера (возможно бэкбон будет психовать :(()
