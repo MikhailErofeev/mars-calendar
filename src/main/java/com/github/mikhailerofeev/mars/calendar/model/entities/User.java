@@ -22,7 +22,15 @@ public class User implements Serializable {
   private String name;
 
   protected User() {
-    
+
+  }
+
+  public long getId() {
+    return id;
+  }
+
+  public String getName() {
+    return name;
   }
 
   public User(String name) {

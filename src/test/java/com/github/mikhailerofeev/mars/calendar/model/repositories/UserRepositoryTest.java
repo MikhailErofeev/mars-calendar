@@ -12,6 +12,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
@@ -25,6 +26,7 @@ import static org.junit.Assert.assertEquals;
 @WebAppConfiguration
 @DirtiesContext
 @ActiveProfiles("test")
+@Transactional
 public class UserRepositoryTest {
 
   @Autowired
@@ -36,5 +38,14 @@ public class UserRepositoryTest {
     userRepository.save(new User("u2"));
     final List<User> users = Lists.newArrayList(userRepository.findAll());
     assertEquals(2, users.size());
+  }
+
+  @Test
+  public void testByUser() {
+    userRepository.save(new User("u1"));
+    userRepository.save(new User("u2"));
+    final List<User> users = Lists.newArrayList(userRepository.findUsersByName("u2"));
+    assertEquals(1, users.size());
+    assertEquals("u2", users.get(0).getName());
   }
 }
