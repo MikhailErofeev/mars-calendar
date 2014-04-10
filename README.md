@@ -10,6 +10,9 @@ Please write all code and comments in English, according to challenge rules!
 Нужно будет перевести доку!
 
 
+Настройка базы: в mysql нужно выполнить db_copy.rtfm. Настройки mysql в application.properties
+
+
 Старт приложения (из идеи):
 Простой запуск встроенного tomcat: app-local в идее, либо
 mvn spring-boot:run
