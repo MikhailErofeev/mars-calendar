@@ -1,6 +1,8 @@
 package com.github.mikhailerofeev.mars.calendar.rest.controllers;
 
+import com.github.mikhailerofeev.mars.calendar.model.services.UserService;
 import com.github.mikhailerofeev.mars.calendar.rest.dto.Greeting;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,6 +19,9 @@ import java.security.Principal;
 @Controller
 @Deprecated //for testing purposes
 public class GreetingsController {
+
+  @Autowired
+  UserService userService;
 
   private Greeting greeting;
 
