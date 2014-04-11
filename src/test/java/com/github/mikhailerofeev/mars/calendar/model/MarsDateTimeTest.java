@@ -13,7 +13,7 @@ public class MarsDateTimeTest {
     @Test
     public void testGetYear() throws Exception {
         MarsDateTime now = new MarsDateTime();
-        now.getYear();
+      now.getYear();
 
     }
 }
