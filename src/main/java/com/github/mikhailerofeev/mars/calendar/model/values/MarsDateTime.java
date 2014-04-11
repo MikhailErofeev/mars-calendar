@@ -22,6 +22,7 @@ public class MarsDateTime {
     };
 
     private final long unixTimeStamp;
+    private final long epoch; // initialise
 
     public MarsDateTime(final long unixTimeStamp) {
         this.unixTimeStamp = unixTimeStamp;
@@ -33,6 +34,8 @@ public class MarsDateTime {
     public MarsDateTime() {
         unixTimeStamp = DateTime.now().getMillis();
     }
+
+
 
     public int getYear() {
         throw new NotImplementedException();
