@@ -1,6 +1,6 @@
 package com.github.mikhailerofeev.mars.calendar.model;
 
-import com.github.mikhailerofeev.mars.calendar.model.values.MarsDateTime;
+import org.joda.time.DateTime;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
@@ -10,10 +10,10 @@ import org.junit.runners.JUnit4;
  */
 @RunWith(JUnit4.class)
 public class MarsDateTimeTest {
-    @Test
-    public void testGetYear() throws Exception {
-        MarsDateTime now = new MarsDateTime();
-      now.getYear();
-
-    }
+  @Test
+  public void testGetYear() throws Exception {
+//        MarsDateTime now = new MarsDateTime();
+//      now.getYear();
+    System.out.println(new DateTime(0));
+  }
 }
