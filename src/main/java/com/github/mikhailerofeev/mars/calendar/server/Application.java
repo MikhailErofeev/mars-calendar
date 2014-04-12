@@ -30,7 +30,7 @@ public class Application extends WebMvcConfigurerAdapter {
     return new WebSecurityConfigurerAdapter() {
       @Override
       protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests().anyRequest().anonymous();
+        http.authorizeRequests().anyRequest().permitAll().and().csrf().disable(); //oops?
       }
 //
 //      @Override

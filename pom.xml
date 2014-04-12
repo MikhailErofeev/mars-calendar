@@ -67,6 +67,28 @@
             <artifactId>jackson-databind</artifactId>
         </dependency>
 
+
+        <!--OAUTH-->
+
+        <dependency>
+            <groupId>org.springframework.social</groupId>
+            <artifactId>spring-social-google</artifactId>
+            <version>1.0.0.M3</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.social</groupId>
+            <artifactId>spring-social-web</artifactId>
+            <version>1.0.3.RELEASE</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.social</groupId>
+            <artifactId>spring-social-twitter</artifactId>
+            <version>1.0.5.RELEASE</version>
+        </dependency>
+
+
         <!--COMMON LIBS-->
 
         <dependency>
@@ -106,6 +128,11 @@
             <artifactId>javax.annotation-api</artifactId>
             <version>1.2</version>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.social</groupId>
+            <artifactId>spring-social-security</artifactId>
+            <version>1.1.0.RC1</version>
+        </dependency>
     </dependencies>
 
 
@@ -140,6 +167,13 @@
                 <enabled>true</enabled>
             </snapshots>
         </repository>
+
+        <repository>
+            <id>spring-social-google</id>
+            <name>Spring Social Google</name>
+            <url>https://github.com/GabiAxel/maven/raw/master/</url>
+        </repository>
+        
     </repositories>
 
     <pluginRepositories>

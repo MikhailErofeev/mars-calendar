@@ -3,18 +3,130 @@
 <head>
     <title>Hello, Worlds!</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-    <link rel="stylesheet" href="css/style.css" type="text/css"/>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-    <script src="js/hello.js"></script>
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+
+    <link rel="stylesheet" href="css/index.css" type="text/css"/>
+    <link rel="stylesheet" href="css/week.css" type="text/css"/>
+
+    <!-- jQuery -->
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
+    <!-- backbone.js -->
+    <script src="//cdnjs.cloudflare.com/ajax/libs/backbone.js/1.1.2/backbone-min.js"></script>
+    <!-- underscore.js -->
+    <script src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.6.0/underscore-min.js"></script>
+    <!-- bootstrap -->
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+
+    <script src="js/index.js"></script>
+    <script src="js/week.js"></script>
 </head>
 <body>
-<h1>Hello, html worlds!</h1>
+<!--<h1>Hello, html worlds!</h1>-->
 
-<div>
-    <p class="ajax-content">Ajax text: </p>
+<!--<div>-->
+<!--<p class="ajax-content">Ajax text: </p>-->
 
-    <p class="get-content"><b>text</b> variable in URL: </p>
-</div>
+<!--<p class="get-content"><b>text</b> variable in URL: </p>-->
+<!--</div>-->
 
+<!-- Navbar -->
+<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#">Mars-Calendar</a>
+        </div>
+        <div class="collapse navbar-collapse">
+            <ul class="nav navbar-nav">
+                <li class="dropdown disabled">
+                    <a class="dropdown-toggle planet-name source-planet-name left-bordered disabled" data-toggle="dropdown" href="#">
+                        Mars <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu disabled">
+                    </ul>
+                </li>
+                <li class="disabled"><a href="#"><span class="glyphicon glyphicon-resize-horizontal"></span></a></li>
+                <li class="dropdown disabled">
+                    <a class="dropdown-toggle planet-name destination-planet-name right-bordered disabled" data-toggle="dropdown" href="#">
+                        Earth <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                    </ul>
+                </li>
+                <li class="left-offset right-offset right-bordered">
+                    <div class="btn-group btn-group-sm">
+                        <button type="button" class="btn btn-default navbar-btn" data-toggle="modal" data-target="#AddTask">Add task</button>
+                    </div>
+                </li>
+                <li class="left-offset border">
+                    <div class="btn-group btn-group-sm">
+                        <button type="button" class="btn btn-default navbar-btn active ">Today</button>
+                    </div>
+                </li>
+                <li class="offsetted-btn right-offset">
+                    <div class="btn-group btn-group-sm">
+                        <button type="button" class="btn btn-default navbar-btn">
+                            <span class="glyphicon glyphicon-chevron-left"></span></button>
+                        <button type="button" class="btn btn-default navbar-btn">
+                            <span class="glyphicon glyphicon-chevron-right"></span></button>
+                    </div>
+                </li>
+                <li class="left-offset left-bordered">
+                    <div class="btn-group btn-group-sm">
+                        <button type="button" class="btn btn-default navbar-btn">Week</button>
+                        <button type="button" class="btn btn-default navbar-btn">Month</button>
+                        <button type="button" class="btn btn-default navbar-btn">Year</button>
+                    </div>
+                </li>
+            </ul>
+            <form class="navbar-form navbar-right" role="form">
+                <button type="submit" class="btn btn-info">Twitter login</button>
+            </form>
+        </div><!-- /.nav-collapse -->
+    </div><!-- /.container-->
+</div><!-- /.navbar -->
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12 main-content-area">
+            <table id="days-table">
+                <thead></thead>
+                <tbody></tbody>
+            </table>
+        </div>
+    </div>
+</div><!-- /.container -->
+
+<div class="modal fade" id="AddTask">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Add task</h4>
+            </div>
+            <div class="modal-body">
+                <form id="AddTaskForm" class="form-horizontal" role="form">
+                    <div class="form-group">
+                        <label for="TaskName" class="col-sm-2 control-label">Name</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="TaskName" placeholder="Name">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="TaskBeginDate" class="col-sm-2 control-label">Begin</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="TaskBeginDate" placeholder="Begin">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 </body>
 </html>
