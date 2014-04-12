@@ -1,12 +1,13 @@
 package com.github.mikhailerofeev.mars.calendar.model.values;
 
 /**
- * Created by Anton on 11.04.2014.
+ * Contains abstact month class
  */
 public class PlanetMonth {
     private int numSols;
     private String name = null;
 
+    @SuppressWarnings("UnusedDeclaration")
     PlanetMonth(int numSols) {
         this.numSols = numSols;
     }
@@ -16,10 +17,12 @@ public class PlanetMonth {
         this.name = name;
     }
 
+    @SuppressWarnings("UnusedDeclaration")
     public String getName() {
         return name;
     }
 
+    @SuppressWarnings("UnusedDeclaration")
     public int getNumSols() {
         return numSols;
     }
@@ -31,10 +34,8 @@ public class PlanetMonth {
 
         PlanetMonth that = (PlanetMonth) o;
 
-        if (numSols != that.numSols) return false;
-        if (!name.equals(that.name)) return false;
+        return numSols == that.numSols && name.equals(that.name);
 
-        return true;
     }
 
     @Override
