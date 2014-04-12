@@ -110,10 +110,10 @@ public class PlanetDateTime {
             year = getYear();
             timePoint.add(yearDuration(year));
             monthNum = 0;
-            do {
+            while (timePoint.isBefore(this.timePoint)) {
                 timePoint.add(monthDuration(year, monthNum));
                 ++monthNum;
-            } while (timePoint.isBefore(this.timePoint));
+            }
         }
         return monthNum;
     }
