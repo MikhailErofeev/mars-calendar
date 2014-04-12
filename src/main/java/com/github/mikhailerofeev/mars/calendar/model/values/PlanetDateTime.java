@@ -115,7 +115,7 @@ public class PlanetDateTime {
             year = periodsSinceEpoch * calendar.getLeapPeriod().size();
             int solsElapsed = 0;
             // may need to be changed to 1 (instead of 0)
-            while (solsElapsed < solsSincePeriod) {
+            while (solsElapsed <= solsSincePeriod) {
                 solsElapsed += calendar.solsInYear(0);
                 ++year;
             }
