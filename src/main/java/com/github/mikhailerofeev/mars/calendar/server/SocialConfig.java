@@ -1,12 +1,17 @@
 package com.github.mikhailerofeev.mars.calendar.server;
 
+import com.google.common.collect.Lists;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.core.env.Environment;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.encrypt.Encryptors;
 import org.springframework.security.crypto.encrypt.TextEncryptor;
@@ -32,6 +37,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.inject.Inject;
 import javax.sql.DataSource;
+import java.util.Random;
 
 /**
  * @author Mikhail Erofeev https://github.com/MikhailErofeev
@@ -49,6 +55,8 @@ public class SocialConfig {
 
   @Inject
   private TextEncryptor textEncryptor;
+  public static final GrantedAuthority ROLE_USER = new SimpleGrantedAuthority("ROLE_USER");
+  public static final GrantedAuthority ROLE_ANONYMOUS = new SimpleGrantedAuthority("ROLE_ANONYMOUS");
 
   @Bean
   public ConnectController connectController() {
@@ -112,7 +120,8 @@ public class SocialConfig {
   public static class SpringSecuritySignInAdapter implements SignInAdapter {
     public String signIn(String localUserId, Connection<?> connection, NativeWebRequest request) {
       SecurityContextHolder.getContext().setAuthentication(
-          new UsernamePasswordAuthenticationToken(localUserId, null, null));
+          //todo change to SocialAuthToken?
+          new UsernamePasswordAuthenticationToken(localUserId, null, Lists.newArrayList(ROLE_USER)));
       return null;
     }
   }
@@ -122,7 +131,7 @@ public class SocialConfig {
   //could been extended to registration form
   public ModelAndView signupForm(WebRequest request) {
     Connection<?> connection = ProviderSignInUtils.getConnection(request);
-    if (connection != null) {      
+    if (connection != null) {
       final UserProfile userProfile = connection.fetchUserProfile();
       ProviderSignInUtils.handlePostSignUp(userProfile.getUsername(), request);
       return new ModelAndView("redirect:/?signup=success");
@@ -130,6 +139,19 @@ public class SocialConfig {
       return new ModelAndView("redirect:/?signup=error");
     }
   }
+
+
+  @RequestMapping(value = "/disconnect", method = RequestMethod.DELETE)
+  @Secured("ROLE_USER")
+  @ResponseBody
+  public ModelAndView disconnect(WebRequest request) {
+    Connection<?> connection = ProviderSignInUtils.getConnection(request);
+    final String key = new Random().nextInt() + "";
+    final AnonymousAuthenticationToken anonymous = new AnonymousAuthenticationToken(key, "Anonymous", Lists.newArrayList(ROLE_ANONYMOUS));
+    SecurityContextHolder.getContext().setAuthentication(anonymous);
+    return new ModelAndView("redirect:/");
+  }
+
 
   @Bean
   public TextEncryptor textEncryptor() {
