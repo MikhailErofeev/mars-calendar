@@ -63,6 +63,18 @@ public class PlanetDateTime {
         return new Duration(epoch, timePoint);
     }
 
+    private double solsSinceEpoch() {
+        return timeSinceEpoch().getMillis() / solDuration.getMillis();
+    }
+
+    public long wholeSolsSinceEpoch() {
+        return (long)solsSinceEpoch();
+    }
+
+    public Duration durationSinceSolStart() {
+        return new Duration(timeSinceEpoch().getMillis() % solDuration.getMillis());
+    }
+
     @SuppressWarnings("UnusedDeclaration")
     public DateTime toTerrestrial() {
         return timePoint;
