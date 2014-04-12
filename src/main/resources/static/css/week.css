@@ -29,6 +29,7 @@ body {
 .scale-top {
     height: 29px;
     text-align: center;
+    line-height: 29px;
 }
 
 .hour {
@@ -40,5 +41,6 @@ body {
 .day-top {
     border-bottom: 1px solid #bababa;
     height: 30px;
+    line-height: 30px;
     text-align: center;
 }
