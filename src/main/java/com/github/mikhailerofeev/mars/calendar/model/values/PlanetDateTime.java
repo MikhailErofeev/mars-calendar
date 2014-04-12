@@ -97,30 +97,29 @@ public class PlanetDateTime {
         return new Duration(solDuration.getMillis() * calendar.solsInMonth(year, month));
     }
 
+    private void calcTime() {
+        int solsSincePeriod = (int)(wholeSolsSinceEpoch() % (long)calendar.solsInLeapPeriod());
+        int periodsSinceEpoch = (int)(wholeSolsSinceEpoch() / (long)calendar.solsInLeapPeriod());
+        year = periodsSinceEpoch * calendar.getLeapPeriod().size();
+        int solsElapsed = 0;
+        // may need to be changed to 1 (instead of 0)
+        while (solsElapsed <= solsSincePeriod) {
+            solsElapsed += calendar.solsInYear(year);
+            ++year;
+        }
+        solsElapsed -= calendar.solsInYear(year);
+        --year; // because we return the nearest PREVIOUS year, not the NEXT one (!!!)
+        // -- by now, the year is supposed to be calculated -- //
+        monthNum = 0;
+
+    }
+
     /**
      * returns the year in the natural form
      * @return
      */
     public int getYear() {
-        if (year == null) {
-            // todo: optimization
-//            year = 0;
-//            MutableDateTime timePoint = new MutableDateTime(this.epoch);
-//            while (timePoint.isBefore(this.timePoint)) {
-//                ++year;
-//                timePoint.add(yearDuration(year));
-//            }
-            int solsSincePeriod = (int)(wholeSolsSinceEpoch() % (long)calendar.solsInLeapPeriod());
-            int periodsSinceEpoch = (int)(wholeSolsSinceEpoch() / (long)calendar.solsInLeapPeriod());
-            year = periodsSinceEpoch * calendar.getLeapPeriod().size();
-            int solsElapsed = 0;
-            // may need to be changed to 1 (instead of 0)
-            while (solsElapsed <= solsSincePeriod) {
-                solsElapsed += calendar.solsInYear(0);
-                ++year;
-            }
-            --year; // because we return the nearest PREVIOUS year, not the NEXT one (!!!)
-        }
+        if (year == null) calcTime();
         return year;
     }
 
@@ -129,17 +128,7 @@ public class PlanetDateTime {
      * @return
      */
     public int getMonthNum() {
-        if (monthNum == null) {
-            // todo: optimization
-            MutableDateTime timePoint = new MutableDateTime(this.epoch);
-            year = getYear();
-            timePoint.add(yearDuration(year));
-            monthNum = 0;
-            while (timePoint.isBefore(this.timePoint)) {
-                timePoint.add(monthDuration(year, monthNum));
-                ++monthNum;
-            }
-        }
+        if (monthNum == null) calcTime();
         return monthNum;
     }
 
@@ -149,50 +138,27 @@ public class PlanetDateTime {
     }
 
     public int getDay() {
-        if (day == null) {
-            // todo: optimization
-            MutableDateTime timePoint = new MutableDateTime(this.epoch);
-            year = getYear();
-            monthNum = getMonthNum();
-            timePoint.add(yearDuration(year));
-            timePoint.add(monthDuration(year, monthNum));
-            day = 1;
-            while (timePoint.isBefore(this.timePoint)) {
-                ++day;
-                timePoint.add(solDuration);
-            }
-        }
+        if (day == null) calcTime();
         return day;
-
     }
 
     @SuppressWarnings("UnusedDeclaration")
     public long getHour() {
-        if (hour == null) {
-            return durationSinceSolStart().getStandardHours();
-        }
-        else {
-            return hour;
-        }
+        if (hour == null) calcTime();
+        return hour;
     }
 
     public long getMinute() {
-        if (minute == null)
-            return (durationSinceSolStart().getStandardMinutes() - durationSinceSolStart().getStandardHours() * 60);
-        else {
-            return minute;
-        }
+       if (minute == null) calcTime();
+       return minute;
     }
 
     public long getSecond() {
-        if (second == null)
-            return (durationSinceSolStart().getStandardSeconds() - durationSinceSolStart().getStandardHours() * 60 * 60);
-        else {
-            return second;
-        }
+        if (second == null) calcTime();
+        return second;
     }
 
-    public int getWeekNum(){
+    public int getWeek(){
         throw new NotImplementedException();
     }
 }
