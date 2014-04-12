@@ -92,4 +92,12 @@ public class PlanetCalendar {
         return sols;
     }
 
+    public int solsInLeapPeriod() {
+        int sols = 0;
+        for (int i = 0; i < leapPeriod.size(); ++i) {
+            sols += solsInYear(i);
+        }
+        return sols;
+    }
+
 }
