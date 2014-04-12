@@ -1,0 +1,48 @@
+h1 {
+    color: red;
+}
+
+body {
+    background-color: #e7e7e7;
+}
+
+.day {
+    width: 150px;
+    border: 1px black;
+    margin: 3px;
+    float: left;
+    background-color: white;
+    height: 800px;
+}
+
+.scale {
+    width: 50px;
+    margin-top: 3px;
+    float: left;
+    background-color: white;
+    height: 800px;
+
+}
+
+.scale-row {
+    font-size: small;
+    height: 31px;
+    text-align: right;
+}
+
+.scale-top {
+    height: 31px;
+    text-align: center;
+}
+
+.hour {
+    /*background-color: lightcoral;*/
+    border-bottom: 1px solid #e7e7e7;
+    height: 30px;
+}
+
+.day-top {
+    border-bottom: 1px solid #bababa;
+    height: 30px;
+    text-align: center;
+}

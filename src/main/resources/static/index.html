@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
 
     <link rel="stylesheet" href="css/index.css" type="text/css"/>
+    <link rel="stylesheet" href="css/week.css" type="text/css"/>
 
     <!-- jQuery -->
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
@@ -19,20 +20,21 @@
     <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
 
     <script src="js/index.js"></script>
+    <script src="js/week.js"></script>
 </head>
 <body>
 <!--<h1>Hello, html worlds!</h1>-->
 
 <!--<div>-->
-    <!--<p class="ajax-content">Ajax text: </p>-->
+<!--<p class="ajax-content">Ajax text: </p>-->
 
-    <!--<p class="get-content"><b>text</b> variable in URL: </p>-->
+<!--<p class="get-content"><b>text</b> variable in URL: </p>-->
 <!--</div>-->
 
 <!--<form action="/signin/twitter" method="POST">-->
-    <!--<button type="submit">-->
-        <!--login with twi-->
-    <!--</button>-->
+<!--<button type="submit">-->
+<!--login with twi-->
+<!--</button>-->
 <!--</form>-->
 
 <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
@@ -49,26 +51,23 @@
             <form class="navbar-form navbar-right" role="form">
                 <button type="submit" class="btn btn-default">Twitter</button>
             </form>
-        </div><!--/.nav-collapse -->
+        </div>
+        <!--/.nav-collapse -->
     </div>
 </div>
 
 <div class="container container-full">
     <div class="row">
-        <div class="col-md-2 action-menu main-action-menu">
+        <div class="col-md-1 action-menu main-action-menu">
             <div class="btn-group-vertical">
                 <button type="button" class="btn btn-default">Add task</button>
             </div>
         </div>
-        <div class="col-md-8 main-content-area"></div>
-        <div class="col-md-2 action-menu additional-action-menu"></div>
+        <div class="col-md-11 main-content-area">
+            <div id="days"></div>
+        </div>
     </div>
-</div><!-- /.container -->
-
-<form action="/disconnect" method="POST">
-    <button type="submit">Disconnect</button>
-    <input type="hidden" name="_method" value="delete"/>
-</form>
-
+</div>
+<!-- /.container -->
 </body>
 </html>
