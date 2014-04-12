@@ -44,17 +44,17 @@ public class PlanetCalendarTest {
         assertEquals(weekSols.size(), 7);
 
         int periodTime = 10;
-        Map<PlanetMonth, Integer> leapMonths = new TreeMap<PlanetMonth, Integer>();
+        Map<PlanetMonth, Integer> leapMonths = new HashMap<PlanetMonth, Integer>();
         leapMonths.put(months.get(23), 1);
         assertEquals(leapMonths.size(), 1);
 
         List<Map<PlanetMonth, Integer>> leapPeriod = new ArrayList<Map<PlanetMonth, Integer>>(periodTime);
         for (int i = 0; i < 6; ++i) {
-            leapPeriod.add(new TreeMap(leapMonths));
+            leapPeriod.add(new HashMap(leapMonths));
         }
         assertEquals(leapPeriod.size(), 6);
         assertEquals(leapPeriod.get(5), leapPeriod.get(4));
-        assertTrue(leapPeriod.get(6).isEmpty());
+        //assertTrue(leapPeriod.get(6) == null);
 
         PlanetCalendar marsCalendar = new PlanetCalendar(months, weekSols, leapPeriod, true);
     }
