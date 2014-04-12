@@ -78,19 +78,16 @@ public class PlanetDateTime {
      */
     public int getYear() {
         if (year == null) {
-            // calculate
-            throw new NotImplementedException();
-        } else {
-            return year;
+            // todo: optimization
+            year = 0;
+            MutableDateTime timePoint = new MutableDateTime(this.epoch);
+            while (timePoint.isBefore(this.timePoint)) {
+                ++year;
+                timePoint.add(yearDuration(year));
+            }
         }
-//        // todo: optimization
-//        int year = 0;
-//        MutableDateTime timePoint = new MutableDateTime(this.epoch);
-//        while (timePoint.isBefore(this.timePoint)) {
-//            ++year;
-//            timePoint.add(yearDuration(year));
-//        }
-//        return year;
+        return year;
+
     }
 
     /**
@@ -99,21 +96,17 @@ public class PlanetDateTime {
      */
     public int getMonthNum() {
         if (monthNum == null) {
-            // calculate
-            throw new NotImplementedException();
-        } else {
-            return monthNum;
+            // todo: optimization
+            MutableDateTime timePoint = new MutableDateTime(this.epoch);
+            year = getYear();
+            timePoint.add(yearDuration(year));
+            monthNum = 0;
+            do {
+                timePoint.add(monthDuration(year, monthNum));
+                ++monthNum;
+            } while (timePoint.isBefore(this.timePoint));
         }
-//        // todo: optimization
-//        MutableDateTime timePoint = new MutableDateTime(this.epoch);
-//        int year = getYear();
-//        timePoint.add(yearDuration(year - 1));
-//        int month = 0;
-//        do {
-//            timePoint.add(monthDuration(year, month));
-//            ++month;
-//        } while (timePoint.isBefore(this.timePoint));
-//        return month;
+        return monthNum;
     }
 
     public PlanetMonth getMonth() {
@@ -122,22 +115,20 @@ public class PlanetDateTime {
 
     public int getDay() {
         if (day == null) {
-            // calculate
-            throw new NotImplementedException();
-        } else {
-            return day;
+            // todo: optimization
+            MutableDateTime timePoint = new MutableDateTime(this.epoch);
+            year = getYear();
+            monthNum = getMonthNum();
+            timePoint.add(yearDuration(year));
+            timePoint.add(monthDuration(year, monthNum));
+            day = 0;
+            while (timePoint.isBefore(this.timePoint)) {
+                ++day;
+                timePoint.add(solDuration);
+            }
         }
-//        // todo: optimization
-//        MutableDateTime timePoint = new MutableDateTime(this.epoch);
-//        int year = getYear() - 1;
-//        timePoint.add(yearDuration(year));
-//        timePoint.add(monthDuration(year, getMonthNum()));
-//        int day = 0;
-//        while (timePoint.isBefore(this.timePoint)) {
-//            ++day;
-//            timePoint.add(solDuration);
-//        }
-//        return day;
+        return day;
+
     }
 
     public int getHour() {

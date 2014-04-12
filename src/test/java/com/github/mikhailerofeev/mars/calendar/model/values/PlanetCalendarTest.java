@@ -7,6 +7,7 @@ import org.junit.runners.JUnit4;
 
 import java.util.*;
 
+import static junit.framework.Assert.assertTrue;
 import static org.junit.Assert.assertEquals;
 
 /**
@@ -32,7 +33,7 @@ public class PlanetCalendarTest {
         };
         List<PlanetMonth> months = new ArrayList<PlanetMonth>();
         for (int i = 0; i < 24; ++i) {
-            months.add(new PlanetMonth(monthDayNums[i], monthNames[i]))
+            months.add(new PlanetMonth(monthDayNums[i], monthNames[i]));
         }
         assertEquals(months.size(), 24);
 
@@ -42,7 +43,19 @@ public class PlanetCalendarTest {
         List<String> weekSols = new ArrayList<String> (Arrays.asList(weekSolNames));
         assertEquals(weekSols.size(), 7);
 
-        List<Map<PlanetMonth, Integer>> leapPeriod = new ArrayList<Map<PlanetMonth, Integer>>();
-        PlanetCalendar marsCalendar = new PlanetCalendar()
+        int periodTime = 10;
+        Map<PlanetMonth, Integer> leapMonths = new TreeMap<PlanetMonth, Integer>();
+        leapMonths.put(months.get(23), 1);
+        assertEquals(leapMonths.size(), 1);
+
+        List<Map<PlanetMonth, Integer>> leapPeriod = new ArrayList<Map<PlanetMonth, Integer>>(periodTime);
+        for (int i = 0; i < 6; ++i) {
+            leapPeriod.add(new TreeMap(leapMonths));
+        }
+        assertEquals(leapPeriod.size(), 6);
+        assertEquals(leapPeriod.get(5), leapPeriod.get(4));
+        assertTrue(leapPeriod.get(6).isEmpty());
+
+        PlanetCalendar marsCalendar = new PlanetCalendar(months, weekSols, leapPeriod, true);
     }
 }
