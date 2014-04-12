@@ -1,6 +1,6 @@
 package com.github.mikhailerofeev.mars.calendar.model.values;
 
-import org.aspectj.lang.annotation.Before;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
@@ -15,9 +15,10 @@ import static org.junit.Assert.assertEquals;
  */
 @RunWith(JUnit4.class)
 public class PlanetCalendarTest {
+    private PlanetCalendar marsCalendar;
 
-    @Test
-    public void testCalendarCreation(){
+    @Before
+    public void createCalendar() {
         String[] monthNames = {
                 "Sagittarius", "Dhanus", "Capricornus", "Makara", "Aquarius", "Kumbha",
                 "Pisces", "Mina", "Aries", "Mesha", "Taurus", "Rishabha",
@@ -56,6 +57,17 @@ public class PlanetCalendarTest {
         assertEquals(leapPeriod.get(5), leapPeriod.get(4));
         //assertTrue(leapPeriod.get(6) == null);
 
-        PlanetCalendar marsCalendar = new PlanetCalendar(months, weekSols, leapPeriod, true);
+        marsCalendar = new PlanetCalendar(months, weekSols, leapPeriod, true);
+    }
+
+    @Test
+    public void testCalendarCreation(){
+        int a0 = marsCalendar.extraSolsInYear(100);
+        int a1 = marsCalendar.solsInMonth(100, 5);
+        int a2 = marsCalendar.solsInYear(100);
+        int a3 = marsCalendar.standardSolsInYear();
+        List<Map<PlanetMonth, Integer>> a4 = new ArrayList<Map<PlanetMonth, Integer>>(marsCalendar.getLeapPeriod());
+        List<PlanetMonth> a5 = new ArrayList<PlanetMonth>(marsCalendar.getMonths());
+        List<String> a6 = marsCalendar.getWeekSols();
     }
 }
