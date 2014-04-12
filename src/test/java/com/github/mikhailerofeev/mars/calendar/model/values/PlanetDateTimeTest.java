@@ -76,13 +76,4 @@ public class PlanetDateTimeTest {
         PlanetDateTime marsZeroTime     = new PlanetDateTime(DateTime.now(),epochTime,CalInit(),new Duration(88642663));
         System.out.println(marsZeroTime.getDay());
     }
-
-    private void testGetTime(DateTime expected, DateTime asq){
-        assert(expected == asq);
-    }
-
-    private void testGetVal(int expected, int asq){
-        assert(expected == asq);
-    }
-
 }

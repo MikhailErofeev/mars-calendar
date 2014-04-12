@@ -8,10 +8,10 @@ import sun.reflect.generics.reflectiveObjects.NotImplementedException;
  *
  */
 public class PlanetDateTime {
-    private DateTime timePoint;
-    private DateTime epoch;
-    private PlanetCalendar calendar;
-    private Duration solDuration;
+    private final DateTime timePoint;
+    private final DateTime epoch;
+    private final PlanetCalendar calendar;
+    private final Duration solDuration;
 
     private Integer year = null;
     private Integer monthNum = null; // from 1 ...
