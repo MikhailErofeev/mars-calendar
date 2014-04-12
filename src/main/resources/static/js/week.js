@@ -5,12 +5,13 @@
 var days = ["Solis", "Lunae", "Martis", "Mercurii", "Jovis", "Veneris", "Saturni"]
 function generateDaysAndScale() {
     var scale = $("<div class='scale'></div>");
-    scale.append("<div class='scale-row'>day</div>")
-    for (var i = 0; i < 25; i++) {
+    scale.append("<div class='scale-top'>day</div>")
+    for (var i = 0; i < 24; i++) {
         var hour = i != 0 ? i + ":00" : "";
         var hourEl = $("<div class='scale-row'>" + hour + "</div>");
         scale.append(hourEl)
     }
+    scale.append($("<div class='scale-row' style='height: 20px'>24:00</div>"))
     var $days = $("#days");
     $days.append(scale)
     for (var dayNumber = 0; dayNumber < 7; dayNumber++) {
