@@ -17,28 +17,35 @@ public class PlanetDateTime {
     private Integer monthNum = null; // from 1 ...
     private Integer day = null; // from 1 ...
     private Integer hour = null; // from 1 ...
+    @SuppressWarnings("UnusedDeclaration")
     private Integer minute = null; // from 1 ...
+    @SuppressWarnings("UnusedDeclaration")
     private Integer second = null; // from 1 ...
 
+    @SuppressWarnings("UnusedDeclaration")
     public PlanetDateTime() {
         this.timePoint = DateTime.now();
     }
 
+    @SuppressWarnings("UnusedDeclaration")
     public PlanetDateTime(DateTime timePoint) {
         this.timePoint = timePoint;
         this.epoch = new DateTime(0);
     }
 
+    @SuppressWarnings("UnusedDeclaration")
     public PlanetDateTime(DateTime timePoint, DateTime epoch) {
         this.timePoint = timePoint;
         this.epoch = epoch;
     }
 
+    @SuppressWarnings("UnusedDeclaration")
     public PlanetDateTime(long unixTimeStamp) {
         this.timePoint = new DateTime(unixTimeStamp);
         this.epoch = new DateTime(0);
     }
 
+    @SuppressWarnings("UnusedDeclaration")
     public PlanetDateTime(long unixTimeStamp, long epoch) {
         this.timePoint = new DateTime(unixTimeStamp);
         this.epoch = new DateTime(epoch);
@@ -51,10 +58,12 @@ public class PlanetDateTime {
         this.solDuration = solDuration;
     }
 
+    @SuppressWarnings("UnusedDeclaration")
     public Duration timeSinceEpoch() {
         return new Duration(epoch, timePoint);
     }
 
+    @SuppressWarnings("UnusedDeclaration")
     public DateTime toTerrestrial() {
         return timePoint;
     }
@@ -109,6 +118,7 @@ public class PlanetDateTime {
         return monthNum;
     }
 
+    @SuppressWarnings("UnusedDeclaration")
     public PlanetMonth getMonth() {
         return calendar.getMonths().get(getMonthNum() - 1);
     }
@@ -131,6 +141,7 @@ public class PlanetDateTime {
 
     }
 
+    @SuppressWarnings("UnusedDeclaration")
     public int getHour() {
         if (hour == null) {
             // calculate
