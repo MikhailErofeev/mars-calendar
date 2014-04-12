@@ -55,34 +55,37 @@ public class PlanetCalendar {
         return sols;
     }
 
-
-    //Deprecated - works with old leapYears field
-    /*
     public int extraSolsInYear(int year) {
         int sols = 0;
-        for (Map.Entry<Integer, Map<PlanetMonth, Integer>> leapYear : leapYears.entrySet()) {
-            if (year % leapYear.getKey() == 0) {
-                for (Map.Entry<PlanetMonth, Integer> extraDays : leapYear.getValue().entrySet()) {
-                    sols += extraDays.getValue();
-                }
-            }
+        for (Map.Entry<PlanetMonth, Integer> leapYear : leapPeriod.get(year % leapPeriod.size()).entrySet()) {
+            sols += leapYear.getKey().getNumSols();
         }
         return sols;
     }
 
+    /**
+     * returns the total number of sols in a specific year
+     * @param year
+     * @return
+     */
     public int solsInYear(int year) {
         return standardSolsInYear() + extraSolsInYear(year);
     }
 
-    public int solsInMonth(int year, int month) {
-        int sols = months.get(month).getNumSols();
-        for (Map.Entry<Integer, Map<PlanetMonth, Integer>> leapYear : leapYears.entrySet()) {
-            if (year % leapYear.getKey() == 0 && leapYear.getValue().containsKey(month)) {
-                sols += leapYear.getValue().get(month);
-            }
+    /**
+     * returns the total number of sols in a specific month
+     * @param year
+     * @param monthNum: the number of the month (starting from 0)
+     * @return
+     */
+    public int solsInMonth(int year, int monthNum) {
+        PlanetMonth month = months.get(monthNum);
+        int sols = month.getNumSols();
+        Map<PlanetMonth, Integer> leapYear = leapPeriod.get(year % leapPeriod.size());
+        if (leapYear.containsKey(month)) {
+            sols += leapYear.get(month);
         }
         return sols;
     }
-    */
 
 }
