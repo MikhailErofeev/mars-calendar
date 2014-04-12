@@ -11,7 +11,6 @@ function generateDaysAndScale() {
     }
     $("#days-table").find("thead").append(header);
     for (var hour = 0; hour < 25; hour++) {
-
         var row;
         if (hour == 24){
             row = $("<tr class='tr-hour' style='height: 20px;'></tr>");
