@@ -104,15 +104,24 @@ public class PlanetDateTime {
     public int getYear() {
         if (year == null) {
             // todo: optimization
-            year = 0;
-            MutableDateTime timePoint = new MutableDateTime(this.epoch);
-            while (timePoint.isBefore(this.timePoint)) {
+//            year = 0;
+//            MutableDateTime timePoint = new MutableDateTime(this.epoch);
+//            while (timePoint.isBefore(this.timePoint)) {
+//                ++year;
+//                timePoint.add(yearDuration(year));
+//            }
+            int solsSincePeriod = (int)(wholeSolsSinceEpoch() % (long)calendar.solsInLeapPeriod());
+            int periodsSinceEpoch = (int)(wholeSolsSinceEpoch() / (long)calendar.solsInLeapPeriod());
+            year = periodsSinceEpoch * calendar.getLeapPeriod().size();
+            int solsElapsed = 0;
+            // may need to be changed to 1 (instead of 0)
+            while (solsElapsed < solsSincePeriod) {
+                solsElapsed += calendar.solsInYear(0);
                 ++year;
-                timePoint.add(yearDuration(year));
             }
+            --year; // because we return the nearest PREVIOUS year, not the NEXT one (!!!)
         }
         return year;
-
     }
 
     /**
