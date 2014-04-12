@@ -43,8 +43,8 @@ public class PlanetCalendar {
         return weekSols;
     }
 
-    public Map<Integer, Map<PlanetMonth, Integer>> getLeapYears() {
-        return leapYears;
+    public List<Map<PlanetMonth, Integer>> getLeapPeriod() {
+        return leapPeriod;
     }
 
     public int standardSolsInYear() {
@@ -55,6 +55,9 @@ public class PlanetCalendar {
         return sols;
     }
 
+
+    //Deprecated - works with old leapYears field
+    /*
     public int extraSolsInYear(int year) {
         int sols = 0;
         for (Map.Entry<Integer, Map<PlanetMonth, Integer>> leapYear : leapYears.entrySet()) {
@@ -80,5 +83,6 @@ public class PlanetCalendar {
         }
         return sols;
     }
+    */
 
 }
