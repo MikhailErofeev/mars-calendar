@@ -2,6 +2,8 @@ package com.github.mikhailerofeev.mars.calendar.model.values;
 
 import org.joda.time.*;
 
+import java.util.Map;
+
 /**
  * Created by Anton on 11.04.2014.
  *
@@ -11,6 +13,8 @@ public class PlanetDateTime {
     private DateTime epoch;
     private PlanetCalendar calendar;
     private Duration solDuration;
+
+
 
     public PlanetDateTime() {
         this.timePoint = DateTime.now();
@@ -47,6 +51,8 @@ public class PlanetDateTime {
         return new Duration(epoch, timePoint);
     }
 
+    //public double planetEarthCoeff;
+
     public DateTime toTerrestrial() {
         return timePoint;
     }
@@ -63,7 +69,6 @@ public class PlanetDateTime {
     public Duration monthDuration(int year, int month) {
         return new Duration(solDuration.getMillis() * calendar.solsInMonth(year, month));
     }
-
     /**
      * returns the year in the natural form
      * @return
@@ -71,10 +76,10 @@ public class PlanetDateTime {
     public int getYear() {
         // todo: optimization
         int year = 0;
-        MutableDateTime timePoint = new MutableDateTime(this.epoch);
-        while (timePoint.isBefore(this.timePoint)) {
+        MutableDateTime timeStartPoint = new MutableDateTime(this.epoch);
+        while (timeStartPoint.isBefore(this.timePoint)) {
             ++year;
-            timePoint.add(yearDuration(year));
+            timeStartPoint.add(yearDuration(year));
         }
         return year;
     }
@@ -85,14 +90,14 @@ public class PlanetDateTime {
      */
     public int getMonthNum() {
         // todo: optimization
-        MutableDateTime timePoint = new MutableDateTime(this.epoch);
+        MutableDateTime timeStartPoint = new MutableDateTime(this.epoch);
         int year = getYear();
-        timePoint.add(yearDuration(year - 1));
+        timeStartPoint.add(yearDuration(year - 1));
         int month = 0;
         do {
-            timePoint.add(monthDuration(year, month));
+            timeStartPoint.add(monthDuration(year, month));
             ++month;
-        } while (timePoint.isBefore(this.timePoint));
+        } while (timeStartPoint.isBefore(this.timePoint));
         return month;
     }
 
@@ -102,21 +107,50 @@ public class PlanetDateTime {
 
     public int getDay() {
         // todo: optimization
-        MutableDateTime timePoint = new MutableDateTime(this.epoch);
+        MutableDateTime timeStartPoint = new MutableDateTime(this.epoch);
         int year = getYear() - 1;
-        timePoint.add(yearDuration(year));
-        timePoint.add(monthDuration(year, getMonthNum()));
+        timeStartPoint.add(yearDuration(year));
+        timeStartPoint.add(monthDuration(year, getMonthNum()));
         int day = 0;
-        while (timePoint.isBefore(this.timePoint)) {
+        while (timeStartPoint.isBefore(this.timePoint)) {
             ++day;
-            timePoint.add(solDuration);
+            timeStartPoint.add(solDuration);
         }
         return day;
     }
 
     public int getHour() {
         // todo: optimization
-        MutableDateTime timePoint = new MutableDateTime(this.epoch);
+        MutableDateTime timeStartPoint = new MutableDateTime(this.epoch);
+        int year = getYear() - 1;
+        timeStartPoint.add(yearDuration(year));
+        timeStartPoint.add(monthDuration(year, getMonthNum()));
+        timeStartPoint.add(solDuration.getMillis()*getDay());
 
+        int hour = 0;
+        while(timeStartPoint.isBefore(this.timePoint)){
+            ++hour;
+            timeStartPoint.add(60*60*1000);
+        }
+        return  hour;
     }
+
+    public int getMinute() {
+        // todo: optimization
+        MutableDateTime timeStartPoint = new MutableDateTime(this.epoch);
+        int year = getYear() - 1;
+        timeStartPoint.add(yearDuration(year));
+        timeStartPoint.add(monthDuration(year, getMonthNum()));
+        timeStartPoint.add(solDuration.getMillis()*getDay());
+        timeStartPoint.add(60*60*1000*getHour());
+
+        int minute = 0;
+        while(timeStartPoint.isBefore(this.timePoint)){
+            ++minute;
+            timeStartPoint.add(60*1000);
+        }
+        return minute;
+    }
+
+
 }
