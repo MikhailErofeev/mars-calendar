@@ -6,18 +6,11 @@ import org.joda.time.*;
  * Created by Anton on 11.04.2014.
  *
  */
-public final class PlanetDateTime {
+public class PlanetDateTime {
     private DateTime timePoint;
     private DateTime epoch;
     private PlanetCalendar calendar;
     private Duration solDuration;
-
-    private Integer year = null;
-    private Integer monthNum = null; // from 1 to ..
-    private Integer day = null; // from 1 to ..
-    private Integer hour = null; // from 1 to ..
-    private Integer minute = null; // from 1 to ..
-    private Integer second = null; // from 1 to ..
 
     public PlanetDateTime() {
         this.timePoint = DateTime.now();
