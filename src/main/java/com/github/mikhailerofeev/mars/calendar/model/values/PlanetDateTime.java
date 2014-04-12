@@ -7,21 +7,9 @@ import org.joda.time.*;
  *
  */
 public class PlanetDateTime {
-    /**
-     * the time point stored
-     */
     private DateTime timePoint;
-    /**
-     * point of reference
-     */
     private DateTime epoch;
-    /**
-     * calendar to use
-     */
     private PlanetCalendar calendar;
-    /**
-     * sol duration in milliseconds
-     */
     private Duration solDuration;
 
     public PlanetDateTime() {
@@ -46,6 +34,13 @@ public class PlanetDateTime {
     public PlanetDateTime(long unixTimeStamp, long epoch) {
         this.timePoint = new DateTime(unixTimeStamp);
         this.epoch = new DateTime(epoch);
+    }
+
+    public PlanetDateTime(DateTime timePoint, DateTime epoch, PlanetCalendar calendar, Duration solDuration) {
+        this.timePoint = timePoint;
+        this.epoch = epoch;
+        this.calendar = calendar;
+        this.solDuration = solDuration;
     }
 
     public Duration timeSinceEpoch() {

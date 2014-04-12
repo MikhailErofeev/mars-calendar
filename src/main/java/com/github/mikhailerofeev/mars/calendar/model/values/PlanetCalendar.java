@@ -30,10 +30,14 @@ public class PlanetCalendar {
     /**
      * If true, the week is restarted after the end of each month, otherwise isn't.
      */
-    private boolean weekRestart;
+    private boolean weekRestart = false;
 
-    // add contructor
-
+    public PlanetCalendar(List<PlanetMonth> months, List<String> weekSols, List<Map<PlanetMonth, Integer>> leapPeriod, boolean weekRestart) {
+        this.months = months;
+        this.weekSols = weekSols;
+        this.leapPeriod = leapPeriod;
+        this.weekRestart = weekRestart;
+    }
 
     public List<PlanetMonth> getMonths() {
         return months;
