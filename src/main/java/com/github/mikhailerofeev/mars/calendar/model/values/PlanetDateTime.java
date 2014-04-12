@@ -3,6 +3,8 @@ package com.github.mikhailerofeev.mars.calendar.model.values;
 import org.joda.time.*;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
+import java.util.Date;
+
 /**
  * Created by Anton on 11.04.2014.
  *
@@ -10,8 +12,8 @@ import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 public class PlanetDateTime {
     private final DateTime timePoint;
     private final DateTime epoch;
-    private final PlanetCalendar calendar;
-    private final Duration solDuration;
+    private PlanetCalendar calendar = null;
+    private Duration solDuration;
 
     private Integer year        = null;
     private Integer weekNum     = null;
@@ -25,7 +27,8 @@ public class PlanetDateTime {
 
     @SuppressWarnings("UnusedDeclaration")
     public PlanetDateTime() {
-        this.timePoint = DateTime.now();
+        this.timePoint  = DateTime.now();
+        this.epoch      = new DateTime(0);
     }
 
     @SuppressWarnings("UnusedDeclaration")
@@ -155,12 +158,28 @@ public class PlanetDateTime {
     }
 
     @SuppressWarnings("UnusedDeclaration")
-    public int getHour() {
+    public long getHour() {
         if (hour == null) {
-            // calculate
-            throw new NotImplementedException();
-        } else {
+            return durationSinceSolStart().getStandardHours();
+        }
+        else {
             return hour;
+        }
+    }
+
+    public long getMinute() {
+        if (minute == null)
+            return (durationSinceSolStart().getStandardMinutes() - durationSinceSolStart().getStandardHours() * 60);
+        else {
+            return minute;
+        }
+    }
+
+    public long getSecond() {
+        if (second == null)
+            return (durationSinceSolStart().getStandardSeconds() - durationSinceSolStart().getStandardHours() * 60 * 60);
+        else {
+            return second;
         }
     }
 
