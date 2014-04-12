@@ -1,5 +1,6 @@
 package com.github.mikhailerofeev.mars.calendar.model.values;
 
+import junit.framework.Assert;
 import org.joda.time.DateTime;
 import org.joda.time.Duration;
 import org.junit.Before;
@@ -74,6 +75,6 @@ public class PlanetDateTimeTest {
     @Test
     public void testZeroEpochZeroTime() throws Exception{
         PlanetDateTime marsZeroTime     = new PlanetDateTime(DateTime.now(),epochTime,CalInit(),new Duration(88642663));
-        System.out.println(marsZeroTime.getDay());
+        assertEquals(marsZeroTime.getYear(), 24);
     }
 }
