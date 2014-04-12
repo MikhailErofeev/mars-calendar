@@ -22,7 +22,7 @@ public class MarsDateTime {
     };
 
     private final long unixTimeStamp;
-    private final long epoch; // initialise
+    private final long epoch = 0; // initialise
 
     public MarsDateTime(final long unixTimeStamp) {
         this.unixTimeStamp = unixTimeStamp;
