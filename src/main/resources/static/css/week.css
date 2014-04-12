@@ -8,15 +8,13 @@ body {
 
 .scale-row {
     font-size: smaller;
-    height: 30px;
     text-align: right;
     background-color: #e7e7e7;
 }
 
 .scale-header {
-    height: 29px;
     text-align: center;
-    line-height: 29px;
+    line-height: 30px;
     background-color: #e7e7e7;
 }
 
@@ -38,7 +36,6 @@ body {
 .day-header {
     border-bottom: 1px solid #e7e7e7;
     border-left: 1px solid #e7e7e7;
-    height: 30px;
     line-height: 30px;
     text-align: center;
     font-weight: normal;

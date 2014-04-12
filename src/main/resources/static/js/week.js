@@ -10,8 +10,15 @@ function generateDaysAndScale() {
         header.append("<th class='day-header'>" + days[day] + "</th>");
     }
     $("#days-table").find("tbody").append(header);
-    for (var hour = 0; hour < 24; hour++) {
-        var row = $("<tr class='tr-hour'></tr>");
+    for (var hour = 0; hour < 25; hour++) {
+
+        var row;
+        if (hour == 24){
+            row = $("<tr class='tr-hour' style='height: 20px;'></tr>");
+        }else{
+            row = $("<tr class='tr-hour'></tr>");
+        }
+        
         var hourTxt = hour + ":00";
         row.append("<td class='scale-row'>" + hourTxt + "</td>")
         for (day = 0; day < 7; day++) {
