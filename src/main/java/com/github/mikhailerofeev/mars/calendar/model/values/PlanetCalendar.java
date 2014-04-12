@@ -16,6 +16,9 @@ public class PlanetCalendar {
      *  months with default number of days
      */
     private List<PlanetMonth> months;
+    /**
+     * weeksols' names
+     */
     private List<String> weekSols;
     /**
      * The first Integer is number of the year which is leap year.
@@ -23,24 +26,14 @@ public class PlanetCalendar {
      * the month contains in addition to the default number of days.
      * The PlanetMonth is the month which contains these days.
      */
-    private Map<Integer, Map<PlanetMonth, Integer>> leapYears;
+    private List<Map<PlanetMonth, Integer>> leapPeriod;
+    /**
+     * If true, the week is restarted after the end of each month, otherwise isn't.
+     */
+    private boolean weekRestart;
 
-    public PlanetCalendar(List<PlanetMonth> months) {
-        this.months = months;
-    }
+    // add contructor
 
-    public PlanetCalendar(List<PlanetMonth> months, Map<Integer, Map<PlanetMonth, Integer>> leapYears) {
-        this.months = months;
-        this.leapYears = leapYears;
-    }
-
-    public PlanetCalendar(List<PlanetMonth> months,
-                          Map<Integer, Map<PlanetMonth, Integer>> leapYears,
-                          List<String> weekSols) {
-        this.months = months;
-        this.weekSols = weekSols;
-        this.leapYears = leapYears;
-    }
 
     public List<PlanetMonth> getMonths() {
         return months;

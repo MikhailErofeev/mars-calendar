@@ -7,11 +7,22 @@ import org.joda.time.*;
  *
  */
 public class PlanetDateTime {
+    /**
+     * the time point stored
+     */
     private DateTime timePoint;
+    /**
+     * point of reference
+     */
     private DateTime epoch;
+    /**
+     * calendar to use
+     */
     private PlanetCalendar calendar;
+    /**
+     * sol duration in milliseconds
+     */
     private Duration solDuration;
-    //private Duration yearDuration;
 
     public PlanetDateTime() {
         this.timePoint = DateTime.now();
@@ -58,10 +69,14 @@ public class PlanetDateTime {
         return new Duration(solDuration.getMillis() * calendar.solsInMonth(year, month));
     }
 
+    /**
+     * returns the year in the natural form
+     * @return
+     */
     public int getYear() {
         // todo: optimization
         int year = 0;
-        MutableDateTime timePoint = new MutableDateTime(this.timePoint);
+        MutableDateTime timePoint = new MutableDateTime(this.epoch);
         while (timePoint.isBefore(this.timePoint)) {
             ++year;
             timePoint.add(yearDuration(year));
@@ -69,16 +84,20 @@ public class PlanetDateTime {
         return year;
     }
 
+    /**
+     * returns the the month number starting from 1
+     * @return
+     */
     public int getMonthNum() {
         // todo: optimization
-        MutableDateTime timePoint = new MutableDateTime(this.timePoint);
+        MutableDateTime timePoint = new MutableDateTime(this.epoch);
         int year = getYear();
         timePoint.add(yearDuration(year - 1));
         int month = 0;
-        while (timePoint.isBefore(this.timePoint)) {
+        do {
             timePoint.add(monthDuration(year, month));
             ++month;
-        }
+        } while (timePoint.isBefore(this.timePoint));
         return month;
     }
 
@@ -88,13 +107,21 @@ public class PlanetDateTime {
 
     public int getDay() {
         // todo: optimization
-        MutableDateTime timePoint = new MutableDateTime(this.timePoint);
-        int year = getYear();
-        timePoint.add(yearDuration(year - 1));
-        int month = 0;
+        MutableDateTime timePoint = new MutableDateTime(this.epoch);
+        int year = getYear() - 1;
+        timePoint.add(yearDuration(year));
+        timePoint.add(monthDuration(year, getMonthNum()));
+        int day = 0;
         while (timePoint.isBefore(this.timePoint)) {
-            timePoint.add(monthDuration(year, month));
+            ++day;
+            timePoint.add(solDuration);
         }
-        return month;
+        return day;
+    }
+
+    public int getHour() {
+        // todo: optimization
+        MutableDateTime timePoint = new MutableDateTime(this.epoch);
+
     }
 }
