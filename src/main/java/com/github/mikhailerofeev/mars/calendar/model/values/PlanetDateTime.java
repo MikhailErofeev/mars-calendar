@@ -2,8 +2,6 @@ package com.github.mikhailerofeev.mars.calendar.model.values;
 
 import org.joda.time.*;
 
-import java.util.Map;
-
 /**
  * Created by Anton on 11.04.2014.
  *
@@ -14,6 +12,12 @@ public class PlanetDateTime {
     private PlanetCalendar calendar;
     private Duration solDuration;
 
+    private Integer year = null;
+    private Integer monthNum = null; // from 1 ...
+    private Integer day = null; // from 1 ...
+    private Integer hour = null; // from 1 ...
+    private Integer minute = null; // from 1 ...
+    private Integer second = null; // from 1 ...
 
 
     public PlanetDateTime() {
@@ -51,8 +55,6 @@ public class PlanetDateTime {
         return new Duration(epoch, timePoint);
     }
 
-    //public double planetEarthCoeff;
-
     public DateTime toTerrestrial() {
         return timePoint;
     }
@@ -69,6 +71,7 @@ public class PlanetDateTime {
     public Duration monthDuration(int year, int month) {
         return new Duration(solDuration.getMillis() * calendar.solsInMonth(year, month));
     }
+
     /**
      * returns the year in the natural form
      * @return
@@ -76,10 +79,10 @@ public class PlanetDateTime {
     public int getYear() {
         // todo: optimization
         int year = 0;
-        MutableDateTime timeStartPoint = new MutableDateTime(this.epoch);
-        while (timeStartPoint.isBefore(this.timePoint)) {
+        MutableDateTime timePoint = new MutableDateTime(this.epoch);
+        while (timePoint.isBefore(this.timePoint)) {
             ++year;
-            timeStartPoint.add(yearDuration(year));
+            timePoint.add(yearDuration(year));
         }
         return year;
     }
@@ -90,14 +93,14 @@ public class PlanetDateTime {
      */
     public int getMonthNum() {
         // todo: optimization
-        MutableDateTime timeStartPoint = new MutableDateTime(this.epoch);
+        MutableDateTime timePoint = new MutableDateTime(this.epoch);
         int year = getYear();
-        timeStartPoint.add(yearDuration(year - 1));
+        timePoint.add(yearDuration(year - 1));
         int month = 0;
         do {
-            timeStartPoint.add(monthDuration(year, month));
+            timePoint.add(monthDuration(year, month));
             ++month;
-        } while (timeStartPoint.isBefore(this.timePoint));
+        } while (timePoint.isBefore(this.timePoint));
         return month;
     }
 
@@ -107,50 +110,21 @@ public class PlanetDateTime {
 
     public int getDay() {
         // todo: optimization
-        MutableDateTime timeStartPoint = new MutableDateTime(this.epoch);
+        MutableDateTime timePoint = new MutableDateTime(this.epoch);
         int year = getYear() - 1;
-        timeStartPoint.add(yearDuration(year));
-        timeStartPoint.add(monthDuration(year, getMonthNum()));
+        timePoint.add(yearDuration(year));
+        timePoint.add(monthDuration(year, getMonthNum()));
         int day = 0;
-        while (timeStartPoint.isBefore(this.timePoint)) {
+        while (timePoint.isBefore(this.timePoint)) {
             ++day;
-            timeStartPoint.add(solDuration);
+            timePoint.add(solDuration);
         }
         return day;
     }
 
     public int getHour() {
         // todo: optimization
-        MutableDateTime timeStartPoint = new MutableDateTime(this.epoch);
-        int year = getYear() - 1;
-        timeStartPoint.add(yearDuration(year));
-        timeStartPoint.add(monthDuration(year, getMonthNum()));
-        timeStartPoint.add(solDuration.getMillis()*getDay());
+        MutableDateTime timePoint = new MutableDateTime(this.epoch);
 
-        int hour = 0;
-        while(timeStartPoint.isBefore(this.timePoint)){
-            ++hour;
-            timeStartPoint.add(60*60*1000);
-        }
-        return  hour;
     }
-
-    public int getMinute() {
-        // todo: optimization
-        MutableDateTime timeStartPoint = new MutableDateTime(this.epoch);
-        int year = getYear() - 1;
-        timeStartPoint.add(yearDuration(year));
-        timeStartPoint.add(monthDuration(year, getMonthNum()));
-        timeStartPoint.add(solDuration.getMillis()*getDay());
-        timeStartPoint.add(60*60*1000*getHour());
-
-        int minute = 0;
-        while(timeStartPoint.isBefore(this.timePoint)){
-            ++minute;
-            timeStartPoint.add(60*1000);
-        }
-        return minute;
-    }
-
-
 }
