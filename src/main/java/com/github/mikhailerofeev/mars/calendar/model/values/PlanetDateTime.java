@@ -131,7 +131,7 @@ public class PlanetDateTime {
             monthNum = getMonthNum();
             timePoint.add(yearDuration(year));
             timePoint.add(monthDuration(year, monthNum));
-            day = 0;
+            day = 1;
             while (timePoint.isBefore(this.timePoint)) {
                 ++day;
                 timePoint.add(solDuration);

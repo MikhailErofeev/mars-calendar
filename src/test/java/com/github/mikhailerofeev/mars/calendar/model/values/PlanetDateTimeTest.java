@@ -73,7 +73,7 @@ public class PlanetDateTimeTest {
 
     @Test
     public void testZeroEpochZeroTime() throws Exception{
-        PlanetDateTime marsZeroTime     = new PlanetDateTime(zeroTime,epochTime,CalInit(),new Duration(88642663));
+        PlanetDateTime marsZeroTime     = new PlanetDateTime(DateTime.now(),epochTime,CalInit(),new Duration(88642663));
         System.out.println(marsZeroTime.getDay());
     }
 
