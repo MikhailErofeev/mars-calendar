@@ -14,31 +14,25 @@ function generateDaysAndScale() {
         for (var quarter = 0; quarter < 4; quarter++) {
             var row;
             if (hour == 24 && quarter == 3)
-                row = $("<tr class='hour' style='height: 5px;'></tr>");
+                row = $("<tr class='tr-hour' style='height: 5px;'></tr>");
             else
-                row = $("<tr class='hour'></tr>");
+                row = $("<tr class='tr-hour'></tr>");
 
-            var hourTxt = "";
-            if (quarter == 0)
+            if (quarter == 0) {
                 hourTxt = hour + ":00";
+                row.append("<td rowspan='4' class='scale-row'>" + hourTxt + "</td>")
+            } 
 
-            row.append("<td class='scale-row'>" + hourTxt + "</td>")
             for (day = 0; day < 7; day++) {
+                var $td = $("<td class='quarter'></td>");
+                if (quarter == 3) {
+                    $td.addClass("hour");
+                }
                 row.append(
-                        $("<td class='hour'></td>")
-                            .attr("hour", hour)
-                            .attr("day", day)
-                            .attr("quarter", quarter));
+                    $td.attr("hour", hour).attr("day", day).attr("quarter", quarter));
             }
             $("#days-table").find("tbody").append(row);
         }
-        
-        var hourTxt = hour + ":00";
-        row.append("<td class='scale-row'>" + hourTxt + "</td>")
-        for (day = 0; day < 7; day++) {
-            row.append("<td class='hour' hour=" + hour + " day=" + day + "></td>");
-        }
-        $("#days-table").find("tbody").append(row);
     }
 }
 $(document).ready(function () {

@@ -24,14 +24,17 @@ body {
     background-color: white;
 }
 
-tr.hour {
-    height: 10px;
+.tr-hour {
+    height: 7px;
+}
+
+.quarter{
+    width: 150px;
+    border-left: 1px solid #e7e7e7;
 }
 
 .hour {
-    width: 150px;
     border-bottom: 1px solid #e7e7e7;
-    border-left: 1px solid #e7e7e7;
 }
 
 .day-header {
