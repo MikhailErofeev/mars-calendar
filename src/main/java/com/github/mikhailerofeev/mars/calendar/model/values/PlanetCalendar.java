@@ -86,7 +86,7 @@ public class PlanetCalendar {
         PlanetMonth month = months.get(monthNum);
         int sols = month.getNumSols();
         Map<PlanetMonth, Integer> leapYear = leapPeriod.get(year % leapPeriod.size());
-        if (leapYear.containsKey(month)) {
+        if (!leapYear.isEmpty() && leapYear.containsKey(month)) {
             sols += leapYear.get(month);
         }
         return sols;
