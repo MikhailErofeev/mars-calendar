@@ -55,11 +55,17 @@
                     </ul>
                 </li>
                 <li class="left-offset right-offset right-bordered">
-                    <button type="button" class="btn btn-default navbar-btn" data-toggle="modal" data-target="#AddTask">Add task</button>
+                    <div class="btn-group btn-group-sm">
+                        <button type="button" class="btn btn-default navbar-btn" data-toggle="modal" data-target="#AddTask">Add task</button>
+                    </div>
                 </li>
-                <li class="left-offset border"><button type="button" class="btn btn-default navbar-btn active ">Today</button></li>
+                <li class="left-offset border">
+                    <div class="btn-group btn-group-sm">
+                        <button type="button" class="btn btn-default navbar-btn active ">Today</button>
+                    </div>
+                </li>
                 <li class="offsetted-btn right-offset">
-                    <div class="btn-group">
+                    <div class="btn-group btn-group-sm">
                         <button type="button" class="btn btn-default navbar-btn">
                             <span class="glyphicon glyphicon-chevron-left"></span></button>
                         <button type="button" class="btn btn-default navbar-btn">
@@ -67,8 +73,8 @@
                     </div>
                 </li>
                 <li class="left-offset left-bordered">
-                    <div class="btn-group">
-                        <button type="button" class="btn btn-default navbar-btn active">Week</button>
+                    <div class="btn-group btn-group-sm">
+                        <button type="button" class="btn btn-default navbar-btn">Week</button>
                         <button type="button" class="btn btn-default navbar-btn">Month</button>
                         <button type="button" class="btn btn-default navbar-btn">Year</button>
                     </div>
@@ -81,14 +87,9 @@
     </div><!-- /.container-->
 </div><!-- /.navbar -->
 
-<div class="container-fluid">
+<div class="container">
     <div class="row">
-        <div class="col-md-1 action-menu main-action-menu">
-            <div class="btn-group-vertical">
-                <button type="button" class="btn btn-default">Add task</button>
-            </div>
-        </div>
-        <div class="col-md-11 main-content-area">
+        <div class="col-md-12 main-content-area">
             <table id="days-table">
                 <thead></thead>
                 <tbody></tbody>
@@ -102,10 +103,23 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title">Modal title</h4>
+                <h4 class="modal-title">Add task</h4>
             </div>
             <div class="modal-body">
-                <p>One fine body&hellip;</p>
+                <form id="AddTaskForm" class="form-horizontal" role="form">
+                    <div class="form-group">
+                        <label for="TaskName" class="col-sm-2 control-label">Name</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="TaskName" placeholder="Name">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="TaskBeginDate" class="col-sm-2 control-label">Begin</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="TaskBeginDate" placeholder="Begin">
+                        </div>
+                    </div>
+                </form>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

@@ -11,11 +11,9 @@ body {
     width: 100%;
 }
 
-/* left action menu style */
-.action-menu {
-    position: fixed;
-    padding-top: 10px;
-    padding-left: 20px;
+.main-content-area {
+    padding-top: 5px;
+    padding-bottom: 10px;
 }
 
 .left-bordered {
@@ -40,4 +38,8 @@ body {
 
 .left-offset {
     padding-left: 5px;
+}
+
+.fixed-thead {
+    position: fixed;
 }

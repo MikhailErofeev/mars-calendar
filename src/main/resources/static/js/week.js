@@ -9,7 +9,7 @@ function generateDaysAndScale() {
     for (day = 0; day < 7; day++) {
         header.append("<th class='day-header'>" + days[day] + "</th>");
     }
-    $("#days-table").find("tbody").append(header);
+    $("#days-table").find("thead").append(header);
     for (var hour = 0; hour < 25; hour++) {
 
         var row;
@@ -22,7 +22,7 @@ function generateDaysAndScale() {
         var hourTxt = hour + ":00";
         row.append("<td class='scale-row'>" + hourTxt + "</td>")
         for (day = 0; day < 7; day++) {
-            row.append("<td class='hour'></td>");
+            row.append("<td class='hour' hour=" + hour + " day=" + day + "></td>");
         }
         $("#days-table").find("tbody").append(row);
     }
