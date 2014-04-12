@@ -32,7 +32,7 @@ public class MarsDateTime {
      * now
      */
     public MarsDateTime() {
-        unixTimeStamp = DateTime.now().getMillis();
+        unixTimeStamp = DateTime.now().getMillis(); 
     }
 
 
