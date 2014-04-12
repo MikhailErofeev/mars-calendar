@@ -6,41 +6,40 @@ body {
     background-color: #e7e7e7;
 }
 
-.day {
-    width: 150px;
-    border-right: 1px solid #e7e7e7;
-    float: left;
-    background-color: white;
-    
-}
-
-.scale {
-    width: 50px;
-    float: left;
-    background-color: white;
-}
-
 .scale-row {
-    font-size: small;
+    font-size: smaller;
     height: 30px;
     text-align: right;
+    background-color: #e7e7e7;
 }
 
-.scale-top {
+.scale-header {
     height: 29px;
     text-align: center;
     line-height: 29px;
+    background-color: #e7e7e7;
+}
+
+#days-table {
+    border-spacing: 0;
+    background-color: white;
+}
+
+.tr-hour {
+    height: 30px;
 }
 
 .hour {
-    /*background-color: lightcoral;*/
+    width: 150px;
     border-bottom: 1px solid #e7e7e7;
-    height: 30px;
+    border-left: 1px solid #e7e7e7;
 }
 
-.day-top {
-    border-bottom: 1px solid #bababa;
+.day-header {
+    border-bottom: 1px solid #e7e7e7;
+    border-left: 1px solid #e7e7e7;
     height: 30px;
     line-height: 30px;
     text-align: center;
+    font-weight: normal;
 }

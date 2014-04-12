@@ -4,26 +4,20 @@
  */
 var days = ["Solis", "Lunae", "Martis", "Mercurii", "Jovis", "Veneris", "Saturni"]
 function generateDaysAndScale() {
-    var scale = $("<div class='scale'></div>");
-    scale.append("<div class='scale-top'>day</div>")
-    for (var i = 0; i < 24; i++) {
-        var hour = i != 0 ? i + ":00" : "";
-        var hourEl = $("<div class='scale-row'>" + hour + "</div>");
-        scale.append(hourEl)
+    var header = $("<tr></tr>");
+    header.append("<th class='scale-header'></th>")
+    for (day = 0; day < 7; day++) {
+        header.append("<th class='day-header'>" + days[day] + "</th>");
     }
-    scale.append($("<div class='scale-row' style='height: 20px'>24:00</div>"))
-    var $days = $("#days");
-    $days.append(scale)
-    for (var dayNumber = 0; dayNumber < 7; dayNumber++) {
-        var day = $("<div class='day'></div>");
-        day.append("<div class='day-top'>" + days[dayNumber] + "</div>")
-        for (var i = 0; i < 24; i++) {
-            var hour = $("<div class='hour'></div>");
-            day.append(hour)
+    $("#days-table").find("tbody").append(header);
+    for (var hour = 0; hour < 24; hour++) {
+        var row = $("<tr class='tr-hour'></tr>");
+        var hourTxt = hour + ":00";
+        row.append("<td class='scale-row'>" + hourTxt + "</td>")
+        for (day = 0; day < 7; day++) {
+            row.append("<td class='hour'></td>");
         }
-        var hour = $("<div class='hour' style='height: 20px'></div>");
-        day.append(hour)
-        $days.append(day)
+        $("#days-table").find("tbody").append(row);
     }
 }
 $(document).ready(function () {
