@@ -39,7 +39,3 @@ body {
 .left-offset {
     padding-left: 5px;
 }
-
-.fixed-thead {
-    position: fixed;
-}
