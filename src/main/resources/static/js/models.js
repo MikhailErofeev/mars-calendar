@@ -12,12 +12,14 @@ var AppState = Backbone.Model.extend({
 var appState = new AppState();
 
 var Day = Backbone.Model.extend({
+    idAttribute: "dayOfWeekPos",
     defaults: {
         "name": "Monday",
         "planet": "Earth",
         "year": 1,
         "month": 1,
-        "day": 1
+        "day": 1,
+        dayOfWeekPos: 1
     }
 });
 
@@ -75,7 +77,8 @@ var Month = Backbone.Model.extend({
                     planet: planet.get("name"),
                     year: this.get("year"),
                     month: this.get("month"),
-                    day: i
+                    day: i,
+                    dayOfWeekPos: i % 7
                 });
                 week.add(day);
             }
@@ -123,27 +126,34 @@ function getSample() {
 
 
 function getPrevCurrentAndNextWeeks(original, alternative, year, month, startDay) {
-    var originMonth = getSample().get("current").get("origin");
+    var months = getSample();
+    var originMonth = months.get("current").get("origin");
     var weeks = originMonth.weeks();
     for (i = 0; i < weeks.length; i++) {
-        var ret = null
+        var weekNumber = null;
         weeks[i].each(function (day) {
             if (year == day.get("year") && day.get("month") == month && day.get("day") == startDay) {
-                ret = i;
+                weekNumber = i;
             }
         });
-        if (ret != null) {
-            if (ret == 0) {
-                var prevMonthWeeks = getSample().get("previous").get("origin").weeks();
-                var lastWeekOfPrevMonth = prevMonthWeeks[prevMonthWeeks.length];
-                return [lastWeekOfPrevMonth, weeks[ret], weeks[ret + 1]];
-            } else if (ret == weeks.length - 1) {
-                var nextMonthWeeks = getSample().get("next").get("origin").weeks();
+        if (weekNumber != null) {
+            console.log(weekNumber);
+            if (weekNumber == 1) {
+                var prevMonthWeeks = months.get("previous").get("origin").weeks();
+//                console.out(months.get("previous"));
+//                console.out(months.get("previous").get("origin"));
+//                console.out(prevMonthWeeks);
+                var lastWeekOfPrevMonth = prevMonthWeeks[prevMonthWeeks.length - 1];
+                return {"month": originMonth, "planet": getPlanetByName(originMonth.get("planet")),
+                    "weeks": [lastWeekOfPrevMonth, weeks[weekNumber], weeks[weekNumber + 1]]};
+            } else if (weekNumber == weeks.length - 1) {
+                var nextMonthWeeks = months.get("next").get("origin").weeks();
                 var firstWeekOfPrevMonth = nextMonthWeeks[0];
-                return [weeks[ret - 1], weeks[ret], firstWeekOfPrevMonth];
+                return {"month": originMonth, "planet": getPlanetByName(originMonth.get("planet")),
+                    "weeks": [weeks[weekNumber - 1], weeks[weekNumber], firstWeekOfPrevMonth]};
             } else {
                 return {"month": originMonth, "planet": getPlanetByName(originMonth.get("planet")),
-                    "weeks": [weeks[ret - 1], weeks[ret], weeks[ret + 1]]};
+                    "weeks": [weeks[weekNumber - 1], weeks[weekNumber], weeks[weekNumber + 1]]};
             }
         }
 

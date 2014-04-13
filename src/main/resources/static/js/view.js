@@ -6,6 +6,34 @@ var Main = Backbone.View.extend({
         this.model.bind('change', this.render, this);
     },
 
+    initLinks: function () {
+        $('#month-btn').attr('href', "#!/month/" + this.model.get("originalPlanet") +
+            "/" + this.model.get("year") + "/" + this.model.get("month"));
+
+        $('#year-btn').attr('href', "#!/month/" + this.model.get("originalPlanet") + "/" + this.model.get("year"));
+
+        $('#week-btn').attr('href', "#!/month/" + this.model.get("originalPlanet") + "/" + this.model.get("alternativePlanet") +
+            "/" + this.model.get("year") + "/" + this.model.get("month") + "/" + this.model.get("day"));
+
+        $('#today-btn').attr('href', "#!/month/" + this.model.get("originalPlanet") + "/" + this.model.get("alternativePlanet") +
+            "/" + this.model.get("year") + "/" + this.model.get("month") + "/" + this.model.get("day"));
+
+    },
+    initWeekLinks: function (monthPlanetAndWeeks) {
+        var year = monthPlanetAndWeeks.month.get("year");
+        var month = monthPlanetAndWeeks.month.get("month");
+        var lastWeekFirstDay = monthPlanetAndWeeks.weeks[0].get("0");
+        console.log(lastWeekFirstDay);
+        console.log(monthPlanetAndWeeks.weeks[0]);
+        console.log(monthPlanetAndWeeks.weeks[1]);
+        console.log(monthPlanetAndWeeks.weeks[2]);
+        var nextWeekFirstDay = monthPlanetAndWeeks.weeks[2].get("0");
+        this.initLinks();
+        $('#prev-week-btn').attr('href', "#!/month/" + this.model.get("originalPlanet") + "/" + this.model.get("alternativePlanet") +
+            "/" + this.model.get("year") + "/" + this.model.get("month") + "/" + lastWeekFirstDay.get("day"));
+        $('#next-week-btn').attr('href', "#!/month/" + this.model.get("originalPlanet") + "/" + this.model.get("alternativePlanet") +
+            "/" + this.model.get("year") + "/" + this.model.get("month") + "/" + nextWeekFirstDay.get("day"));
+    },
     render: function () {
         console.log(this.model.get("viewType"));
         if (this.model.get("viewType") == "month") {
@@ -15,8 +43,7 @@ var Main = Backbone.View.extend({
             var monthPlanetAndWeeks = getPrevCurrentAndNextWeeks(this.model.get("originalPlanet"), this.model.get("alternativePlanet"),
                 this.model.get("year"), this.model.get("month"), this.model.get("day"));
             var weekTable = generateWeekTable(monthPlanetAndWeeks);
-
-
+            this.initWeekLinks(monthPlanetAndWeeks);
             $("#main").html(weekTable);
 
             //---------- tasks tests -----------------------
