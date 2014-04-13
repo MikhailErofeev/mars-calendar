@@ -37,10 +37,10 @@ public class CalendarFactory {
             Map<PlanetMonth, Integer> leapMonths = new HashMap<PlanetMonth, Integer>();
             leapMonths.put(months.get(23), 1);
             List<Map<PlanetMonth, Integer>> leapPeriod = new ArrayList<Map<PlanetMonth, Integer>>(periodTime);
-            for (int i = 0; i < 6; ++i) {
+            for (int i = 0; i < leapYearsNum; ++i) {
                 leapPeriod.add(new HashMap(leapMonths));
             }
-            for (int i = 6; i < periodTime; ++i) {
+            for (int i = leapYearsNum; i < periodTime; ++i) {
                 leapPeriod.add(new HashMap());
             }
             PlanetCalendar planetCalendar = new PlanetCalendar(months, weekSols, leapPeriod, true);
