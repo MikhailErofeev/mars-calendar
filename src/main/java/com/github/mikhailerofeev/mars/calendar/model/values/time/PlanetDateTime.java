@@ -28,8 +28,9 @@ public class PlanetDateTime {
         this.solDuration = solDuration;
     }
 
-    public PlanetDateTime(DateTime epoch, int year, int monthOfYear, int solOfMonth, int hourOfSol, int minuteOfHour, int secondOfMinute) {
+    public PlanetDateTime(DateTime epoch, PlanetCalendar calendar, int year, int monthOfYear, int solOfMonth, int hourOfSol, int minuteOfHour, int secondOfMinute) {
         this.epoch = epoch;
+        this.calendar = calendar;
         this.year = year;
         this.monthOfYear = monthOfYear;
         this.solOfMonth = solOfMonth;
@@ -169,10 +170,10 @@ public class PlanetDateTime {
         }
         // secondOfMinute calculated
 
-        // kludges:
-        if (hourOfSol == solDuration.getStandardHours()) hourOfSol = 0;
-        if (minuteOfHour == 60) minuteOfHour = 0;
-        if (secondOfMinute == 60) secondOfMinute = 0;
+//        // kludges:
+//        if (hourOfSol == solDuration.getStandardHours()) hourOfSol = 0;
+//        if (minuteOfHour == 60) minuteOfHour = 0;
+//        if (secondOfMinute == 60) secondOfMinute = 0;
     }
 
     /**
@@ -242,4 +243,5 @@ public class PlanetDateTime {
         }
         return week;
     }
+
 }

@@ -27,11 +27,23 @@ public class PlanetCalendar {
      * If true, the week is restarted after the end of each month, otherwise isn't.
      */
     private boolean weekRestart = false;
+    /**
+     * the day the week starts with (1 & on)
+     */
+    private int weekStartDayNum = 1;
 
     public PlanetCalendar(List<PlanetMonth> months, List<String> weekSols, List<Map<PlanetMonth, Integer>> leapPeriod, boolean weekRestart) {
         this.months = months;
         this.weekSols = weekSols;
         this.leapPeriod = leapPeriod;
+        this.weekRestart = weekRestart;
+    }
+
+    public PlanetCalendar(List<PlanetMonth> months, List<String> weekSols, List<Map<PlanetMonth, Integer>> leapPeriod, int weekStartDayNum, boolean weekRestart) {
+        this.months = months;
+        this.weekSols = weekSols;
+        this.leapPeriod = leapPeriod;
+        this.weekStartDayNum = weekStartDayNum;
         this.weekRestart = weekRestart;
     }
 

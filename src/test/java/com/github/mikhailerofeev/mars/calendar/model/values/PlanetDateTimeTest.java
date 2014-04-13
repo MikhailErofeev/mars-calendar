@@ -93,8 +93,44 @@ public class PlanetDateTimeTest {
             System.out.println(marsZeroTime.getYear() + "/" + marsZeroTime.getMonthOfYear() + "/" + marsZeroTime.getSolOfMonth()
                     + ", " + marsZeroTime.getHourOfDay() + ":" + marsZeroTime.getMinuteOfHour() + ":" + marsZeroTime.getSecondOfMinute());
         }
+    }
 
+    @Test
+    public void testByMinutes() {
+        Duration solDuration = new Duration(88642663);
+        for (int j = -400; j < 300; ++j) {
+            timeToStore = DateTime.now().plus(new Duration(60000 * j));
+            PlanetDateTime marsZeroTime = new PlanetDateTime(timeToStore, epochToUse, calendar, solDuration);
+            assertEquals(marsZeroTime.getSolDuration().getStandardHours(), 24);
+            assertTrue(new Duration(86400000).isShorterThan(solDuration));
+            assertTrue(marsZeroTime.getCalendar().weekRestarts());
+            for (int i = 0; i < marsZeroTime.getCalendar().getMonths().size(); ++i) {
+                assertEquals(marsZeroTime.getCalendar().getMonths().get(i).getNumSols(), 27 + ((i + 1) % 6 == 0 ? 0 : 1));
+            }
+            assertEquals(marsZeroTime.getCalendar().getMonths().size(), 24);
+            //assertEquals(marsZeroTime.getYear(), 26);
+            System.out.println(marsZeroTime.getYear() + "/" + marsZeroTime.getMonthOfYear() + "/" + marsZeroTime.getSolOfMonth()
+                    + ", " + marsZeroTime.getHourOfDay() + ":" + marsZeroTime.getMinuteOfHour() + ":" + marsZeroTime.getSecondOfMinute());
+        }
+    }
 
+    @Test
+    public void testBySeconds() {
+        Duration solDuration = new Duration(88642663);
+        for (int j = -40000; j < 30000; ++j) {
+            timeToStore = DateTime.now().plus(new Duration(1000 * j));
+            PlanetDateTime marsZeroTime = new PlanetDateTime(timeToStore, epochToUse, calendar, solDuration);
+            assertEquals(marsZeroTime.getSolDuration().getStandardHours(), 24);
+            assertTrue(new Duration(86400000).isShorterThan(solDuration));
+            assertTrue(marsZeroTime.getCalendar().weekRestarts());
+            for (int i = 0; i < marsZeroTime.getCalendar().getMonths().size(); ++i) {
+                assertEquals(marsZeroTime.getCalendar().getMonths().get(i).getNumSols(), 27 + ((i + 1) % 6 == 0 ? 0 : 1));
+            }
+            assertEquals(marsZeroTime.getCalendar().getMonths().size(), 24);
+            //assertEquals(marsZeroTime.getYear(), 26);
+            System.out.println(marsZeroTime.getYear() + "/" + marsZeroTime.getMonthOfYear() + "/" + marsZeroTime.getSolOfMonth()
+                    + ", " + marsZeroTime.getHourOfDay() + ":" + marsZeroTime.getMinuteOfHour() + ":" + marsZeroTime.getSecondOfMinute());
+        }
     }
 
     @Test
@@ -102,8 +138,7 @@ public class PlanetDateTimeTest {
         DateTime greenwichZero = new DateTime(0, DateTimeZone.forOffsetHours(0));
         DateTimeZone moscowTimeZone = DateTimeZone.forOffsetHours(3);
         DateTime moscowZero = new DateTime(0, moscowTimeZone);
-        DateTime a = moscowZero;
-        assertEquals(a.getHourOfDay(), 3);
+        assertEquals(moscowZero.getHourOfDay(), 3);
         assertEquals(moscowZero.getMillis(), greenwichZero.getMillis());
 
         // input offset affects what the methods of DateTime will output ONLY
@@ -111,7 +146,7 @@ public class PlanetDateTimeTest {
 
         PlanetDateTime pdt = new PlanetDateTime(moscowZero, greenwichZero, calendar, new Duration(88642663));
         int hourOfDay = pdt.getHourOfDay();
-        assertEquals(hourOfDay, 3);
+        assertEquals(hourOfDay, 0);
 
     }
 }
