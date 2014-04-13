@@ -1,0 +1,5 @@
+{
+    "days-of-week": ["Solis", "Lunae", "Martis", "Mercurii", "Jovis", "Veneris", "Saturni"],
+    "months": [],
+    "new-month-new-week": true
+}
