@@ -1,3 +1,12 @@
+var AppState = {
+    originPlanet: "",
+    alternativePlanet: "",
+    type: "",
+    year: 0,
+    month: 0,
+    week: 0
+};
+
 $(document).ready(function () {
 //    function GetURLParameter(sParam) {
 //        var sPageURL = window.location.search.substring(1);

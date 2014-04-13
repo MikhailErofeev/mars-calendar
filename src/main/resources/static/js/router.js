@@ -8,15 +8,22 @@ var Controller = Backbone.Router.extend({
     routes: {"!/": "error" // Начальная страница
     },
     week: function (origin, alternative, year, month, day) {
-        console.log(origin, alternative, year, month, day);
+        AppState.originPlanet = origin;
+        AppState.alternativePlanet = alternative;
+        AppState.year = year;
+        AppState.month = month;
+        AppState.day = day;
     },
 
-    month: function (origin, year, mm) {
-        console.log(year, mm);
+    month: function (origin, year, month) {
+        AppState.originPlanet = origin;
+        AppState.year = year;
+        AppState.month = month;
     },
 
     year: function (origin, year) {
-        console.log(year);
+        AppState.originPlanet = origin;
+        AppState.year = year;
     },
 
     error: function () {
@@ -30,8 +37,8 @@ var Controller = Backbone.Router.extend({
         var router = this,
             routes = [
                 [ /^!\/week\/([a-z]+)\/([a-z]+)\/(\d+)\/(\d+)\/(\d+)$/, "week", this.week],
-                    [ /^!\/month\/([a-z]+)\/(\d+)\/(\d+)$/, "month", this.month],
-                    [ /^!\/year\/([a-z]+)\/(\d+)$/, "year", this.year]
+                [ /^!\/month\/([a-z]+)\/(\d+)\/(\d+)$/, "month", this.month],
+                [ /^!\/year\/([a-z]+)\/(\d+)$/, "year", this.year]
 //        "!/month/:year-:mm": "month",
 //        "!/year/:year": "year",
 //        "!/error": "error" ]// Блок ошибки
