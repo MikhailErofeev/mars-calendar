@@ -19,10 +19,8 @@ public class PlanetCalendar {
      */
     private List<String> weekSols;
     /**
-     * The first Integer is number of the year which is leap year.
-     * The second Integer is the number of extra days (if positive) or lacking days (if negative)
-     * the month contains in addition to the default number of days.
      * The PlanetMonth is the month which contains these days.
+     * The Integer is the number of extra days (if positive) or lacking days (if negative)
      */
     private List<Map<PlanetMonth, Integer>> leapPeriod;
     /**
