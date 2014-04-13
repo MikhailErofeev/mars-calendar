@@ -99,14 +99,19 @@ public class PlanetDateTimeTest {
 
     @Test
     public void testTimeZones(){
-        DateTimeZone dateTimeZone = DateTimeZone.forOffsetHours(0);
-        DateTime dateTime = new DateTime(0, dateTimeZone);
-        DateTime a = dateTime;
-        assertEquals(a.getHourOfDay(), 0);
+        DateTime greenwichZero = new DateTime(0, DateTimeZone.forOffsetHours(0));
+        DateTimeZone moscowTimeZone = DateTimeZone.forOffsetHours(3);
+        DateTime moscowZero = new DateTime(0, moscowTimeZone);
+        DateTime a = moscowZero;
+        assertEquals(a.getHourOfDay(), 3);
+        assertEquals(moscowZero.getMillis(), greenwichZero.getMillis());
 
-        PlanetDateTime pdt = new PlanetDateTime(dateTime, dateTime, null, new Duration(24*60*60*100));
+        // input offset affects what the methods of DateTime will output ONLY
+        // the time stamp stored in DateTime is the same everywhere
+
+        PlanetDateTime pdt = new PlanetDateTime(moscowZero, greenwichZero, calendar, new Duration(88642663));
         int hourOfDay = pdt.getHourOfDay();
-        assertEquals(pdt.getHourOfDay(), 0);
+        assertEquals(hourOfDay, 3);
 
     }
 }
