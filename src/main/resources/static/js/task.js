@@ -34,8 +34,8 @@ function Task(name, desc, begin, end, id, isOtherPlanetTime) {
         var beginCell = FindCell(table, this.begin);
         var endCell = FindCell(table, this.end);
 
-        if (beginCell.length == 0 || endCell.length == 0) return;
         this.isPartial = (this.begin.day != this.end.day);
+        if (!this.isPartial && (beginCell.length == 0 || endCell.length == 0)) return;
 
         var beginPosition = beginCell.offset();
         var endPosition = endCell.offset();
@@ -49,6 +49,8 @@ function Task(name, desc, begin, end, id, isOtherPlanetTime) {
             drawable.addClass('otherPlanetTime');
 
         if (this.isPartial) {
+            if (endPosition === undefined)
+                endPosition = { top: 0 };
             endPosition.top = table.height() + table.offset().top;
             drawable.addClass('partial-begin');
         }
@@ -65,6 +67,8 @@ function Task(name, desc, begin, end, id, isOtherPlanetTime) {
         if (!this.isPartial) return;
 
         beginCell = FindCell(table, new TaskTime(this.end.day, 0, 0));
+
+        if (beginCell.length == 0) return;
 
         beginPosition = beginCell.offset();
         endPosition = endCell.offset();
