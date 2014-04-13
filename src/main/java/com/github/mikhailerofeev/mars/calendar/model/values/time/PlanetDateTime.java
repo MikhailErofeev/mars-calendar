@@ -197,7 +197,7 @@ public class PlanetDateTime {
      *
      * @return month object (if you need month number use getMonthOfYear instead)
      */
-    public PlanetMonth getMonth() {
+    public PlanetMonth getMonthObject() {
         return calendar.getMonths().get(getMonthOfYear() - 1);
     }
 
@@ -216,12 +216,12 @@ public class PlanetDateTime {
         return hourOfSol;
     }
 
-    public long getMinuteOfHour() {
+    public int getMinuteOfHour() {
        if (minuteOfHour == null) calcTime();
        return minuteOfHour;
     }
 
-    public long getSecondOfMinute() {
+    public int getSecondOfMinute() {
         if (secondOfMinute == null) calcTime();
         return secondOfMinute;
     }

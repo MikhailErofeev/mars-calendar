@@ -105,6 +105,7 @@ public class PlanetDateTimeTest {
         assertEquals(a.getHourOfDay(), 0);
 
         PlanetDateTime pdt = new PlanetDateTime(dateTime, dateTime, null, new Duration(24*60*60*100));
+        int hourOfDay = pdt.getHourOfDay();
         assertEquals(pdt.getHourOfDay(), 0);
 
     }
