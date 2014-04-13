@@ -8,7 +8,7 @@ import java.util.*;
  * Created by Максим on 13.04.2014.
  */
 public class CalendarFactory {
-    static PlanetCalendar getPlanetCalendar(String name) {
+    public static PlanetCalendar getPlanetCalendar(String name) {
         if (name.toLowerCase().equals("mars")) {
             PlanetDateTime planetDT;
             String[] monthNames = {

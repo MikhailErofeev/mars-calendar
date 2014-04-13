@@ -1,7 +1,9 @@
 package com.github.mikhailerofeev.mars.calendar.rest.controllers;
 
 import com.github.mikhailerofeev.mars.calendar.model.services.UserService;
+import com.github.mikhailerofeev.mars.calendar.model.values.time.CalendarFactory;
 import com.github.mikhailerofeev.mars.calendar.model.values.time.LinkedMonth;
+import com.github.mikhailerofeev.mars.calendar.model.values.time.PlanetCalendar;
 import com.github.mikhailerofeev.mars.calendar.model.values.time.PlanetMonth;
 import com.github.mikhailerofeev.mars.calendar.rest.dto.Greeting;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,8 +35,27 @@ public class MonthController {
                                     @PathVariable int year,
                                     @PathVariable int month) {
       List<LinkedMonth> retVal = new ArrayList<LinkedMonth>();
+
+      int maxMonthCount;
+
+      if (originalPlanet.toLowerCase().equals("earth")) {
+          maxMonthCount = 12;
+      } else {
+          PlanetCalendar pc = CalendarFactory.getPlanetCalendar(originalPlanet.toLowerCase());
+          maxMonthCount = pc.getMonths().size();
+      }
+
       // month can be overcapped (month +1 > 12 months)
+      if(month == maxMonthCount){
+          month = 1;
+          year++;
+      }
+      else if (month == 1){
+          month = maxMonthCount;
+          year--;
+      }
       LinkedMonth currMonth = new LinkedMonth(originalPlanet, alternativePlanet, year, month);
+
       LinkedMonth prevMonth = new LinkedMonth(originalPlanet, alternativePlanet, year, month - 1);
       LinkedMonth nextMonth = new LinkedMonth(originalPlanet, alternativePlanet, year, month + 1);
 
