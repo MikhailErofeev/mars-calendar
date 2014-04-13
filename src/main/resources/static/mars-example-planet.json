@@ -5,5 +5,6 @@
         "Libra", "Tula", "Scorpius", "Vrishika"],
     "new-month-new-week": true,
     "hours": 24,
-    "minutes": 39
+    "minutes": 39,
+    "name": "Earth"
 }

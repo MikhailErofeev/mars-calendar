@@ -12,8 +12,13 @@ var Main = Backbone.View.extend({
             var monthTable = generateMonthWithNewWeekStart(29);
             $("#main").html(monthTable)
         } else if (this.model.get("viewType") == "week") {
+            var monthAndWeeks = getPrevCurrentAndNextWeeks(this.model.get("originalPlanet"), this.model.get("alternativePlanet"),
+                this.model.get("year"), this.model.get("month"), this.model.get("day"));
+            console.log(monthAndWeeks);
             var weekTable = generateWeekTable(24, 0, ["Su", "Mn", "Tu", "We", "Th", "Fr", "Sa"]);
-            $("#main").html(weekTable)
+
+
+            $("#main").html(weekTable);
 
             //---------- tasks tests -----------------------
             var tasks = [
