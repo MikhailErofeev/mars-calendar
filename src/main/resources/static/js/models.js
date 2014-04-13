@@ -142,7 +142,8 @@ function getPrevCurrentAndNextWeeks(original, alternative, year, month, startDay
                 var firstWeekOfPrevMonth = nextMonthWeeks[0];
                 return [weeks[ret - 1], weeks[ret], firstWeekOfPrevMonth];
             } else {
-                return {"month": originMonth, "weeks": [weeks[ret - 1], weeks[ret], weeks[ret + 1]]};
+                return {"month": originMonth, "planet": getPlanetByName(originMonth.get("planet")),
+                    "weeks": [weeks[ret - 1], weeks[ret], weeks[ret + 1]]};
             }
         }
 
