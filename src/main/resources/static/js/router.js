@@ -4,7 +4,14 @@
  */
 
 var Controller = Backbone.Router.extend({
-    routes: {},
+    routes: {
+        "": "week",
+        "!/": "week"
+    },
+
+    week: function () {
+        r.navigate('/week/mars/earth/2014/12/13', { trigger: true });
+    },
 
     week: function (origin, alternative, year, month, day) {
         appState.set({
@@ -38,22 +45,15 @@ var Controller = Backbone.Router.extend({
         console.log("error")
     },
 
-    initialize: function () {
-//        "": "start", 
-//        "!/": "start",
-//        "!/week1": "success", 
+    initialize: function () { 
         var router = this,
             routes = [
                 [ /^!\/week\/([a-z]+)\/([a-z]+)\/(\d+)\/(\d+)\/(\d+)\/?$/, "week", this.week],
                 [ /^!\/month\/([a-z]+)\/(\d+)\/(\d+)\/?$/, "month", this.month],
                 [ /^!\/year\/([a-z]+)\/(\d+)\/?$/, "year", this.year]
-//        "!/month/:year-:mm": "month",
-//        "!/year/:year": "year",
-//        "!/error": "error" ]
             ];
         _.each(routes, function (route) {
             router.route.apply(router, route);
-            // ^ Say it ten times fast
         });
     }
 });
