@@ -33,13 +33,16 @@ public class CalendarFactory {
             };
             List<String> weekSols = new ArrayList<String>(Arrays.asList(weekSolNames));
             int periodTime = 10;
+            int leapYearsNum = 6;
             Map<PlanetMonth, Integer> leapMonths = new HashMap<PlanetMonth, Integer>();
             leapMonths.put(months.get(23), 1);
             List<Map<PlanetMonth, Integer>> leapPeriod = new ArrayList<Map<PlanetMonth, Integer>>(periodTime);
             for (int i = 0; i < 6; ++i) {
                 leapPeriod.add(new HashMap(leapMonths));
             }
-
+            for (int i = 6; i < periodTime; ++i) {
+                leapPeriod.add(new HashMap());
+            }
             PlanetCalendar planetCalendar = new PlanetCalendar(months, weekSols, leapPeriod, true);
             return planetCalendar;
         } else throw new Exception("Planet not found");
