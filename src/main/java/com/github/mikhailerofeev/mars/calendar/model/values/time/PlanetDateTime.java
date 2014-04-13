@@ -1,7 +1,6 @@
 package com.github.mikhailerofeev.mars.calendar.model.values.time;
 
 import org.joda.time.*;
-import org.springframework.web.bind.MethodArgumentNotValidException;
 
 /**
  * Created by Anton on 11.04.2014.
@@ -14,40 +13,13 @@ public class PlanetDateTime {
     private Duration solDuration;
 
     private Integer year        = null;
-    private Integer monthNum    = null; // from 1 ...
-    private Integer sol         = null; // from 1 ...
-    private Integer hour        = null; // from 1 ...
-    private Integer minute      = null; // from 1 ...
-    private Integer second      = null; // from 1 ...
+    private Integer monthOfYear = null; // from 1 ...
+    private Integer solOfMonth = null; // from 1 ...
+    private Integer hourOfSol = null; // from 1 ...
+    private Integer minuteOfHour = null; // from 1 ...
+    private Integer secondOfMinute = null; // from 1 ...
     private Integer week        = null; // from 1 ...
 
-    @SuppressWarnings("UnusedDeclaration")
-    public PlanetDateTime() {
-        this.timePoint  = DateTime.now();
-        this.epoch      = new DateTime(0);
-    }
-
-    @SuppressWarnings("UnusedDeclaration")
-    public PlanetDateTime(DateTime timePoint) {
-        this.timePoint = timePoint;
-        this.epoch = new DateTime(0);
-    }
-
-    @SuppressWarnings("UnusedDeclaration")
-    public PlanetDateTime(DateTime timePoint, DateTime epoch) {
-        this.timePoint = timePoint;
-        this.epoch = epoch;
-    }
-
-    public PlanetDateTime(long unixTimeStamp) {
-        this.timePoint = new DateTime(unixTimeStamp);
-        this.epoch = new DateTime(0);
-    }
-
-    public PlanetDateTime(long unixTimeStamp, long epoch) {
-        this.timePoint = new DateTime(unixTimeStamp);
-        this.epoch = new DateTime(epoch);
-    }
 
     public PlanetDateTime(DateTime timePoint, DateTime epoch, PlanetCalendar calendar, Duration solDuration) {
         this.timePoint = timePoint;
@@ -56,14 +28,14 @@ public class PlanetDateTime {
         this.solDuration = solDuration;
     }
 
-    public PlanetDateTime(DateTime epoch, int year, int monthNum, int sol, int hour, int minute, int second) {
+    public PlanetDateTime(DateTime epoch, int year, int monthOfYear, int solOfMonth, int hourOfSol, int minuteOfHour, int secondOfMinute) {
         this.epoch = epoch;
         this.year = year;
-        this.monthNum = monthNum;
-        this.sol = sol;
-        this.hour = hour;
-        this.minute = minute;
-        this.second = second;
+        this.monthOfYear = monthOfYear;
+        this.solOfMonth = solOfMonth;
+        this.hourOfSol = hourOfSol;
+        this.minuteOfHour = minuteOfHour;
+        this.secondOfMinute = secondOfMinute;
         MutableDateTime mutableTimePoint = new MutableDateTime(epoch);
         mutableTimePoint.add(calendar.solsInLeapPeriod() * solDuration.getMillis());
         int yearsUntilCurrentCalc = year - (year % calendar.getLeapPeriod().size());
@@ -72,19 +44,19 @@ public class PlanetDateTime {
             ++yearsUntilCurrentCalc;
         }
         --yearsUntilCurrentCalc;
-        for (int currentMonth = 0; currentMonth < monthNum - 1; ++currentMonth) {
-            mutableTimePoint.add(calendar.solsInMonth(yearsUntilCurrentCalc, monthNum) * solDuration.getMillis());
+        for (int currentMonth = 0; currentMonth < monthOfYear - 1; ++currentMonth) {
+            mutableTimePoint.add(calendar.solsInMonth(yearsUntilCurrentCalc, monthOfYear) * solDuration.getMillis());
         }
-        for (int currentSol = 0; currentSol < sol - 1; ++currentSol) {
+        for (int currentSol = 0; currentSol < solOfMonth - 1; ++currentSol) {
             mutableTimePoint.add(solDuration.getMillis());
         }
-        for (int currentHour = 0; currentHour < hour; ++currentHour) {
+        for (int currentHour = 0; currentHour < hourOfSol; ++currentHour) {
             mutableTimePoint.add(3600000);
         }
-        for (int currentMinute = 0; currentMinute < minute; ++currentMinute) {
+        for (int currentMinute = 0; currentMinute < minuteOfHour; ++currentMinute) {
             mutableTimePoint.add(60000);
         }
-        for (int currentSecond = 0; currentSecond < second; ++currentSecond) {
+        for (int currentSecond = 0; currentSecond < secondOfMinute; ++currentSecond) {
             mutableTimePoint.add(1000);
         }
         timePoint = new DateTime(mutableTimePoint);
@@ -153,54 +125,54 @@ public class PlanetDateTime {
         solsElapsedUntilCurrentCalc -= calendar.solsInYear(year - 1);
         //--year; // because we return the nearest PREVIOUS year, not the NEXT one (!!!)
         // -- by now, the year is supposed to be calculated -- //
-        monthNum = 0;
+        monthOfYear = 0;
         while (solsElapsedUntilCurrentCalc <= wholeSolsSinceEpoch) {
             // we use the month starting from zero here as it accesses the list
-            solsElapsedUntilCurrentCalc += calendar.solsInMonth(year, monthNum);
-            ++monthNum;
+            solsElapsedUntilCurrentCalc += calendar.solsInMonth(year, monthOfYear);
+            ++monthOfYear;
         }
-        solsElapsedUntilCurrentCalc -= calendar.solsInMonth(year, monthNum);
-        // no need to decrement sol because it should start from 0 (!!!)
+        solsElapsedUntilCurrentCalc -= calendar.solsInMonth(year, monthOfYear);
+        // no need to decrement solOfMonth because it should start from 0 (!!!)
         // -- by now, we have month -- //
-        sol = 0;
+        solOfMonth = 0;
         while (solsElapsedUntilCurrentCalc < wholeSolsSinceEpoch) {
-            ++sol;
+            ++solOfMonth;
             ++solsElapsedUntilCurrentCalc;
         }
-        ++sol; // because it should start from 1
-        // sol calculated
+        ++solOfMonth; // because it should start from 1
+        // solOfMonth calculated
 
         long hoursElapsedUntilCurrentCalc = solsElapsedUntilCurrentCalc * solDuration.getMillis() / 3600000;
         long totalHoursElapsed = timeSinceEpoch().getStandardHours();
-        hour = 0;
+        hourOfSol = 0;
         while (hoursElapsedUntilCurrentCalc < totalHoursElapsed) {
             ++hoursElapsedUntilCurrentCalc;
-            ++hour;
+            ++hourOfSol;
         }
-        // hour calculated
+        // hourOfSol calculated
 
         long minutesElapsedUntilCurrentCalc = hoursElapsedUntilCurrentCalc * 60;
         long totalMinutesElapsed = timeSinceEpoch().getStandardMinutes();
-        minute = 0;
+        minuteOfHour = 0;
         while (minutesElapsedUntilCurrentCalc < totalMinutesElapsed) {
             ++minutesElapsedUntilCurrentCalc;
-            ++minute;
+            ++minuteOfHour;
         }
-        // minute calculated
+        // minuteOfHour calculated
 
         long secondsElapsedUntilCurrentCalc = minutesElapsedUntilCurrentCalc * 60;
         long totalSecondsElapsed = timeSinceEpoch().getStandardSeconds();
-        second = 0;
+        secondOfMinute = 0;
         while (secondsElapsedUntilCurrentCalc < totalSecondsElapsed) {
             ++secondsElapsedUntilCurrentCalc;
-            ++second;
+            ++secondOfMinute;
         }
-        // second calculated
+        // secondOfMinute calculated
 
         // kludges:
-        if (hour == solDuration.getStandardHours()) hour = 0;
-        if (minute == 60) minute = 0;
-        if (second == 60) second = 0;
+        if (hourOfSol == solDuration.getStandardHours()) hourOfSol = 0;
+        if (minuteOfHour == 60) minuteOfHour = 0;
+        if (secondOfMinute == 60) secondOfMinute = 0;
     }
 
     /**
@@ -216,42 +188,42 @@ public class PlanetDateTime {
      *
      * @return month number starting from 1
      */
-    public int getMonthNum() {
-        if (monthNum == null) calcTime();
-        return monthNum;
+    public int getMonthOfYear() {
+        if (monthOfYear == null) calcTime();
+        return monthOfYear;
     }
 
     /**
      *
-     * @return month object (if you need month number use getMonthNum instead)
+     * @return month object (if you need month number use getMonthOfYear instead)
      */
     public PlanetMonth getMonth() {
-        return calendar.getMonths().get(getMonthNum() - 1);
+        return calendar.getMonths().get(getMonthOfYear() - 1);
     }
 
     /**
      *
-     * @return sol number starting with 1
+     * @return solOfMonth number starting with 1
      */
-    public int getSol() {
-        if (sol == null) calcTime();
-        return sol;
+    public int getSolOfMonth() {
+        if (solOfMonth == null) calcTime();
+        return solOfMonth;
     }
 
     @SuppressWarnings("UnusedDeclaration")
-    public long getHour() {
-        if (hour == null) calcTime();
-        return hour;
+    public int getHourOfDay() {
+        if (hourOfSol == null) calcTime();
+        return hourOfSol;
     }
 
-    public long getMinute() {
-       if (minute == null) calcTime();
-       return minute;
+    public long getMinuteOfHour() {
+       if (minuteOfHour == null) calcTime();
+       return minuteOfHour;
     }
 
-    public long getSecond() {
-        if (second == null) calcTime();
-        return second;
+    public long getSecondOfMinute() {
+        if (secondOfMinute == null) calcTime();
+        return secondOfMinute;
     }
 
     /**
@@ -261,9 +233,9 @@ public class PlanetDateTime {
     public int getWeek(){
         if (week == null) {
             if (calendar.weekRestarts()) {
-                // we use sol minus one because getSol returns the number of the sol for normal humans
+                // we use solOfMonth minus one because getSolOfMonth returns the number of the solOfMonth for normal humans
                 // (i.e. starting from 1)
-                week = (getSol() - 1) / calendar.getWeekSols().size() + 1;
+                week = (getSolOfMonth() - 1) / calendar.getWeekSols().size() + 1;
             } else {
                 week = (int)(wholeSolsSinceEpoch() / calendar.getWeekSols().size() + 1);
             }

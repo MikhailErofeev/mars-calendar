@@ -28,7 +28,7 @@ public class LinkedMonth {
             DateTime catchedDateTime = new DateTime(year, month, 1, 0, 0);
             DateTime defaulEpoch = EpochFactory.getDefaultEpoch();
 
-            pdt = new PlanetDateTime(catchedDateTime, defaulEpoch);
+//            pdt = new PlanetDateTime(catchedDateTime, defaulEpoch);
             DateTime dt = new DateTime(0).plus(pdt.timeSinceEpoch());
             //mr. = dt.monthOfYear();
             //todo -implement to earth conversion
@@ -41,8 +41,8 @@ public class LinkedMonth {
             pdt = new PlanetDateTime(catchedDateTime, defaulEpoch, pc, solDuration);
 
             mr.year = pdt.getYear();
-            mr.days = pdt.getSol();
-            mr.month = pdt.getMonthNum();
+            mr.days = pdt.getSolOfMonth();
+            mr.month = pdt.getMonthOfYear();
         }
 
         return mr;

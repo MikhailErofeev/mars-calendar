@@ -4,6 +4,7 @@ import com.github.mikhailerofeev.mars.calendar.model.values.time.PlanetCalendar;
 import com.github.mikhailerofeev.mars.calendar.model.values.time.PlanetDateTime;
 import com.github.mikhailerofeev.mars.calendar.model.values.time.PlanetMonth;
 import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
 import org.joda.time.Duration;
 import org.junit.Before;
 import org.junit.Test;
@@ -89,10 +90,22 @@ public class PlanetDateTimeTest {
             }
             assertEquals(marsZeroTime.getCalendar().getMonths().size(), 24);
             //assertEquals(marsZeroTime.getYear(), 26);
-            System.out.println(marsZeroTime.getYear() + "/" + marsZeroTime.getMonthNum() + "/" + marsZeroTime.getSol()
-                    + ", " + marsZeroTime.getHour() + ":" + marsZeroTime.getMinute() + ":" + marsZeroTime.getSecond());
+            System.out.println(marsZeroTime.getYear() + "/" + marsZeroTime.getMonthOfYear() + "/" + marsZeroTime.getSolOfMonth()
+                    + ", " + marsZeroTime.getHourOfDay() + ":" + marsZeroTime.getMinuteOfHour() + ":" + marsZeroTime.getSecondOfMinute());
         }
 
+
+    }
+
+    @Test
+    public void testTimeZones(){
+        DateTimeZone dateTimeZone = DateTimeZone.forOffsetHours(0);
+        DateTime dateTime = new DateTime(0, dateTimeZone);
+        DateTime a = dateTime;
+        assertEquals(a.getHourOfDay(), 0);
+
+        PlanetDateTime pdt = new PlanetDateTime(dateTime, dateTime, null, new Duration(24*60*60*100));
+        assertEquals(pdt.getHourOfDay(), 0);
 
     }
 }
