@@ -3,36 +3,42 @@
  * @since 12.04.14
  */
 var days = ["Solis", "Lunae", "Martis", "Mercurii", "Jovis", "Veneris", "Saturni"]
-function generateDaysAndScale(planetHours, planetMinutes) {
-    var header = $("<tr></tr>");
-    header.append("<th class='scale-header'></th>")
+function generateWeekTable(planetHours, planetMinutes, days) {
+    var $table = $("<table id='days-table'/>");
+    var tHead = $("<thead/>");
+    var trHeader = $("<tr/>");
+    tHead.append(trHeader);
+    trHeader.append("<th class='scale-header'></th>")
     for (day = 0; day < 7; day++) {
-        header.append("<th class='day-header'>" + days[day] + "</th>");
+        year = "0000";
+        month = "00";
+        dayHeader = days[day] + " <br/>" + [year,month,day+1].join("-");
+        trHeader.append("<th class='day-header'>" +dayHeader +  "</th>");
     }
-    $("#days-table").find("thead").append(header);
-    ;
+    $table.append(tHead);
     var planetQuarters = Math.ceil((planetHours * 60 + planetMinutes) / 15.0);
-    console.log(planetQuarters)
+    $body = $("<tbody/>");
     for (var quarter = 0; quarter < planetQuarters; quarter++) {
-        hour = quarter / 4;
-        var row = $("<tr class='tr-hour'></tr>");
+        var hour = quarter / 4;
+        var row = $("<tr class='tr-hour'/>");
         if (quarter % 4 == 0) {
-            hourTxt = hour + ":00";
-            row.append("<td rowspan='4' class='scale-row'>" + hourTxt + "</td>")
+            row.append("<td rowspan='4' class='scale-row'>" + (hour + ":00") + "</td>")
         }
-
-        for (day = 0; day < 7; day++) {
+        for (var day = 0; day < 7; day++) {
             var $td = $("<td class='quarter'></td>");
             if (quarter % 4 == 3) {
                 $td.addClass("hour");
             }
-            row.append(
-                $td.attr("hour", hour).attr("day", day).attr("quarter", quarter % 4));
+            row.append($td.attr("hour", hour).attr("day", day).attr("quarter", quarter % 4));
         }
-        $("#days-table").find("tbody").append(row);
+        $body.append(row);
     }
+    $table.append($body);
+    return $table;
 }
 $(document).ready(function () {
-//    generateDaysAndScale(24, 0);
-    generateDaysAndScale(24, 37);
+//    generateWeekTable(24, 0);
+//    var weekTable = generateWeekTable(24, 37, days);
+    var weekTable = generateWeekTable(24, 0, ["Su", "Mn", "Tu", "We", "Th", "Fr", "Sa"]);
+    $("#main").html(weekTable)
 });
