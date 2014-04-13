@@ -117,7 +117,7 @@ public class PlanetDateTime {
         long solsInLeapPeriod = calendar.solsInLeapPeriod();
         int periodsSinceEpoch = (int)(wholeSolsSinceEpoch / solsInLeapPeriod);
         year = periodsSinceEpoch * calendar.getLeapPeriod().size();
-        long solsElapsedUntilCurrentCalc = periodsSinceEpoch * calendar.solsInLeapPeriod();
+        long solsElapsedUntilCurrentCalc = periodsSinceEpoch * solsInLeapPeriod;
         // may need to be changed to 1 (instead of 0)
         while (solsElapsedUntilCurrentCalc <= wholeSolsSinceEpoch) {
             solsElapsedUntilCurrentCalc += calendar.solsInYear(year);
@@ -127,26 +127,24 @@ public class PlanetDateTime {
         //--year; // because we return the nearest PREVIOUS year, not the NEXT one (!!!)
         // -- by now, the year is supposed to be calculated -- //
         monthOfYear = 0;
-        while (solsElapsedUntilCurrentCalc <= wholeSolsSinceEpoch) {
-            // we use the month starting from zero here as it accesses the list
+        while (solsElapsedUntilCurrentCalc <= wholeSolsSinceEpoch) { // <= -> <
             solsElapsedUntilCurrentCalc += calendar.solsInMonth(year, monthOfYear);
             ++monthOfYear;
         }
         solsElapsedUntilCurrentCalc -= calendar.solsInMonth(year, monthOfYear);
         // no need to decrement solOfMonth because it should start from 0 (!!!)
         // -- by now, we have month -- //
-        solOfMonth = 0;
+        solOfMonth = 1; // because it should start from 1
         while (solsElapsedUntilCurrentCalc < wholeSolsSinceEpoch) {
             ++solOfMonth;
             ++solsElapsedUntilCurrentCalc;
         }
-        ++solOfMonth; // because it should start from 1
         // solOfMonth calculated
 
         long secondsElapsedUntilCurrentCalc = solsElapsedUntilCurrentCalc * solDuration.getMillis() / 1000;
         long totalSecondsElapsed = timeSinceEpoch().getStandardSeconds();
         hourOfSol = 0;
-        while (secondsElapsedUntilCurrentCalc < totalSecondsElapsed) {
+        while (secondsElapsedUntilCurrentCalc <= totalSecondsElapsed) {
             secondsElapsedUntilCurrentCalc += 3600;
             ++hourOfSol;
         }
@@ -155,7 +153,7 @@ public class PlanetDateTime {
         // hourOfSol calculated
 
         minuteOfHour = 0;
-        while (secondsElapsedUntilCurrentCalc < totalSecondsElapsed) {
+        while (secondsElapsedUntilCurrentCalc <= totalSecondsElapsed) {
             secondsElapsedUntilCurrentCalc += 60;
             ++minuteOfHour;
         }
@@ -164,7 +162,7 @@ public class PlanetDateTime {
         // minuteOfHour calculated
 
         secondOfMinute = 0;
-        while (secondsElapsedUntilCurrentCalc < totalSecondsElapsed) {
+        while (secondsElapsedUntilCurrentCalc <= totalSecondsElapsed) {
             ++secondsElapsedUntilCurrentCalc;
             ++secondOfMinute;
         }
