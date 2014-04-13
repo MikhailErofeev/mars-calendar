@@ -136,8 +136,25 @@ public class PlanetDateTimeTest {
     @Test
     public void testByDays() {
         Duration solDuration = new Duration(88642663);
-        for (int j = 0; j < 500; ++j) {
+        String control = "";
+        int j = 0;
+        for (; !control.equals(new String("2327")); ++j) {
             timeToStore = DateTime.now().plus(new Duration(solDuration.getMillis() * j));
+            PlanetDateTime marsZeroTime = new PlanetDateTime(timeToStore, epochToUse, calendar, solDuration);
+            assertEquals(marsZeroTime.getSolDuration().getStandardHours(), 24);
+            assertTrue(new Duration(86400000).isShorterThan(solDuration));
+            assertTrue(marsZeroTime.getCalendar().weekRestarts());
+            for (int i = 0; i < marsZeroTime.getCalendar().getMonths().size(); ++i) {
+                assertEquals(marsZeroTime.getCalendar().getMonths().get(i).getNumSols(), 27 + ((i + 1) % 6 == 0 ? 0 : 1));
+            }
+            assertEquals(marsZeroTime.getCalendar().getMonths().size(), 24);
+            //assertEquals(marsZeroTime.getYear(), 26);
+            System.out.println(marsZeroTime.getYear() + "/" + marsZeroTime.getMonthOfYear() + "/" + marsZeroTime.getSolOfMonth()
+            + ", " + marsZeroTime.getHourOfDay() + ":" + marsZeroTime.getMinuteOfHour() + ":" + marsZeroTime.getSecondOfMinute());
+        control = "" + new Integer(marsZeroTime.getMonthOfYear()) + new Integer(marsZeroTime.getSolOfMonth());
+        }
+        for (; j < 300000; ++j) {
+            timeToStore = timeToStore.plus(new Duration(1000));
             PlanetDateTime marsZeroTime = new PlanetDateTime(timeToStore, epochToUse, calendar, solDuration);
             assertEquals(marsZeroTime.getSolDuration().getStandardHours(), 24);
             assertTrue(new Duration(86400000).isShorterThan(solDuration));

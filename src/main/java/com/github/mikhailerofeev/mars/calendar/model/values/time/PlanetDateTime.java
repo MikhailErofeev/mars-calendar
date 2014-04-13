@@ -162,12 +162,11 @@ public class PlanetDateTime {
         // minuteOfHour calculated
 
         secondOfMinute = 0;
-        while (secondsElapsedUntilCurrentCalc <= totalSecondsElapsed) {
+        while (secondsElapsedUntilCurrentCalc < totalSecondsElapsed) {
             ++secondsElapsedUntilCurrentCalc;
             ++secondOfMinute;
         }
-        --secondsElapsedUntilCurrentCalc;
-        --secondOfMinute;
+
         // secondOfMinute calculated
 
 //        // kludges:
