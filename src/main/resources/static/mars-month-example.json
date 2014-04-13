@@ -8,7 +8,7 @@
     },
     "current": {
         "origin":{
-            "planet": "mars",
+            "planetName": "earth",
             "name": "dec",
             "timestamp": 1397370690758,
             "year": 1014,
@@ -16,7 +16,7 @@
             "days": 31
         },
         "alternative":{
-            "alternative": "earth",
+            "planetName": "mars",
             "name": "dec",
             "timestamp": 1397370690758,
             "year": 1014,

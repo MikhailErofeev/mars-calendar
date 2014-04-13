@@ -1,24 +1,50 @@
 package com.github.mikhailerofeev.mars.calendar.model.values.time;
 
 import org.joda.time.DateTime;
+import org.joda.time.Duration;
 
 /**
  * Created by Максим on 13.04.2014.
  */
 public class LinkedMonth {
-    public PlanetMonth origin      = null;
-    public PlanetMonth alternative = null;
+    public MonthReply origin = null;
+    public MonthReply alternative = null;
 
-    LinkedMonth(String planet, int year, int month){
+    public LinkedMonth(String originalPlanet, String alternativePlanet, int year, int month) {
+        originalPlanet = originalPlanet.toLowerCase();
+        alternativePlanet = alternativePlanet.toLowerCase();
+
+        origin = getMonthReply(originalPlanet, year, month);
+        alternative = getMonthReply(alternativePlanet, year, month);
+    }
+
+    MonthReply getMonthReply(String planet, int year, int month) {
         PlanetDateTime pdt = null;
-        try {
-            pdt = new PlanetDateTime(new DateTime(year, month, 1, 0, 0), EpochFactory.getDefaultEpoch(), CalendarFactory.getPlanetCalendar(planet.toLowerCase()),SolDurationFactory.getSolDuration(planet.toLowerCase()));
-        } catch (Exception e) {
-            e.printStackTrace();
+        MonthReply  mr = null;
+        mr.name = planet;
+
+
+        if (planet.equals("earth")) {
+            DateTime catchedDateTime = new DateTime(year, month, 1, 0, 0);
+            DateTime defaulEpoch = EpochFactory.getDefaultEpoch();
+
+            pdt = new PlanetDateTime(catchedDateTime, defaulEpoch);
+            DateTime dt = new DateTime(0).plus(pdt.timeSinceEpoch());
+            //mr. = dt.monthOfYear();
+            //todo -implement to earth conversion
+        } else {
+            DateTime catchedDateTime = new DateTime(year, month, 1, 0, 0);
+            DateTime defaulEpoch = EpochFactory.getDefaultEpoch();
+            PlanetCalendar pc = CalendarFactory.getPlanetCalendar(planet);
+            Duration solDuration = SolDurationFactory.getSolDuration(planet);
+
+            pdt = new PlanetDateTime(catchedDateTime, defaulEpoch, pc, solDuration);
+
+            mr.year = pdt.getYear();
+            mr.days = pdt.getSol();
+            mr.month = pdt.getMonthNum();
         }
 
-        assert pdt != null;
-        origin = pdt.getMonth();
-
+        return mr;
     }
 }

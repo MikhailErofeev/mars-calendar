@@ -8,8 +8,8 @@ import java.util.*;
  * Created by Максим on 13.04.2014.
  */
 public class CalendarFactory {
-    static PlanetCalendar getPlanetCalendar(String name) throws Exception {
-        if (name == "mars") {
+    static PlanetCalendar getPlanetCalendar(String name) {
+        if (name.toLowerCase().equals("mars")) {
             PlanetDateTime planetDT;
             String[] monthNames = {
                     "Sagittarius", "Dhanus", "Capricornus", "Makara", "Aquarius", "Kumbha",
@@ -45,6 +45,6 @@ public class CalendarFactory {
             }
             PlanetCalendar planetCalendar = new PlanetCalendar(months, weekSols, leapPeriod, true);
             return planetCalendar;
-        } else throw new Exception("Planet not found");
+        } else throw new IllegalArgumentException("Planet not found");
     }
 }
