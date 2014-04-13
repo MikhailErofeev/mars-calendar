@@ -16,5 +16,4 @@ Launch on the local Jetty: jetty-local in Idea
 or mvn org.apache.maven.plugins:maven-war-plugin:2.4:war
 & then something like jetty-runner (не настраивал)
 
-
-Чтобы разрабатывать вёрстку, можно отдельно открыть index.html через "open in browser", тогда не надо будет париться с рестартом сервера (возможно бэкбон будет психовать :(()
+In order to write html code, one may open index.html via "open in browser" - there won't be any need to restart the server (backbone might go nuts though)

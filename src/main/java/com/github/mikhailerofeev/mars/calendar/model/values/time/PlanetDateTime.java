@@ -116,7 +116,7 @@ public class PlanetDateTime {
             solsElapsedUntilCurrentCalc += calendar.solsInYear(year);
             ++year;
         }
-        solsElapsedUntilCurrentCalc -= calendar.solsInYear(year);
+        solsElapsedUntilCurrentCalc -= calendar.solsInYear(year - 1);
         //--year; // because we return the nearest PREVIOUS year, not the NEXT one (!!!)
         // -- by now, the year is supposed to be calculated -- //
         monthNum = 0;
@@ -129,43 +129,44 @@ public class PlanetDateTime {
         // no need to decrement sol because it should start from 0 (!!!)
         // -- by now, we have month -- //
         sol = 0;
-        while (solsElapsedUntilCurrentCalc <= wholeSolsSinceEpoch) {
+        while (solsElapsedUntilCurrentCalc < wholeSolsSinceEpoch) {
             ++sol;
             ++solsElapsedUntilCurrentCalc;
         }
-        // no need to decrement sol because it should start from 1 (!!!)
-        --solsElapsedUntilCurrentCalc;
+        ++sol; // because it should start from 1
         // sol calculated
-        long hoursElapsedUntilCurrentCalc = solsElapsedUntilCurrentCalc * solDuration.getStandardHours();
+
+        long hoursElapsedUntilCurrentCalc = solsElapsedUntilCurrentCalc * solDuration.getMillis() / 3600000;
         long totalHoursElapsed = timeSinceEpoch().getStandardHours();
         hour = 0;
-        while (hoursElapsedUntilCurrentCalc <= totalHoursElapsed) {
+        while (hoursElapsedUntilCurrentCalc < totalHoursElapsed) {
             ++hoursElapsedUntilCurrentCalc;
             ++hour;
         }
-        --hoursElapsedUntilCurrentCalc;
-        --hour;
         // hour calculated
+
         long minutesElapsedUntilCurrentCalc = hoursElapsedUntilCurrentCalc * 60;
         long totalMinutesElapsed = timeSinceEpoch().getStandardMinutes();
         minute = 0;
-        while (minutesElapsedUntilCurrentCalc <= totalMinutesElapsed) {
+        while (minutesElapsedUntilCurrentCalc < totalMinutesElapsed) {
             ++minutesElapsedUntilCurrentCalc;
             ++minute;
         }
-        --minutesElapsedUntilCurrentCalc;
-        --minute;
         // minute calculated
+
         long secondsElapsedUntilCurrentCalc = minutesElapsedUntilCurrentCalc * 60;
         long totalSecondsElapsed = timeSinceEpoch().getStandardSeconds();
         second = 0;
-        while (secondsElapsedUntilCurrentCalc <= totalSecondsElapsed) {
+        while (secondsElapsedUntilCurrentCalc < totalSecondsElapsed) {
             ++secondsElapsedUntilCurrentCalc;
             ++second;
         }
-        --secondsElapsedUntilCurrentCalc;
-        --second;
         // second calculated
+
+        // kludges:
+        if (hour == solDuration.getStandardHours()) hour = 0;
+        if (minute == 60) minute = 0;
+        if (second == 60) second = 0;
     }
 
     /**

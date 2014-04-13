@@ -78,17 +78,21 @@ public class PlanetDateTimeTest {
     @Test
     public void testZeroEpochZeroTime() throws Exception{
         Duration solDuration = new Duration(88642663);
-        PlanetDateTime marsZeroTime = new PlanetDateTime(DateTime.now(), epochToUse, calendar, solDuration);
-        assertEquals(marsZeroTime.getSolDuration().getStandardHours(), 24);
-        assertTrue(new Duration(86400000).isShorterThan(solDuration));
-        assertTrue(marsZeroTime.getCalendar().weekRestarts());
-        for (int i = 0; i < marsZeroTime.getCalendar().getMonths().size(); ++i) {
-            assertEquals(marsZeroTime.getCalendar().getMonths().get(i).getNumSols(), 27 + ((i + 1) % 6 == 0 ? 0 : 1));
+        for (int j = -40; j < 30; ++j) {
+            timeToStore = DateTime.now().plus(new Duration(3600000 * j));
+            PlanetDateTime marsZeroTime = new PlanetDateTime(timeToStore, epochToUse, calendar, solDuration);
+            assertEquals(marsZeroTime.getSolDuration().getStandardHours(), 24);
+            assertTrue(new Duration(86400000).isShorterThan(solDuration));
+            assertTrue(marsZeroTime.getCalendar().weekRestarts());
+            for (int i = 0; i < marsZeroTime.getCalendar().getMonths().size(); ++i) {
+                assertEquals(marsZeroTime.getCalendar().getMonths().get(i).getNumSols(), 27 + ((i + 1) % 6 == 0 ? 0 : 1));
+            }
+            assertEquals(marsZeroTime.getCalendar().getMonths().size(), 24);
+            //assertEquals(marsZeroTime.getYear(), 26);
+            System.out.println(marsZeroTime.getYear() + "/" + marsZeroTime.getMonthNum() + "/" + marsZeroTime.getSol()
+                    + ", " + marsZeroTime.getHour() + ":" + marsZeroTime.getMinute() + ":" + marsZeroTime.getSecond());
         }
-        assertEquals(marsZeroTime.getCalendar().getMonths().size(), 24);
-        assertEquals(marsZeroTime.getYear(), 26);
-        System.out.println(marsZeroTime.getYear() + "/" + marsZeroTime.getMonthNum() + "/" + marsZeroTime.getSol()
-        + ", " + marsZeroTime.getHour() + ":" + marsZeroTime.getMinute() + ":" + marsZeroTime.getSecond());
+
 
     }
 }
