@@ -8,8 +8,8 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
  *
  */
 public class PlanetDateTime {
-    private final DateTime timePoint;
-    private final DateTime epoch;
+    private DateTime timePoint = null;
+    private DateTime epoch = null;
     private PlanetCalendar calendar = null;
     private Duration solDuration;
 
@@ -56,13 +56,36 @@ public class PlanetDateTime {
         this.solDuration = solDuration;
     }
 
-    public PlanetDateTime(int year, int monthNum, int sol, int hour, int minute, int second) {
+    public PlanetDateTime(DateTime epoch, int year, int monthNum, int sol, int hour, int minute, int second) {
+        this.epoch = epoch;
         this.year = year;
         this.monthNum = monthNum;
         this.sol = sol;
         this.hour = hour;
         this.minute = minute;
         this.second = second;
+        MutableDateTime mutableTimePoint = new MutableDateTime(calendar.solsInLeapPeriod() * solDuration.getMillis());
+        int yearsUntilCurrentCalc = year - (year % calendar.getLeapPeriod().size());
+        while (yearsUntilCurrentCalc <= year) {
+            mutableTimePoint.add(calendar.solsInYear(yearsUntilCurrentCalc) * solDuration.getMillis());
+            ++yearsUntilCurrentCalc;
+        }
+        --yearsUntilCurrentCalc;
+        for (int currentMonth = 0; currentMonth < monthNum - 1; ++currentMonth) {
+            mutableTimePoint.add(calendar.solsInMonth(yearsUntilCurrentCalc, monthNum) * solDuration.getMillis());
+        }
+        for (int currentSol = 0; currentSol < sol - 1; ++currentSol) {
+            mutableTimePoint.add(solDuration.getMillis());
+        }
+        for (int currentHour = 0; currentHour < hour; ++currentHour) {
+            mutableTimePoint.add(3600000);
+        }
+        for (int currentMinute = 0; currentMinute < minute; ++currentMinute) {
+            mutableTimePoint.add(60000);
+        }
+        for (int currentSecond = 0; currentSecond < second; ++currentSecond) {
+            mutableTimePoint.add(1000);
+        }
     }
 
     public Duration timeSinceEpoch() {
