@@ -64,7 +64,8 @@ public class PlanetDateTime {
         this.hour = hour;
         this.minute = minute;
         this.second = second;
-        MutableDateTime mutableTimePoint = new MutableDateTime(calendar.solsInLeapPeriod() * solDuration.getMillis());
+        MutableDateTime mutableTimePoint = new MutableDateTime(epoch);
+        mutableTimePoint.add(calendar.solsInLeapPeriod() * solDuration.getMillis());
         int yearsUntilCurrentCalc = year - (year % calendar.getLeapPeriod().size());
         while (yearsUntilCurrentCalc <= year) {
             mutableTimePoint.add(calendar.solsInYear(yearsUntilCurrentCalc) * solDuration.getMillis());
@@ -86,6 +87,7 @@ public class PlanetDateTime {
         for (int currentSecond = 0; currentSecond < second; ++currentSecond) {
             mutableTimePoint.add(1000);
         }
+        timePoint = new DateTime(mutableTimePoint);
     }
 
     public Duration timeSinceEpoch() {
