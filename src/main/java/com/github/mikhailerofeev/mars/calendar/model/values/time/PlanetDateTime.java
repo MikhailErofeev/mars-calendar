@@ -56,6 +56,15 @@ public class PlanetDateTime {
         this.solDuration = solDuration;
     }
 
+    public PlanetDateTime(int year, int monthNum, int sol, int hour, int minute, int second) {
+        this.year = year;
+        this.monthNum = monthNum;
+        this.sol = sol;
+        this.hour = hour;
+        this.minute = minute;
+        this.second = second;
+    }
+
     public Duration timeSinceEpoch() {
         return new Duration(epoch, timePoint);
     }
