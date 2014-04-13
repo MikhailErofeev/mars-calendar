@@ -20,3 +20,9 @@
     border-top-right-radius: 0px;
     margin-top: -4px;
 }
+
+.task.otherPlanetTime {
+    border-color: orangered;
+    background: darkorange;
+    opacity: 0.3;
+}

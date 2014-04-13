@@ -8,7 +8,8 @@ function TaskTime(day, hour, quarter) {
     this.quarter = quarter;
 }
 
-function Task(name, desc, begin, end) {
+function Task(name, desc, begin, end, id, isOtherPlanetTime) {
+    this.id = ((id === undefined || id === null) ? Task.id++ : id);
     this.name = name;
     this.desc = desc;
     this.begin = begin;
@@ -16,8 +17,9 @@ function Task(name, desc, begin, end) {
 
     this.isPartial = false;
     this.isPartialBegin = true;
+    this.isOtherPlanetTime = (true === isOtherPlanetTime);
 
-    this.container = "<div class='task'>@data</div>";
+    this.container = "<div></div>";
 
     function FindCell(table, taskTime) {
         var template = "td[hour=@hour][day=@day][quarter=@quarter]";
@@ -38,7 +40,13 @@ function Task(name, desc, begin, end) {
         var beginPosition = beginCell.offset();
         var endPosition = endCell.offset();
 
-        var drawable = $(this.container.replace('@data', this.name));
+        var drawable = $(this.container)
+            .attr('id', this.id)
+            .append(this.name)
+            .addClass('task');
+
+        if (this.isOtherPlanetTime)
+            drawable.addClass('otherPlanetTime');
 
         if (this.isPartial) {
             endPosition.top = table.height() + table.offset().top;
@@ -61,8 +69,14 @@ function Task(name, desc, begin, end) {
         beginPosition = beginCell.offset();
         endPosition = endCell.offset();
 
-        drawable = $(this.container.replace('@data', this.name));
-        drawable.addClass('partial-end');
+        drawable = $(this.container)
+            .attr('id', this.id)
+            .append(this.name)
+            .addClass('task')
+            .addClass('partial-end');
+
+        if (this.isOtherPlanetTime)
+            drawable.addClass('otherPlanetTime');
 
         height = endPosition.top - beginPosition.top;
         width = beginCell.width() - 4;
@@ -73,3 +87,5 @@ function Task(name, desc, begin, end) {
         beginCell.append(drawable);
     }
 }
+
+Task.id = 0;
