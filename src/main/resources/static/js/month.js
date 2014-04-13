@@ -33,7 +33,9 @@ function generateMonthTable(days, newWeekForMonth, prevMonthDays) {
     }
     $tBody.append($row);
     $table.append($tBody);
-    months = ["Январь", "Февраль", "Март", "Апрель", "Май"]
+    months = ["Sagittarius", "Dhanus", "Capricornus", "Makara", "Aquarius", "Kumbha", "Pisces", "Mina", "Aries",
+        "Mesha", "Taurus", "Rishabha", "Gemini", "Mithuna", "Cancer", "Karka", "Leo", "Simha", "Virgo", "Kanya",
+        "Libra", "Tula", "Scorpius", "Vrishika"]
     $monthsElem = $("<div style='padding-top:10px;'/>");
     for (var i = 0; i < months.length; i++) {
         $monthsElem.append("<div><a href='#!/month/mars/2014/" + (i + 1) + "'>" + months[i] + "</a></div>");

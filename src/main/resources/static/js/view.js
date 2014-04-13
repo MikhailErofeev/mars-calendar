@@ -10,12 +10,12 @@ var Main = Backbone.View.extend({
         $('#month-btn').attr('href', "#!/month/" + this.model.get("originalPlanet") +
             "/" + this.model.get("year") + "/" + this.model.get("month"));
 
-        $('#year-btn').attr('href', "#!/month/" + this.model.get("originalPlanet") + "/" + this.model.get("year"));
+        $('#year-btn').attr('href', "#!/year/" + this.model.get("originalPlanet") + "/" + this.model.get("year"));
 
-        $('#week-btn').attr('href', "#!/month/" + this.model.get("originalPlanet") + "/" + this.model.get("alternativePlanet") +
+        $('#week-btn').attr('href', "#!/week/" + this.model.get("originalPlanet") + "/" + this.model.get("alternativePlanet") +
             "/" + this.model.get("year") + "/" + this.model.get("month") + "/" + this.model.get("day"));
 
-        $('#today-btn').attr('href', "#!/month/" + this.model.get("originalPlanet") + "/" + this.model.get("alternativePlanet") +
+        $('#today-btn').attr('href', "#!/week/" + this.model.get("originalPlanet") + "/" + this.model.get("alternativePlanet") +
             "/" + this.model.get("year") + "/" + this.model.get("month") + "/" + this.model.get("day"));
 
     },
