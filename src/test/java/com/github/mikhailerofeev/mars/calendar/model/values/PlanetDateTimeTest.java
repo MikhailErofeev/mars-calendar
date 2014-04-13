@@ -18,21 +18,17 @@ import static org.junit.Assert.assertEquals;
  */
 public class PlanetDateTimeTest {
 
-    private DateTime timeNow;
-    private DateTime epochTime;
+    private DateTime timeToStore;
+    private DateTime epochToUse;
     private DateTime zeroTime;
     private PlanetCalendar calendar;
 
     @Before
-    public void Setup()
-    {
-        timeNow     = DateTime.now();
-        epochTime   = new DateTime(1965, 7, 15, 1, 0);
-        zeroTime    = new DateTime(1, 1, 1, 0, 0);
-    }
-
-    @Test
     public void CalInit(){
+        timeToStore = DateTime.now();
+        epochToUse = new DateTime(1965, 7, 15, 1, 0);
+        zeroTime    = new DateTime(1, 1, 1, 0, 0);
+
         String[] monthNames = {
                 "Sagittarius", "Dhanus", "Capricornus", "Makara", "Aquarius", "Kumbha",
                 "Pisces", "Mina", "Aries", "Mesha", "Taurus", "Rishabha",
@@ -77,7 +73,15 @@ public class PlanetDateTimeTest {
 
     @Test
     public void testZeroEpochZeroTime() throws Exception{
-        PlanetDateTime marsZeroTime     = new PlanetDateTime(DateTime.now(),epochTime,CalInit(),new Duration(88642663));
+        Duration solDuration = new Duration(88642663);
+        PlanetDateTime marsZeroTime = new PlanetDateTime(DateTime.now(), epochToUse, calendar, solDuration);
+        assertEquals(marsZeroTime.getSolDuration().getStandardHours(), 24);
+        assertTrue(new Duration(86400000).isShorterThan(solDuration));
+        assertTrue(marsZeroTime.getCalendar().weekRestarts());
+        for (int i = 0; i < marsZeroTime.getCalendar().getMonths().size(); ++i) {
+            assertEquals(marsZeroTime.getCalendar().getMonths().get(i).getNumSols(), 27 + ((i + 1) % 6 == 0 ? 0 : 1));
+        }
+        assertEquals(marsZeroTime.getCalendar().getMonths().size(), 24);
         assertEquals(marsZeroTime.getYear(), 24);
     }
 }

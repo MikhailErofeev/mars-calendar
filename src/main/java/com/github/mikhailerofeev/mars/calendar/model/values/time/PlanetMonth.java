@@ -7,7 +7,7 @@ public class PlanetMonth {
     private final int numSols;
     private final String name;
 
-    PlanetMonth(int numSols, String name) {
+    public PlanetMonth(int numSols, String name) {
         this.numSols = numSols;
         this.name = name;
     }

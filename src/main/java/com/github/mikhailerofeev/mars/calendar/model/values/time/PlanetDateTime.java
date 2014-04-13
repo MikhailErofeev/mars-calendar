@@ -56,7 +56,6 @@ public class PlanetDateTime {
         this.solDuration = solDuration;
     }
 
-    @SuppressWarnings("UnusedDeclaration")
     public Duration timeSinceEpoch() {
         return new Duration(epoch, timePoint);
     }
@@ -73,15 +72,30 @@ public class PlanetDateTime {
         return new Duration(timeSinceEpoch().getMillis() % solDuration.getMillis());
     }
 
-    @SuppressWarnings("UnusedDeclaration")
     public DateTime toTerrestrial() {
         return timePoint;
     }
 
+    public DateTime getTimePoint() {
+        return timePoint;
+    }
+
+    public DateTime getEpoch() {
+        return epoch;
+    }
+
+    public PlanetCalendar getCalendar() {
+        return calendar;
+    }
+
+    public Duration getSolDuration() {
+        return solDuration;
+    }
+
     /**
-     * Determines the (terrestrial) duration of the specific year
+     *
      * @param year
-     * @return
+     * @return terrestrial duration of the specific year
      */
     public Duration yearDuration(int year) {
         return new Duration(solDuration.getMillis() * calendar.solsInYear(year));
@@ -94,20 +108,18 @@ public class PlanetDateTime {
     private void calcTime() {
         long wholeSolsSinceEpoch = wholeSolsSinceEpoch();
         long solsInLeapPeriod = calendar.solsInLeapPeriod();
-        int solsSincePeriod = (int)(wholeSolsSinceEpoch % solsInLeapPeriod);
         int periodsSinceEpoch = (int)(wholeSolsSinceEpoch / solsInLeapPeriod);
         year = periodsSinceEpoch * calendar.getLeapPeriod().size();
-        int solsIt = 0;
+        long solsElapsedUntilCurrentCalc = periodsSinceEpoch * calendar.solsInLeapPeriod();
         // may need to be changed to 1 (instead of 0)
-        while (solsIt <= solsSincePeriod) {
-            solsIt += calendar.solsInYear(year);
+        while (solsElapsedUntilCurrentCalc <= wholeSolsSinceEpoch) {
+            solsElapsedUntilCurrentCalc += calendar.solsInYear(year);
             ++year;
         }
-        solsIt -= calendar.solsInYear(year);
-        --year; // because we return the nearest PREVIOUS year, not the NEXT one (!!!)
+        solsElapsedUntilCurrentCalc -= calendar.solsInYear(year);
+        //--year; // because we return the nearest PREVIOUS year, not the NEXT one (!!!)
         // -- by now, the year is supposed to be calculated -- //
         monthNum = 0;
-        long solsElapsedUntilCurrentCalc = periodsSinceEpoch * calendar.solsInLeapPeriod() + solsIt; // check this later
         while (solsElapsedUntilCurrentCalc <= wholeSolsSinceEpoch) {
             // we use the month starting from zero here as it accesses the list
             solsElapsedUntilCurrentCalc += calendar.solsInMonth(year, monthNum);
