@@ -120,7 +120,8 @@ public class PlanetDateTime {
         long solsElapsedUntilCurrentCalc = periodsSinceEpoch * solsInLeapPeriod;
         // may need to be changed to 1 (instead of 0)
         while (solsElapsedUntilCurrentCalc <= wholeSolsSinceEpoch) {
-            ++year;solsElapsedUntilCurrentCalc += calendar.solsInYear(year);
+            ++year;
+            solsElapsedUntilCurrentCalc += calendar.solsInYear(year);
 
         }
         solsElapsedUntilCurrentCalc -= calendar.solsInYear(year);
