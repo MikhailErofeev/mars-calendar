@@ -1,0 +1,34 @@
+{
+    "previous": {
+        "name": "now",
+        "timestamp": 1394692662119,
+        "year": 1014,
+        "month": 22,
+        "days": 27
+    },
+    "current": {
+        "origin":{
+            "planet": "mars",
+            "name": "dec",
+            "timestamp": 1397370690758,
+            "year": 1014,
+            "month": 23,
+            "days": 31
+        },
+        "alternative":{
+            "alternative": "earth",
+            "name": "dec",
+            "timestamp": 1397370690758,
+            "year": 1014,
+            "month": 23,
+            "days": 31
+        }
+    },
+    "next": {
+        "name": "jan",
+        "earth-timestamp": 1399963074160,
+        "year": 1015,
+        "month": 1,
+        "days": 31
+    }
+}

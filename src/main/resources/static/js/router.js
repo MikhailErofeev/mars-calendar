@@ -3,35 +3,62 @@
  * @since 12.04.14
  */
 
-
 var Controller = Backbone.Router.extend({
-    routes: {
-//        "": "start", // Пустой hash-тэг
-//        "!/": "start", // Начальная страница
-//        "!/week1": "success", // Блок удачи
-        "!/week/:year-:mm-:dd": "week",
-        "!/month/:year-:mm": "month",
-        "!/year/:year": "year",
-        "!/error": "error" // Блок ошибки
+    routes: {},
+
+    week: function (origin, alternative, year, month, day) {
+        appState.set({
+            originPlanet: origin,
+            alternativePlanet: alternative,
+            year: year,
+            month: month,
+            day: day,
+            viewType: "week"
+        });
     },
 
-    week: function (year, mm, dd) {
-        console.log(year, mm, dd);
+    month: function (origin, year, month) {
+        appState.set({
+            originPlanet: origin,
+            year: year,
+            month: month,
+            viewType: "month"
+        });
     },
 
-    month: function (year, mm) {
-        console.log(year, mm);
-    },
-
-    year: function (year) {
-        console.log(year);
+    year: function (origin, year) {
+        appState.set({
+            originPlanet: origin,
+            year: year,
+            viewType: "year"
+        });
     },
 
     error: function () {
         console.log("error")
+    },
+
+    initialize: function () {
+//        "": "start", 
+//        "!/": "start",
+//        "!/week1": "success", 
+        var router = this,
+            routes = [
+                [ /^!\/week\/([a-z]+)\/([a-z]+)\/(\d+)\/(\d+)\/(\d+)\/?$/, "week", this.week],
+                [ /^!\/month\/([a-z]+)\/(\d+)\/(\d+)\/?$/, "month", this.month],
+                [ /^!\/year\/([a-z]+)\/(\d+)\/?$/, "year", this.year]
+//        "!/month/:year-:mm": "month",
+//        "!/year/:year": "year",
+//        "!/error": "error" ]
+            ];
+        _.each(routes, function (route) {
+            router.route.apply(router, route);
+            // ^ Say it ten times fast
+        });
     }
 });
 
-var controller = new Controller(); // Создаём контроллер
-
-Backbone.history.start();  // Запускаем HTML5 History push    
+$(document).ready(function () {
+    var controller = new Controller();
+    Backbone.history.start();
+});

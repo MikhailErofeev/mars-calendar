@@ -8,15 +8,18 @@
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="css/index.css" type="text/css"/>
     <link rel="stylesheet" href="css/week.css" type="text/css"/>
+    <link rel="stylesheet" href="css/month.css" type="text/css"/>
 
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.6.0/underscore-min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/backbone.js/1.1.2/backbone-min.js"></script>
     <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
 
-    <script src="js/index.js"></script>
     <script src="js/week.js"></script>
+    <script src="js/month.js"></script>
+    <script src="js/model.js"></script>
     <script src="js/router.js"></script>
+    <script src="js/view.js"></script>
 </head>
 <body>
 <!-- Navbar -->
@@ -28,7 +31,7 @@
         <div class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
 
-                <!--PLANETS TOGGLERS-->
+                <!--PLANETS TOGGLES-->
                 <li class="dropdown disabled">
                     <a class="dropdown-toggle planet-name source-planet-name left-bordered disabled"
                        data-toggle="dropdown" href="#">
@@ -59,18 +62,19 @@
                 <!--TODAY-->
                 <li class="left-offset border">
                     <div class="btn-group btn-group-sm">
-                        <button type="button" class="btn btn-default navbar-btn active ">Today</button>
+                        <a id="today-btn" href="#!/week/mars/earth/2014/04/14" type="button"
+                           class="btn btn-default navbar-btn">Today</a>
                     </div>
                 </li>
 
                 <!--PREV <-> NEXT-->
                 <li class="offsetted-btn right-offset">
                     <div class="btn-group btn-group-sm">
-                        <a id="prev-week-btn" href="#!/week/2014-04-07" type="button"
+                        <a id="prev-week-btn" href="#!/week/mars/earth/2014/04/07" type="button"
                            class="btn btn-default navbar-btn">
                             <span class="glyphicon glyphicon-chevron-left"></span>
                         </a>
-                        <a id="next-week-btn" href="#!/week/2014-04-21" type="button"
+                        <a id="next-week-btn" href="#!/week/mars/earth/2014/04/21" type="button"
                            class="btn btn-default navbar-btn">
                             <span class="glyphicon glyphicon-chevron-right"></span></a>
                     </div>
@@ -78,9 +82,11 @@
 
                 <li class="left-offset left-bordered">
                     <div class="btn-group btn-group-sm">
-                        <a href="#!/week/2014-04-14" type="button" class="btn btn-default navbar-btn">Week</a>
-                        <a href="#!/month/2014-04" type="button" class="btn btn-default navbar-btn">Month</a>
-                        <a href="#!/year/2014" type="button" class="btn btn-default navbar-btn">Year</a>
+                        <a id="week-btn" href="#!/week/mars/earth/2014/04/14" type="button"
+                           class="btn btn-default navbar-btn">Week</a>
+                        <a id="month-btn" href="#!/month/mars/2014/04" type="button" class="btn btn-default navbar-btn">Month</a>
+                        <a id="year-btn" href="#!/year/mars/2014" type="button"
+                           class="btn btn-default navbar-btn">Year</a>
                     </div>
                 </li>
             </ul>
@@ -97,10 +103,7 @@
 <div class="container">
     <div class="row">
         <div class="col-md-12 main-content-area">
-            <table id="days-table">
-                <thead></thead>
-                <tbody></tbody>
-            </table>
+            <div id="main"></div>
         </div>
     </div>
 </div>
