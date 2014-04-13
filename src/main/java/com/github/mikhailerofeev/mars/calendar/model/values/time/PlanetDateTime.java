@@ -28,7 +28,7 @@ public class PlanetDateTime {
         this.solDuration = solDuration;
     }
 
-    public PlanetDateTime(DateTime epoch, PlanetCalendar calendar, int year, int monthOfYear, int solOfMonth, int hourOfSol, int minuteOfHour, int secondOfMinute) {
+    public PlanetDateTime(DateTime epoch, PlanetCalendar calendar, Duration solDuration, int year, int monthOfYear, int solOfMonth, int hourOfSol, int minuteOfHour, int secondOfMinute) {
         this.epoch = epoch;
         this.calendar = calendar;
         this.year = year;
