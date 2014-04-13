@@ -120,10 +120,10 @@ public class PlanetDateTime {
         long solsElapsedUntilCurrentCalc = periodsSinceEpoch * solsInLeapPeriod;
         // may need to be changed to 1 (instead of 0)
         while (solsElapsedUntilCurrentCalc <= wholeSolsSinceEpoch) {
-            solsElapsedUntilCurrentCalc += calendar.solsInYear(year);
-            ++year;
+            ++year;solsElapsedUntilCurrentCalc += calendar.solsInYear(year);
+
         }
-        solsElapsedUntilCurrentCalc -= calendar.solsInYear(year - 1);
+        solsElapsedUntilCurrentCalc -= calendar.solsInYear(year);
         //--year; // because we return the nearest PREVIOUS year, not the NEXT one (!!!)
         // -- by now, the year is supposed to be calculated -- //
         monthOfYear = 0;

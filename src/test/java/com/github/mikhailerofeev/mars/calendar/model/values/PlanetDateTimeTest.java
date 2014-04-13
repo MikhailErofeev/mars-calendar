@@ -1,8 +1,6 @@
 package com.github.mikhailerofeev.mars.calendar.model.values;
 
-import com.github.mikhailerofeev.mars.calendar.model.values.time.PlanetCalendar;
-import com.github.mikhailerofeev.mars.calendar.model.values.time.PlanetDateTime;
-import com.github.mikhailerofeev.mars.calendar.model.values.time.PlanetMonth;
+import com.github.mikhailerofeev.mars.calendar.model.values.time.*;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 import org.joda.time.Duration;
@@ -167,6 +165,12 @@ public class PlanetDateTimeTest {
             System.out.println(marsZeroTime.getYear() + "/" + marsZeroTime.getMonthOfYear() + "/" + marsZeroTime.getSolOfMonth()
                     + ", " + marsZeroTime.getHourOfDay() + ":" + marsZeroTime.getMinuteOfHour() + ":" + marsZeroTime.getSecondOfMinute());
         }
+    }
+
+    @Test
+    public void getInMartian() {
+        PlanetDateTime pdt = new PlanetDateTime(new DateTime(2014, 4, 13, 19, 30) ,EpochFactory.getDefaultEpoch(), CalendarFactory.getPlanetCalendar("mars"), SolDurationFactory.getSolDuration("mars"));
+        System.out.println(pdt.getYear() + "/" + pdt.getMonthOfYear() + "/" + pdt.getSolOfMonth() + ", " + pdt.getHourOfDay() + ":" + pdt.getMinuteOfHour() + ":" + pdt.getSecondOfMinute());
     }
 
     @Test
