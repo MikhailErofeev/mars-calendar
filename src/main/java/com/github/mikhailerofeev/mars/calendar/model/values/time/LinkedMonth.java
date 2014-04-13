@@ -30,7 +30,7 @@ public class LinkedMonth {
         month ++ ;
         DateTime defaultEpoch = EpochFactory.getDefaultEpoch();
         PlanetCalendar pc = CalendarFactory.getPlanetCalendar(planet);
-        PlanetDateTime dpt = new PlanetDateTime(defaultEpoch, year, month, 1, 0, 0, 0);
+        PlanetDateTime dpt = new PlanetDateTime(defaultEpoch, pc, year, month, 1, 0, 0, 0);
         DateTime eTime = dpt.toTerrestrial();
 
         int eyear = eTime.getYear();
