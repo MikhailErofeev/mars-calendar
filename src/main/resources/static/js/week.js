@@ -19,7 +19,7 @@ function generateWeekTable(planetHours, planetMinutes, days) {
     var planetQuarters = Math.ceil((planetHours * 60 + planetMinutes) / 15.0);
     $body = $("<tbody/>");
     for (var quarter = 0; quarter < planetQuarters; quarter++) {
-        var hour = quarter / 4;
+        var hour = Math.floor(quarter / 4);
         var row = $("<tr class='tr-hour'/>");
         if (quarter % 4 == 0) {
             row.append("<td rowspan='4' class='scale-row'>" + (hour + ":00") + "</td>")

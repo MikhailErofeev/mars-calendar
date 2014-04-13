@@ -38,13 +38,3 @@ body {
     text-align: center;
     font-weight: normal;
 }
-
-.task {
-    position: absolute;
-    background: lightskyblue;
-    border-style: solid;
-    border-color: blue;
-    border-width: 1px;
-    border-radius: 5px;
-    margin: 2px;
-}

@@ -1,0 +1,9 @@
+.task {
+    position: absolute;
+    background: lightskyblue;
+    border-style: solid;
+    border-color: cornflowerblue;
+    border-width: 1px;
+    border-radius: 5px;
+    margin: 2px;
+}
