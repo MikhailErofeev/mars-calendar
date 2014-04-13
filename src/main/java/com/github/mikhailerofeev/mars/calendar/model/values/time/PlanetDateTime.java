@@ -228,10 +228,9 @@ public class PlanetDateTime {
             if (calendar.weekRestarts()) {
                 // we use sol minus one because getSol returns the number of the sol for normal humans
                 // (i.e. starting from 1)
-                week = ((getSol() - 1) / calendar.getWeekSols().size()) + 1;
+                week = (getSol() - 1) / calendar.getWeekSols().size() + 1;
             } else {
-                throw new IllegalArgumentException();
-                // to finish later
+                week = (int)(wholeSolsSinceEpoch() / calendar.getWeekSols().size() + 1);
             }
         }
         return week;

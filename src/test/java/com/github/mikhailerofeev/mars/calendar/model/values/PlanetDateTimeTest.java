@@ -55,15 +55,19 @@ public class PlanetDateTimeTest {
         assertEquals(weekSols.size(), 7);
 
         int periodTime = 10;
+        int leapYearsNum = 6;
         Map<PlanetMonth, Integer> leapMonths = new HashMap<PlanetMonth, Integer>();
         leapMonths.put(months.get(23), 1);
         assertEquals(leapMonths.size(), 1);
 
         List<Map<PlanetMonth, Integer>> leapPeriod = new ArrayList<Map<PlanetMonth, Integer>>(periodTime);
-        for (int i = 0; i < 6; ++i) {
+        for (int i = 0; i < leapYearsNum; ++i) {
             leapPeriod.add(new HashMap(leapMonths));
         }
-        assertEquals(leapPeriod.size(), 6);
+        for (int i = 6; i < periodTime; ++i) {
+            leapPeriod.add(new HashMap());
+        }
+        assertEquals(leapPeriod.size(), 10);
         assertEquals(leapPeriod.get(5), leapPeriod.get(4));
         //assertTrue(leapPeriod.get(6) == null);
 
@@ -82,6 +86,9 @@ public class PlanetDateTimeTest {
             assertEquals(marsZeroTime.getCalendar().getMonths().get(i).getNumSols(), 27 + ((i + 1) % 6 == 0 ? 0 : 1));
         }
         assertEquals(marsZeroTime.getCalendar().getMonths().size(), 24);
-        assertEquals(marsZeroTime.getYear(), 24);
+        assertEquals(marsZeroTime.getYear(), 26);
+        System.out.println(marsZeroTime.getYear() + "/" + marsZeroTime.getMonthNum() + "/" + marsZeroTime.getSol()
+        + ", " + marsZeroTime.getHour() + ":" + marsZeroTime.getMinute() + ":" + marsZeroTime.getSecond());
+
     }
 }
