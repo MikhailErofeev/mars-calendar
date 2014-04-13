@@ -17,7 +17,8 @@ var Main = Backbone.View.extend({
 
             //---------- tasks tests -----------------------
             var tasks = [
-                new Task("task1", "task1", new TaskTime(3, 0, 0), new TaskTime(3, 20, 3))
+                new Task("task1", "task1", new TaskTime(2, 0, 0), new TaskTime(2, 16, 3)),
+                new Task("task2", "task2", new TaskTime(2, 4, 0), new TaskTime(2, 19, 0))
             ];
 
             for (var taskIndex in tasks) {
