@@ -14,36 +14,43 @@ public class LinkedMonth {
         originalPlanet = originalPlanet.toLowerCase();
         alternativePlanet = alternativePlanet.toLowerCase();
 
-        origin = getMonthReply(originalPlanet, year, month);
+        origin.planetName = originalPlanet;
+        origin.month = month;
+        origin.year = year;
+        PlanetCalendar pc = CalendarFactory.getPlanetCalendar(originalPlanet);
+        origin.name = pc.getMonths().get(month).getName();
+        origin.days = pc.getMonths().get(month).getNumSols();
+        //origin.timestamp = new DateTime().getMillis(); //1 jan 00.00 since def epoch
+
         alternative = getMonthReply(alternativePlanet, year, month);
     }
 
     MonthReply getMonthReply(String planet, int year, int month) {
-        PlanetDateTime pdt = null;
-        MonthReply  mr = null;
-        mr.name = planet;
+        DateTime defaultEpoch = EpochFactory.getDefaultEpoch();
+        PlanetCalendar pc = CalendarFactory.getPlanetCalendar(planet);
+        PlanetDateTime dpt = new PlanetDateTime(defaultEpoch, year, month, 1, 0, 0, 0);
+        DateTime eTime = dpt.toTerrestrial();
 
+        int eyear = eTime.getYear();
+        int emonth = eTime.getMonthOfYear();
+        int eday = dpt.getMonthObject().getNumSols();
+        int ehour = eTime.getHourOfDay();
+        int eminute = eTime.getMinuteOfDay();
 
-        if (planet.equals("earth")) {
-            DateTime catchedDateTime = new DateTime(year, month, 1, 0, 0);
-            DateTime defaulEpoch = EpochFactory.getDefaultEpoch();
+        DateTime eDT = new DateTime(eyear,emonth, eday, ehour, eminute);
 
-//            pdt = new PlanetDateTime(catchedDateTime, defaulEpoch);
-            DateTime dt = new DateTime(0).plus(pdt.timeSinceEpoch());
-            //mr. = dt.monthOfYear();
-            //todo -implement to earth conversion
-        } else {
-            DateTime catchedDateTime = new DateTime(year, month, 1, 0, 0);
-            DateTime defaulEpoch = EpochFactory.getDefaultEpoch();
-            PlanetCalendar pc = CalendarFactory.getPlanetCalendar(planet);
-            Duration solDuration = SolDurationFactory.getSolDuration(planet);
+        Duration solDuration = SolDurationFactory.getSolDuration(planet);
 
-            pdt = new PlanetDateTime(catchedDateTime, defaulEpoch, pc, solDuration);
+        PlanetDateTime edpt = new PlanetDateTime(eDT, defaultEpoch , pc, solDuration);
 
-            mr.year = pdt.getYear();
-            mr.days = pdt.getSolOfMonth();
-            mr.month = pdt.getMonthOfYear();
-        }
+        MonthReply mr = new MonthReply();
+        mr.planetName = planet;
+        mr.month = edpt.getMonthOfYear();
+        mr.year = edpt.getYear();
+
+        mr.name = edpt.getMonthObject().getName();
+        mr.days = edpt.getMonthObject().getNumSols();
+        //origin.timestamp = new DateTime().getMillis(); //1 jan 00.00 since def epoch
 
         return mr;
     }

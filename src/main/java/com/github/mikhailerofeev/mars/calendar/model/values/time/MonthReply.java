@@ -5,10 +5,10 @@ package com.github.mikhailerofeev.mars.calendar.model.values.time;
  */
 public class MonthReply {
 
-    public String planetName;
-    public String name;
-    public long timestamp;
-    public int year;
-    public int month;
-    public int days;
+    public String planetName = null;
+    public String name = null;
+    public long timestamp = 0;
+    public int year = 0;
+    public int month = 0;
+    public int days = 0;
 }
