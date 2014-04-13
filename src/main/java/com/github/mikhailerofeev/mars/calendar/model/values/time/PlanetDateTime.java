@@ -7,9 +7,9 @@ import org.joda.time.*;
  *
  */
 public class PlanetDateTime {
-    private DateTime timePoint = null;
-    private DateTime epoch = null;
-    private PlanetCalendar calendar = null;
+    private DateTime timePoint;
+    private DateTime epoch;
+    private PlanetCalendar calendar;
     private Duration solDuration;
 
     private Integer year        = null;
@@ -143,31 +143,33 @@ public class PlanetDateTime {
         ++solOfMonth; // because it should start from 1
         // solOfMonth calculated
 
-        long hoursElapsedUntilCurrentCalc = solsElapsedUntilCurrentCalc * solDuration.getMillis() / 3600000;
-        long totalHoursElapsed = timeSinceEpoch().getStandardHours();
+        long secondsElapsedUntilCurrentCalc = solsElapsedUntilCurrentCalc * solDuration.getMillis() / 1000;
+        long totalSecondsElapsed = timeSinceEpoch().getStandardSeconds();
         hourOfSol = 0;
-        while (hoursElapsedUntilCurrentCalc < totalHoursElapsed) {
-            ++hoursElapsedUntilCurrentCalc;
+        while (secondsElapsedUntilCurrentCalc < totalSecondsElapsed) {
+            secondsElapsedUntilCurrentCalc += 3600;
             ++hourOfSol;
         }
+        secondsElapsedUntilCurrentCalc -= 3600;
+        --hourOfSol;
         // hourOfSol calculated
 
-        long minutesElapsedUntilCurrentCalc = hoursElapsedUntilCurrentCalc * 60;
-        long totalMinutesElapsed = timeSinceEpoch().getStandardMinutes();
         minuteOfHour = 0;
-        while (minutesElapsedUntilCurrentCalc < totalMinutesElapsed) {
-            ++minutesElapsedUntilCurrentCalc;
+        while (secondsElapsedUntilCurrentCalc < totalSecondsElapsed) {
+            secondsElapsedUntilCurrentCalc += 60;
             ++minuteOfHour;
         }
+        secondsElapsedUntilCurrentCalc -= 60;
+        --minuteOfHour;
         // minuteOfHour calculated
 
-        long secondsElapsedUntilCurrentCalc = minutesElapsedUntilCurrentCalc * 60;
-        long totalSecondsElapsed = timeSinceEpoch().getStandardSeconds();
         secondOfMinute = 0;
         while (secondsElapsedUntilCurrentCalc < totalSecondsElapsed) {
             ++secondsElapsedUntilCurrentCalc;
             ++secondOfMinute;
         }
+        --secondsElapsedUntilCurrentCalc;
+        --secondOfMinute;
         // secondOfMinute calculated
 
 //        // kludges:
