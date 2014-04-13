@@ -1,6 +1,8 @@
 package com.github.mikhailerofeev.mars.calendar.model.values;
 
-import junit.framework.Assert;
+import com.github.mikhailerofeev.mars.calendar.model.values.time.PlanetCalendar;
+import com.github.mikhailerofeev.mars.calendar.model.values.time.PlanetDateTime;
+import com.github.mikhailerofeev.mars.calendar.model.values.time.PlanetMonth;
 import org.joda.time.DateTime;
 import org.joda.time.Duration;
 import org.junit.Before;
@@ -19,6 +21,7 @@ public class PlanetDateTimeTest {
     private DateTime timeNow;
     private DateTime epochTime;
     private DateTime zeroTime;
+    private PlanetCalendar calendar;
 
     @Before
     public void Setup()
@@ -28,7 +31,8 @@ public class PlanetDateTimeTest {
         zeroTime    = new DateTime(1, 1, 1, 0, 0);
     }
 
-    public PlanetCalendar CalInit(){
+    @Test
+    public void CalInit(){
         String[] monthNames = {
                 "Sagittarius", "Dhanus", "Capricornus", "Makara", "Aquarius", "Kumbha",
                 "Pisces", "Mina", "Aries", "Mesha", "Taurus", "Rishabha",
@@ -67,8 +71,7 @@ public class PlanetDateTimeTest {
         assertEquals(leapPeriod.get(5), leapPeriod.get(4));
         //assertTrue(leapPeriod.get(6) == null);
 
-        PlanetCalendar marsCalendar = new PlanetCalendar(months, weekSols, leapPeriod, true);
-        return marsCalendar;
+        calendar = new PlanetCalendar(months, weekSols, leapPeriod, true);
     }
 
 

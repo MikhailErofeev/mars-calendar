@@ -1,8 +1,6 @@
-package com.github.mikhailerofeev.mars.calendar.model.values;
+package com.github.mikhailerofeev.mars.calendar.model.values.time;
 
 
-
-import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.List;
 import java.util.Map;
@@ -49,6 +47,10 @@ public class PlanetCalendar {
 
     public List<Map<PlanetMonth, Integer>> getLeapPeriod() {
         return leapPeriod;
+    }
+
+    public boolean weekRestarts() {
+        return weekRestart;
     }
 
     public int standardSolsInYear() {

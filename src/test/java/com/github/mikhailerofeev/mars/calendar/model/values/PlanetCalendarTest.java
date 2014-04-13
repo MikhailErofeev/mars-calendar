@@ -1,5 +1,7 @@
 package com.github.mikhailerofeev.mars.calendar.model.values;
 
+import com.github.mikhailerofeev.mars.calendar.model.values.time.PlanetCalendar;
+import com.github.mikhailerofeev.mars.calendar.model.values.time.PlanetMonth;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

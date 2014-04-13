@@ -1,9 +1,7 @@
-package com.github.mikhailerofeev.mars.calendar.model.values;
+package com.github.mikhailerofeev.mars.calendar.model.values.time;
 
 import org.joda.time.*;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
-
-import java.util.Date;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 
 /**
  * Created by Anton on 11.04.2014.
@@ -16,14 +14,12 @@ public class PlanetDateTime {
     private Duration solDuration;
 
     private Integer year        = null;
-    private Integer weekNum     = null;
     private Integer monthNum    = null; // from 1 ...
-    private Integer day         = null; // from 1 ...
+    private Integer sol         = null; // from 1 ...
     private Integer hour        = null; // from 1 ...
-    @SuppressWarnings("UnusedDeclaration")
     private Integer minute      = null; // from 1 ...
-    @SuppressWarnings("UnusedDeclaration")
     private Integer second      = null; // from 1 ...
+    private Integer week        = null; // from 1 ...
 
     @SuppressWarnings("UnusedDeclaration")
     public PlanetDateTime() {
@@ -43,13 +39,11 @@ public class PlanetDateTime {
         this.epoch = epoch;
     }
 
-    @SuppressWarnings("UnusedDeclaration")
     public PlanetDateTime(long unixTimeStamp) {
         this.timePoint = new DateTime(unixTimeStamp);
         this.epoch = new DateTime(0);
     }
 
-    @SuppressWarnings("UnusedDeclaration")
     public PlanetDateTime(long unixTimeStamp, long epoch) {
         this.timePoint = new DateTime(unixTimeStamp);
         this.epoch = new DateTime(epoch);
@@ -98,20 +92,68 @@ public class PlanetDateTime {
     }
 
     private void calcTime() {
-        int solsSincePeriod = (int)(wholeSolsSinceEpoch() % (long)calendar.solsInLeapPeriod());
-        int periodsSinceEpoch = (int)(wholeSolsSinceEpoch() / (long)calendar.solsInLeapPeriod());
+        long wholeSolsSinceEpoch = wholeSolsSinceEpoch();
+        long solsInLeapPeriod = calendar.solsInLeapPeriod();
+        int solsSincePeriod = (int)(wholeSolsSinceEpoch % solsInLeapPeriod);
+        int periodsSinceEpoch = (int)(wholeSolsSinceEpoch / solsInLeapPeriod);
         year = periodsSinceEpoch * calendar.getLeapPeriod().size();
-        int solsElapsed = 0;
+        int solsIt = 0;
         // may need to be changed to 1 (instead of 0)
-        while (solsElapsed <= solsSincePeriod) {
-            solsElapsed += calendar.solsInYear(year);
+        while (solsIt <= solsSincePeriod) {
+            solsIt += calendar.solsInYear(year);
             ++year;
         }
-        solsElapsed -= calendar.solsInYear(year);
+        solsIt -= calendar.solsInYear(year);
         --year; // because we return the nearest PREVIOUS year, not the NEXT one (!!!)
         // -- by now, the year is supposed to be calculated -- //
         monthNum = 0;
-
+        long solsElapsedUntilCurrentCalc = periodsSinceEpoch * calendar.solsInLeapPeriod() + solsIt; // check this later
+        while (solsElapsedUntilCurrentCalc <= wholeSolsSinceEpoch) {
+            // we use the month starting from zero here as it accesses the list
+            solsElapsedUntilCurrentCalc += calendar.solsInMonth(year, monthNum);
+            ++monthNum;
+        }
+        solsElapsedUntilCurrentCalc -= calendar.solsInMonth(year, monthNum);
+        // no need to decrement sol because it should start from 0 (!!!)
+        // -- by now, we have month -- //
+        sol = 0;
+        while (solsElapsedUntilCurrentCalc <= wholeSolsSinceEpoch) {
+            ++sol;
+            ++solsElapsedUntilCurrentCalc;
+        }
+        // no need to decrement sol because it should start from 1 (!!!)
+        --solsElapsedUntilCurrentCalc;
+        // sol calculated
+        long hoursElapsedUntilCurrentCalc = solsElapsedUntilCurrentCalc * solDuration.getStandardHours();
+        long totalHoursElapsed = timeSinceEpoch().getStandardHours();
+        hour = 0;
+        while (hoursElapsedUntilCurrentCalc <= totalHoursElapsed) {
+            ++hoursElapsedUntilCurrentCalc;
+            ++hour;
+        }
+        --hoursElapsedUntilCurrentCalc;
+        --hour;
+        // hour calculated
+        long minutesElapsedUntilCurrentCalc = hoursElapsedUntilCurrentCalc * 60;
+        long totalMinutesElapsed = timeSinceEpoch().getStandardMinutes();
+        minute = 0;
+        while (minutesElapsedUntilCurrentCalc <= totalMinutesElapsed) {
+            ++minutesElapsedUntilCurrentCalc;
+            ++minute;
+        }
+        --minutesElapsedUntilCurrentCalc;
+        --minute;
+        // minute calculated
+        long secondsElapsedUntilCurrentCalc = minutesElapsedUntilCurrentCalc * 60;
+        long totalSecondsElapsed = timeSinceEpoch().getStandardSeconds();
+        second = 0;
+        while (secondsElapsedUntilCurrentCalc <= totalSecondsElapsed) {
+            ++secondsElapsedUntilCurrentCalc;
+            ++second;
+        }
+        --secondsElapsedUntilCurrentCalc;
+        --second;
+        // second calculated
     }
 
     /**
@@ -124,22 +166,29 @@ public class PlanetDateTime {
     }
 
     /**
-     * returns the the month number starting from 1
-     * @return
+     *
+     * @return month number starting from 1
      */
     public int getMonthNum() {
         if (monthNum == null) calcTime();
         return monthNum;
     }
 
-    @SuppressWarnings("UnusedDeclaration")
+    /**
+     *
+     * @return month object (if you need month number use getMonthNum instead)
+     */
     public PlanetMonth getMonth() {
         return calendar.getMonths().get(getMonthNum() - 1);
     }
 
-    public int getDay() {
-        if (day == null) calcTime();
-        return day;
+    /**
+     *
+     * @return sol number starting with 1
+     */
+    public int getSol() {
+        if (sol == null) calcTime();
+        return sol;
     }
 
     @SuppressWarnings("UnusedDeclaration")
@@ -158,7 +207,21 @@ public class PlanetDateTime {
         return second;
     }
 
+    /**
+     *
+     * @return week number starting with 1
+     */
     public int getWeek(){
-        throw new NotImplementedException();
+        if (week == null) {
+            if (calendar.weekRestarts()) {
+                // we use sol minus one because getSol returns the number of the sol for normal humans
+                // (i.e. starting from 1)
+                week = ((getSol() - 1) / calendar.getWeekSols().size()) + 1;
+            } else {
+                throw new IllegalArgumentException();
+                // to finish later
+            }
+        }
+        return week;
     }
 }

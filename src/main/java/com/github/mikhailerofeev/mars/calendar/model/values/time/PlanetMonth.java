@@ -1,4 +1,4 @@
-package com.github.mikhailerofeev.mars.calendar.model.values;
+package com.github.mikhailerofeev.mars.calendar.model.values.time;
 
 /**
  * Contains abstact month class
