@@ -3,7 +3,6 @@
  * @since 12.04.14
  */
 
-
 var Controller = Backbone.Router.extend({
     routes: {"!/": "error" // Начальная страница
     },
@@ -13,12 +12,16 @@ var Controller = Backbone.Router.extend({
         AppState.year = year;
         AppState.month = month;
         AppState.day = day;
+        var weekTable = generateWeekTable(24, 0, ["Su", "Mn", "Tu", "We", "Th", "Fr", "Sa"]);
+        $("#main").html(weekTable)
     },
 
     month: function (origin, year, month) {
         AppState.originPlanet = origin;
         AppState.year = year;
         AppState.month = month;
+        var monthTable = generateMonthWithNewWeekStart(29);
+        $("#main").html(monthTable)
     },
 
     year: function (origin, year) {
@@ -31,9 +34,9 @@ var Controller = Backbone.Router.extend({
     },
 
     initialize: function () {
-//        "": "start", // Пустой hash-тэг
-//        "!/": "start", // Начальная страница
-//        "!/week1": "success", // Блок удачи
+//        "": "start", 
+//        "!/": "start",
+//        "!/week1": "success", 
         var router = this,
             routes = [
                 [ /^!\/week\/([a-z]+)\/([a-z]+)\/(\d+)\/(\d+)\/(\d+)$/, "week", this.week],
@@ -41,7 +44,7 @@ var Controller = Backbone.Router.extend({
                 [ /^!\/year\/([a-z]+)\/(\d+)$/, "year", this.year]
 //        "!/month/:year-:mm": "month",
 //        "!/year/:year": "year",
-//        "!/error": "error" ]// Блок ошибки
+//        "!/error": "error" ]
             ];
         _.each(routes, function (route) {
             router.route.apply(router, route);
@@ -50,7 +53,9 @@ var Controller = Backbone.Router.extend({
     }
 });
 
-var controller = new Controller(); // Создаём контроллер
+$(document).ready(function () {
+    var controller = new Controller();
 //controller.initialize()
 
-Backbone.history.start();  // Запускаем HTML5 History push    
+    Backbone.history.start();
+});
