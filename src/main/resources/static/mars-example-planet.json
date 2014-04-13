@@ -1,5 +1,9 @@
 {
     "days-of-week": ["Solis", "Lunae", "Martis", "Mercurii", "Jovis", "Veneris", "Saturni"],
-    "months": [],
-    "new-month-new-week": true
+    "months": ["Sagittarius", "Dhanus", "Capricornus", "Makara", "Aquarius", "Kumbha", "Pisces", "Mina", "Aries",
+        "Mesha", "Taurus", "Rishabha", "Gemini", "Mithuna", "Cancer", "Karka", "Leo", "Simha", "Virgo", "Kanya",
+        "Libra", "Tula", "Scorpius", "Vrishika"],
+    "new-month-new-week": true,
+    "hours": 24,
+    "minutes": 39
 }

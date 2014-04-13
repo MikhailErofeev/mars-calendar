@@ -7,11 +7,21 @@
         "days": 27
     },
     "current": {
-        "name": "dec",
-        "earth-timestamp": 1397370690758,
-        "year": 1014,
-        "month": 23,
-        "days": 31
+        "origin": {
+            "name": "dec",
+            "earth-timestamp": 1397370690758,
+            "year": 1014,
+            "month": 23,
+            "days": 31
+        },
+        "alternative": {
+            "name": "dec",
+            "earth-timestamp": 1397370690758,
+            "year": 1014,
+            "month": 23,
+            "days": 31
+        }
+
     },
     "next": {
         "name": "jan",
