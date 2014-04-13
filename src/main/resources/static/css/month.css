@@ -1,0 +1,32 @@
+body {
+    background-color: #e7e7e7;
+}
+
+.month-day {
+    background-color: white;
+    width: 120px;
+    height: 100px;
+    position: relative;
+}
+
+.day-link {
+    display: block;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin-right: 5px;
+    margin-top: 2px;
+    text-align: right;
+    color: #a0a0a0;
+    text-decoration: none;
+}
+
+.next-month-new-week {
+    background-color: lightgrey;
+    text-align: center;
+}
+
+.another-month {
+    background-color: lightgrey;
+}
