@@ -4,7 +4,7 @@
  */
 
 function generateMonthTable(days, newWeekForMonth, prevMonthDays) {
-    var $table = $("<table id='month-table'/>");
+    var $table = $("<table id='month-table' style='float: left; margin-right: 20px'/>");
     var $tBody = $("<tbody/>");
     var $row;
 
@@ -33,7 +33,15 @@ function generateMonthTable(days, newWeekForMonth, prevMonthDays) {
     }
     $tBody.append($row);
     $table.append($tBody);
-    return $table;
+    months = ["Январь", "Февраль", "Март", "Апрель", "Май"]
+    $monthsElem = $("<div style='padding-top:10px;'/>");
+    for (var i = 0; i < months.length; i++) {
+        $monthsElem.append("<div><a href='#!/month/mars/2014/" + (i + 1) + "'>" + months[i] + "</a></div>");
+    }
+    var ret = $("<div></div>");
+    ret.append($table);
+    ret.append($monthsElem);
+    return ret;
 }
 
 function generateMonthWithNewWeekStart(days) {
@@ -44,8 +52,8 @@ function generateMonthWithOutNewWeekStart(days, daysBefore) {
     return generateMonthTable(days, false, daysBefore)
 }
 
-$(document).ready(function () {
-//    var weekTable = generateMonthWithOutNewWeekStart(28, 5);
-    var weekTable = generateMonthWithNewWeekStart(29);
-    $("#main").html(weekTable)
-});
+//$(document).ready(function () {
+////    var weekTable = generateMonthWithOutNewWeekStart(28, 5);
+//    var weekTable = generateMonthWithNewWeekStart(29);
+//    $("#main").html(weekTable)
+//});

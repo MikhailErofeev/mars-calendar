@@ -36,9 +36,3 @@ function generateWeekTable(planetHours, planetMinutes, days) {
     $table.append($body);
     return $table;
 }
-$(document).ready(function () {
-//    generateWeekTable(24, 0);
-//    var weekTable = generateWeekTable(24, 37, days);
-    var weekTable = generateWeekTable(24, 0, ["Su", "Mn", "Tu", "We", "Th", "Fr", "Sa"]);
-    $("#main").html(weekTable)
-});
