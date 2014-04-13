@@ -1,36 +1,24 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-    <title>Hello, Worlds!</title>
+    <title>Planets calendar</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
-
     <link rel="stylesheet" href="css/index.css" type="text/css"/>
     <link rel="stylesheet" href="css/week.css" type="text/css"/>
 
-    <!-- jQuery -->
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
-    <!-- backbone.js -->
-    <script src="//cdnjs.cloudflare.com/ajax/libs/backbone.js/1.1.2/backbone-min.js"></script>
-    <!-- underscore.js -->
     <script src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.6.0/underscore-min.js"></script>
-    <!-- bootstrap -->
+    <script src="//cdnjs.cloudflare.com/ajax/libs/backbone.js/1.1.2/backbone-min.js"></script>
     <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
 
     <script src="js/index.js"></script>
     <script src="js/week.js"></script>
+    <script src="js/router.js"></script>
 </head>
 <body>
-<!--<h1>Hello, html worlds!</h1>-->
-
-<!--<div>-->
-<!--<p class="ajax-content">Ajax text: </p>-->
-
-<!--<p class="get-content"><b>text</b> variable in URL: </p>-->
-<!--</div>-->
-
 <!-- Navbar -->
 <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
     <div class="container">
@@ -39,8 +27,11 @@
         </div>
         <div class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
+
+                <!--PLANETS TOGGLERS-->
                 <li class="dropdown disabled">
-                    <a class="dropdown-toggle planet-name source-planet-name left-bordered disabled" data-toggle="dropdown" href="#">
+                    <a class="dropdown-toggle planet-name source-planet-name left-bordered disabled"
+                       data-toggle="dropdown" href="#">
                         Mars <span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu disabled">
@@ -48,44 +39,60 @@
                 </li>
                 <li class="disabled"><a href="#"><span class="glyphicon glyphicon-resize-horizontal"></span></a></li>
                 <li class="dropdown disabled">
-                    <a class="dropdown-toggle planet-name destination-planet-name right-bordered disabled" data-toggle="dropdown" href="#">
+                    <a class="dropdown-toggle planet-name destination-planet-name right-bordered disabled"
+                       data-toggle="dropdown" href="#">
                         Earth <span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu">
                     </ul>
                 </li>
+
+                <!--ADD TASK-->
                 <li class="left-offset right-offset right-bordered">
                     <div class="btn-group btn-group-sm">
-                        <button type="button" class="btn btn-default navbar-btn" data-toggle="modal" data-target="#AddTask">Add task</button>
+                        <button type="button" class="btn btn-default navbar-btn" data-toggle="modal"
+                                data-target="#AddTask">Add task
+                        </button>
                     </div>
                 </li>
+
+                <!--TODAY-->
                 <li class="left-offset border">
                     <div class="btn-group btn-group-sm">
                         <button type="button" class="btn btn-default navbar-btn active ">Today</button>
                     </div>
                 </li>
+
+                <!--PREV <-> NEXT-->
                 <li class="offsetted-btn right-offset">
                     <div class="btn-group btn-group-sm">
-                        <button type="button" class="btn btn-default navbar-btn">
-                            <span class="glyphicon glyphicon-chevron-left"></span></button>
-                        <button type="button" class="btn btn-default navbar-btn">
-                            <span class="glyphicon glyphicon-chevron-right"></span></button>
+                        <a id="prev-week-btn" href="#!/week/2014-04-07" type="button"
+                           class="btn btn-default navbar-btn">
+                            <span class="glyphicon glyphicon-chevron-left"></span>
+                        </a>
+                        <a id="next-week-btn" href="#!/week/2014-04-21" type="button"
+                           class="btn btn-default navbar-btn">
+                            <span class="glyphicon glyphicon-chevron-right"></span></a>
                     </div>
                 </li>
+
                 <li class="left-offset left-bordered">
                     <div class="btn-group btn-group-sm">
-                        <button type="button" class="btn btn-default navbar-btn">Week</button>
-                        <button type="button" class="btn btn-default navbar-btn">Month</button>
-                        <button type="button" class="btn btn-default navbar-btn">Year</button>
+                        <a href="#!/week/2014-04-14" type="button" class="btn btn-default navbar-btn">Week</a>
+                        <a href="#!/month/2014-04" type="button" class="btn btn-default navbar-btn">Month</a>
+                        <a href="#!/year/2014" type="button" class="btn btn-default navbar-btn">Year</a>
                     </div>
                 </li>
             </ul>
             <form class="navbar-form navbar-right" role="form">
                 <button type="submit" class="btn btn-info">Twitter login</button>
             </form>
-        </div><!-- /.nav-collapse -->
-    </div><!-- /.container-->
-</div><!-- /.navbar -->
+        </div>
+        <!-- /.nav-collapse -->
+    </div>
+    <!-- /.container-->
+</div>
+<!-- /.navbar -->
 
 <div class="container">
     <div class="row">
@@ -96,7 +103,8 @@
             </table>
         </div>
     </div>
-</div><!-- /.container -->
+</div>
+<!-- /.container -->
 
 <div class="modal fade" id="AddTask">
     <div class="modal-dialog">
@@ -109,12 +117,14 @@
                 <form id="AddTaskForm" class="form-horizontal" role="form">
                     <div class="form-group">
                         <label for="TaskName" class="col-sm-2 control-label">Name</label>
+
                         <div class="col-sm-10">
                             <input type="text" class="form-control" id="TaskName" placeholder="Name">
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="TaskBeginDate" class="col-sm-2 control-label">Begin</label>
+
                         <div class="col-sm-10">
                             <input type="text" class="form-control" id="TaskBeginDate" placeholder="Begin">
                         </div>
@@ -125,8 +135,11 @@
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                 <button type="button" class="btn btn-primary">Save changes</button>
             </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
 </body>
 </html>
