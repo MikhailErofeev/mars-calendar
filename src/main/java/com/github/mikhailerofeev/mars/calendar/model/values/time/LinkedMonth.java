@@ -35,10 +35,15 @@ public class LinkedMonth {
         DateTime eTime = dpt.toTerrestrial();
 
         int eyear = eTime.getYear();
+        System.out.println(eyear);
         int emonth = eTime.getMonthOfYear();
-        int eday = dpt.getMonthObject().getNumSols();
+        System.out.println(emonth);
+        int eday = eTime.getDayOfMonth();
+        System.out.println(eday);
         int ehour = eTime.getHourOfDay();
-        int eminute = eTime.getMinuteOfDay();
+        System.out.println(ehour);
+        int eminute = eTime.getMinuteOfHour();
+        System.out.println(eminute);
 
         DateTime eDT = new DateTime(eyear,emonth, eTime.getDayOfMonth(), ehour, eminute);
 

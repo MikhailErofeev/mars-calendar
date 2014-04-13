@@ -1,11 +1,9 @@
 package com.github.mikhailerofeev.mars.calendar.rest.controllers;
 
 import com.github.mikhailerofeev.mars.calendar.model.services.UserService;
-import com.github.mikhailerofeev.mars.calendar.model.values.time.CalendarFactory;
-import com.github.mikhailerofeev.mars.calendar.model.values.time.LinkedMonth;
-import com.github.mikhailerofeev.mars.calendar.model.values.time.PlanetCalendar;
-import com.github.mikhailerofeev.mars.calendar.model.values.time.PlanetMonth;
+import com.github.mikhailerofeev.mars.calendar.model.values.time.*;
 import com.github.mikhailerofeev.mars.calendar.rest.dto.Greeting;
+import org.joda.time.Duration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.Authentication;
@@ -71,6 +69,35 @@ public class MonthController {
 
       return retVal;
   }
+    @RequestMapping(value = "/rest/v1/{planet}", method = RequestMethod.GET)
+    public
+    @ResponseBody
+    PlanetReply getMonth(@PathVariable String planet){
+        planet = planet.toLowerCase();
+        PlanetCalendar pc = CalendarFactory.getPlanetCalendar(planet);
+
+        PlanetReply pr = new PlanetReply();
+        pr.days_of_week = new ArrayList<String>();
+        for(int i = 0; i < pc.getWeekSols().size(); ++i){
+            pr.days_of_week.add(pc.getWeekSols().get(i));
+        }
+        pr.months = new ArrayList<String>();
+        for(int i = 0; i < pc.getMonths().size(); ++i){
+            pr.months.add(pc.getMonths().get(i).getName());
+        }
+        if(planet.toLowerCase().equals("earth"))
+            pr.new_month_new_week = false;
+        else
+            pr.new_month_new_week = true;
+
+        Duration sd = SolDurationFactory.getSolDuration(planet.toLowerCase());
+        pr.hours = sd.getStandardHours();
+        pr.minutes = sd.getStandardMinutes() % 60;
+        pr.name = planet;
+
+        return pr;
+
+    }
 
 
 }
