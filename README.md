@@ -4,6 +4,9 @@ mars-calendar
 https://2014.spaceappschallenge.org
 
 
+http://162.243.255.36:8080/#!/week/mars/earth/1014/23/1 (still eventual availablity)
+
+
 Please write all code and comments in English, according to challenge rules!
 
 Database configuration: in mysql to run db_copy.rtfm. MySQL configuration in application.properties
