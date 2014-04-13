@@ -46,18 +46,24 @@ public class MonthController {
       }
 
       // month can be overcapped (month +1 > 12 months)
+      int nextMonthNum, prevMonthNum, yearAppend = 0;
       if(month == maxMonthCount){
-          month = 1;
-          year++;
+          nextMonthNum = 1;
+          prevMonthNum = month - 1;
+          yearAppend = 1;
       }
       else if (month == 1){
-          month = maxMonthCount;
-          year--;
+          nextMonthNum = month + 1;
+          prevMonthNum = maxMonthCount;
       }
-      LinkedMonth currMonth = new LinkedMonth(originalPlanet, alternativePlanet, year, month);
+      else {
+          nextMonthNum = month + 1;
+          prevMonthNum = month - 1;
+      }
 
-      LinkedMonth prevMonth = new LinkedMonth(originalPlanet, alternativePlanet, year, month - 1);
-      LinkedMonth nextMonth = new LinkedMonth(originalPlanet, alternativePlanet, year, month + 1);
+      LinkedMonth currMonth = new LinkedMonth(originalPlanet, alternativePlanet, year, month);
+      LinkedMonth prevMonth = new LinkedMonth(originalPlanet, alternativePlanet, year, prevMonthNum);
+      LinkedMonth nextMonth = new LinkedMonth(originalPlanet, alternativePlanet, year + yearAppend, nextMonthNum);
 
       retVal.add(prevMonth);
       retVal.add(currMonth);

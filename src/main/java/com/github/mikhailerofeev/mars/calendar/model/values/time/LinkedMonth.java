@@ -7,10 +7,11 @@ import org.joda.time.Duration;
  * Created by Максим on 13.04.2014.
  */
 public class LinkedMonth {
-    public MonthReply origin = null;
-    public MonthReply alternative = null;
+    public MonthReply origin = new MonthReply();
+    public MonthReply alternative = new MonthReply();
 
     public LinkedMonth(String originalPlanet, String alternativePlanet, int year, int month) {
+        month--;
         originalPlanet = originalPlanet.toLowerCase();
         alternativePlanet = alternativePlanet.toLowerCase();
 
@@ -26,6 +27,7 @@ public class LinkedMonth {
     }
 
     MonthReply getMonthReply(String planet, int year, int month) {
+        month ++ ;
         DateTime defaultEpoch = EpochFactory.getDefaultEpoch();
         PlanetCalendar pc = CalendarFactory.getPlanetCalendar(planet);
         PlanetDateTime dpt = new PlanetDateTime(defaultEpoch, year, month, 1, 0, 0, 0);
