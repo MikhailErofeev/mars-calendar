@@ -1,22 +1,35 @@
 {
     "previous": {
-        "name": "now",
-        "earth-timestamp": 1394692662119,
-        "year": 1014,
-        "month": 22,
-        "days": 27
+        "origin": {
+            "name": "now",
+            "planetName": "mars",
+            "timestamp": 1394692662119,
+            "year": 1014,
+            "month": 22,
+            "days": 27
+        },
+        "alternative": {
+            "name": "now",
+            "planetName": "earth",
+            "timestamp": 1394692662119,
+            "year": 1014,
+            "month": 22,
+            "days": 27
+        }
     },
     "current": {
         "origin": {
             "name": "dec",
-            "earth-timestamp": 1397370690758,
+            "planetName": "mars",
+            "timestamp": 1397370690758,
             "year": 1014,
             "month": 23,
             "days": 31
         },
         "alternative": {
             "name": "dec",
-            "earth-timestamp": 1397370690758,
+            "planetName": "earth",
+            "timestamp": 1397370690758,
             "year": 1014,
             "month": 23,
             "days": 31
@@ -24,10 +37,21 @@
 
     },
     "next": {
-        "name": "jan",
-        "earth-timestamp": 1399963074160,
-        "year": 1015,
-        "month": 1,
-        "days": 31
+        "origin": {
+            "name": "jan",
+            "planetName": "mars",
+            "timestamp": 1399963074160,
+            "year": 1015,
+            "month": 1,
+            "days": 31
+        },
+        "alternative": {
+            "name": "jan",
+            "planetName": "earth",
+            "timestamp": 1399963074160,
+            "year": 1015,
+            "month": 1,
+            "days": 31
+        }
     }
 }

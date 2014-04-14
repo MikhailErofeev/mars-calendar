@@ -2,19 +2,22 @@
  * @author m-erofeev
  * @since 12.04.14
  */
-var days = ["Solis", "Lunae", "Martis", "Mercurii", "Jovis", "Veneris", "Saturni"]
-function generateWeekTable(planetHours, planetMinutes, days) {
+function generateWeekTable(monthPlanetAndWeeks) {
+    planetHours = monthPlanetAndWeeks.planet.get("hours");
+    planetMinutes = monthPlanetAndWeeks.planet.get("minutes");
+    days = monthPlanetAndWeeks.planet.get("days-of-week");
+    currentWeek = monthPlanetAndWeeks.weeks[1];
     var $table = $("<table id='days-table'/>");
     var tHead = $("<thead/>");
     var trHeader = $("<tr/>");
     tHead.append(trHeader);
     trHeader.append("<th class='scale-header'></th>")
-    for (day = 0; day < 7; day++) {
-        year = "0000";
-        month = "00";
-        dayHeader = days[day] + " <br/>" + [year,month,day+1].join("-");
-        trHeader.append("<th class='day-header'>" +dayHeader +  "</th>");
-    }
+    currentWeek.each(function (day) {
+        year = day.get("year");
+        month = day.get("month");
+        dayHeader = day.get("name") + " <br/>" + [year, month, day.get("day") + 1].join("-");
+        trHeader.append("<th class='day-header'>" + dayHeader + "</th>");
+    });
     $table.append(tHead);
     var planetQuarters = Math.ceil((planetHours * 60 + planetMinutes) / 15.0);
     $body = $("<tbody/>");

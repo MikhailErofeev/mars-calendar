@@ -4,8 +4,8 @@ body {
 
 .month-day {
     background-color: white;
-    width: 150px;
-    height: 120px;
+    width: 120px;
+    height: 100px;
     position: relative;
     border-bottom: 1px solid #e7e7e7;
     border-left: 1px solid #e7e7e7;
