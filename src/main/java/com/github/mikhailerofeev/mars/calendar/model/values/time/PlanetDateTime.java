@@ -122,7 +122,9 @@ public class PlanetDateTime {
         while (solsElapsedUntilCurrentCalc <= wholeSolsSinceEpoch) {
             ++year;
             solsElapsedUntilCurrentCalc += calendar.solsInYear(year);
-
+            // year doesn't restart when the last day passes,
+            // instead the month is incremented to 24 (in case of mars)
+            // & the program throws an out-of-bounds exception
         }
         solsElapsedUntilCurrentCalc -= calendar.solsInYear(year);
         //--year; // because we return the nearest PREVIOUS year, not the NEXT one (!!!)
